@@ -1,0 +1,411 @@
+---
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+    latex_engine: xelatex
+header-includes:
+- \usepackage{fontspec}
+- \setmainfont{Arial}
+---
+
+# UNIVERSIDADE FEDERAL DO PARANÁ
+
+PPGECon\
+Disciplina: Estatística\
+Professor: Adalto Acir Althaus Junior
+
+# **Lista de Exercícios 01**
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)                 # tabelas kable
+library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(nortest)               # Anderson-Darling Test for normality
+```
+
+--- 
+
+## **Item 1**
+
+A planilha DEMO traz informações de 1.000 respondentes quanto à sua
+idade em anos, o seu estado civil (1- casado , 0- não casado), quanto
+tempo (em anos) vive no endereço atual, sua renda anual (em milhares de
+reais), o preço do carro principal (em milhares de reais), sua
+escolaridade (1- primeiro grau, 2- segundo grau, 3- terceiro grau, 4-
+Pós graduação especialização, 5- mestrado/doutorado), quanto tempo, em
+anos, está no emprego atual (t_emp_atual), se é (1) ou não (0)
+aposentado, o sexo (m- masc e f- femin) e sua satisfação no trabalho (de
+1- Nada satisfeito a 5- Muito satisfeito).
+
+### Apuração:
+
+```{r get data 1, options}
+df1 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset1.csv")
+df1
+```
+
+```{r analize data 1, options}
+# medidas estatisticas
+summary(df1)
+```
+
+```{r normality tests, options}
+# Lista das variáveis para testar
+var_names <- c("idade", "renda", "carro", "t_empr_atual")
+
+# Função para aplicar testes de normalidade
+apply_normality_tests <- function(data, var_name) {
+  if(!is.numeric(data[[var_name]])) {
+    return(cat("A variável", var_name, "não é numérica e será ignorada.\n"))
+  }
+  # Teste de Shapiro-Wilk
+  shapiro_result <- shapiro.test(data[[var_name]])
+    # Teste de Kolmogorov-Smirnov
+  ks_result <- tryCatch(
+    ks.test(data[[var_name]], "pnorm", mean = mean(data[[var_name]], na.rm = TRUE), sd = sd(data[[var_name]], na.rm = TRUE)),
+    error = function(e) return(e)
+  )
+    # Teste de Anderson-Darling
+  ad_result <- ad.test(data[[var_name]])
+    # Compilar resultados em uma lista
+  list(
+    Shapiro_Wilk = shapiro_result,
+    Kolmogorov_Smirnov = ks_result,
+    Anderson_Darling = ad_result
+  )
+}
+
+# Aplicar testes a todas as variáveis selecionadas
+results <- lapply(var_names, function(v) apply_normality_tests(df1, v))
+
+# Imprimir resultados
+print(results)
+
+```
+
+```{r label, options}
+library(knitr)
+
+# Definindo os nomes das variáveis manualmente na ordem correta
+var_names <- c("idade", "renda", "carro", "t_empr_atual")
+
+# Inicializa um dataframe para armazenar os resultados
+results_df <- data.frame(
+  Variavel = character(),
+  `Shapiro-Wilk p-valor` = numeric(),  # P-valor do Shapiro-Wilk
+  `Kolmogorov-Smirnov p-valor` = numeric(),  # P-valor do Kolmogorov-Smirnov
+  `Anderson-Darling p-valor` = numeric(),  # P-valor do Anderson-Darling
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+# Iterar sobre cada conjunto de resultados
+for (i in seq_along(results)) {
+  shapiro_p <- results[[i]]$Shapiro_Wilk$p.value
+  ks_p <- results[[i]]$Kolmogorov_Smirnov$p.value
+  ad_p <- results[[i]]$Anderson_Darling$p.value
+  
+  # Adiciona uma nova linha ao dataframe de forma segura
+  new_row <- data.frame(
+    Variavel = var_names[i],
+    `Shapiro-Wilk p-valor` = shapiro_p,
+    `Kolmogorov-Smirnov p-valor` = ks_p,
+    `Anderson-Darling p-valor` = ad_p,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  results_df <- rbind(results_df, new_row, make.row.names = FALSE)
+}
+
+
+# Usar kable para criar a tabela formatada
+kable(results_df, fotmat = "html", digits = 50, caption = "Resultados dos Testes de Normalidade para cada Variável", 
+      format.args = list(big.mark = ",", scientific = TRUE))
+
+
+```
+
+### Questões:
+
+a)  Classifique cada variável em ESCALAR, ORDINAL ou NOMINAL\
+    Resp:
+
+b)  Represente as variáveis categóricas graficamente para resumir as
+    informações da melhor maneira possível\
+    Resp:
+
+c)  Para as variáveis escalares faça um resumo de todas as medidas
+    estudadas (média, mediana, desvio-padrão, etc)\
+    Resp:
+
+d)  Examine a possibilidade das variáveis possuirem distribuição normal
+    de probabilidades Resp: Os três testes de normalidade executados
+    indicam que a distri
+
+Variavel, p-valor
+
+```{r qq grid, options}
+# Função para criar um gráfico Q-Q com ggplot2
+make_qqplot <- function(data, var_name) {
+  ggplot(data, aes(sample = .data[[var_name]])) +
+    stat_qq() +
+    stat_qq_line(colour = "red") +
+    ggtitle(paste("Q-Q Plot de", var_name)) +
+    theme_minimal()
+}
+
+# Lista de variáveis numéricas (excluindo variáveis categóricas)
+var_names <- c("idade", "renda", "carro", "t_empr_atual")
+
+# Criar uma lista de gráficos Q-Q para cada variável
+plots <- lapply(var_names, function(v) make_qqplot(df1, v))
+
+# Organizar os gráficos em uma grade de 2 colunas
+grid.arrange(grobs = plots, ncol = 2)
+
+```
+
+```{r hist grid, options}
+# Função para criar um histograma com curva de densidade
+make_histogram <- function(data, var_name) {
+  # Verifica se a variável é numérica; caso contrário, retorna NULL
+  if (!is.numeric(data[[var_name]])) {
+    return(NULL)
+  }
+  
+  p <- ggplot(data, aes_string(x = var_name)) +
+    geom_histogram(aes(y = ..density..), bins = 30, fill = "gray", alpha = 0.7) +
+    geom_density(color = "red", size = 1) +
+    labs(title = paste("Histograma:", var_name),
+         x = var_name,
+         y = "Densidade") +
+    theme_minimal()
+  return(p)
+}
+
+# Lista de variáveis numéricas
+var_names <- c("idade", "renda", "carro", "t_empr_atual")  
+
+# Criar uma lista de gráficos para cada variável numérica
+plots <- lapply(var_names, function(v) make_histogram(df1, v))
+plots <- plots[!sapply(plots, is.null)]
+
+# Organizar os gráficos em uma grade de 2 colunas
+grid.arrange(grobs = plots, ncol = 2)
+```
+
+
+---
+
+
+## **Item 2**
+
+Ao lado são apresentados dados de gastos per capita, em milhares de
+dólares, para cada estado americano em 20xx.
+
+### Apuração:
+
+```{r get data 2, options}
+df2 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset2.csv")
+df2
+```
+
+```{r analize data 2, options}
+summary(df2)
+```
+
+### Questões:
+
+a)  Faça um resumo das estatísticas descritivas desses dados\
+b)  Decida se os dados apresentados podem estar aproximadamente
+    normalmente distribuídos
+
+
+---
+
+
+## **Item 3**
+
+Suponha que o volume de negócios diários comercializados na Bolsa de
+Nova York (NYSE) seja uma variável normalmente distribuída com média de
+1,8 bilhão e desvio-padrão de 0,15 bilhão.
+
+### Apuração:
+
+```{r get data 3, options}
+# parametros
+mean3 <- 1.8
+sd3 <- 0.15
+```
+
+```{r analize data 3, options}
+
+# Calculando as probabilidades 
+## Usando 'pnorm': probabilidade de ser menor ou igual a um valor (dist normal)
+prob_a <- pnorm(1.5, mean = mean3, sd = sd3)
+prob_b <- 1 - pnorm(2, mean = mean3, sd = sd3)
+prob_c <- pnorm(1.9, mean = mean3, sd = sd3) - pnorm(1.7, mean = mean3, sd = sd3)
+
+# Gerando um gráfico
+## Criando um data frame para o gráfico
+x <- seq(mean3 - 4*sd3, mean3 + 5*sd3, length.out = 1000)
+y <- dnorm(x, mean = mean3, sd = sd3)
+data <- data.frame(x, y)
+
+## Gerando o gráfico
+ggplot(data, aes(x, y)) +
+  geom_line() +
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = mean3, sd = sd3), 
+    geom = "area", 
+    fill = "blue", 
+    xlim = c(1, 1.5), 
+    alpha = 0.3) +
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = mean3, sd = sd3), 
+    geom = "area", 
+    fill = "red", 
+    xlim = c(2, 2.5), 
+    alpha = 0.3) +
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = mean3, sd = sd3), 
+    geom = "area", 
+    fill = "green", 
+    xlim = c(1.7, 1.9), 
+    alpha = 0.3) +
+  labs(title = 'Volume de Negócios na NYSE',
+       subtitle = 'Assumindo uma distribuição normal',
+       x = 'Volume de Negócios (bilhões)',
+       y = 'Probabilidade') +
+  theme_bw()
+```
+
+### Questões:
+
+Para um dia aleatoriamente escolhido, qual a probabilidade do volume
+estar:\
+a) abaixo de 1,5 bilhão?\
+Resp: `r prob_a`\
+b) acima de 2 bilhões?\
+Resp: `r prob_b`\
+c) entre 1,7 e 1,9 bilhão?\
+Resp: `r prob_c`
+
+
+---
+
+
+## **Item 4**
+
+Uma análise estatística de 1.000 chamadas telefônicas de longa distância
+originadas dos escritórios da Bricks and Clicks Computer Corporation
+indicam que a duração dessas chamadas estão normalmente distribuídas.
+Sendo a média e o desvio-padrão da duração das chamadas 240 segundos e
+40 segundos, respectivamente.
+
+### Apuração:
+
+```{r get data 4, options}
+mean4 <- 240
+sd4 <- 40
+```
+
+```{r analize data 4, options}
+
+```
+
+### Questões:
+
+a)  Calcule a probabilidade de uma chamada durar menos de 180 segundos.\
+b)  Qual a probabilidade de uma chamada durar entre 200 e 300 segundos?\
+c)  Um empregado realizou diversas chamadas com duração acima de 350
+    segundos.\
+    Você pode aceitar que esse é um fato casual?
+
+
+---
+
+
+## **Item 5**
+
+Uma pesquisa realizada entre instituições financeiras da América Latina
+apresentou os resultados descritos na tabela abaixo. Você diria que
+existe associação entre o tempo de atuação e o número de clientes?
+
+### Apuração:
+
+```{r get data 5, options}
+df5 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset5.csv")
+df5
+```
+
+```{r analize data 5, options}
+
+```
+
+### Questões:
+
+a)  Construa o diagrama de dispersão dos dados.\
+b)  Calcule a covariância e o coeficiente de correlação.
+
+
+------------------------------------------------------------------------
+
+
+## **Item 6**
+
+Os preços de fechamento de diversos ativos negociados na BOVESPA
+aparecem listados na planilha portfolio.
+
+### Apuração:
+
+```{r get data 6, options}
+df6 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset6.csv")
+df6
+```
+
+```{r analize data 6, options}
+
+```
+
+### Questões:
+
+a)  Se você fosse comprar somente um dos papéis dentre os listados, qual
+    seria a melhor escolha com base no período analisado?\
+b)  Calcule o risco e o retorno de uma carteira formada com 50% de PETR4
+    e 50% de VALE5. Simule o resultado para diversos níveis de
+    correlação.\
+c)  Encontre os papéis com menor correlação.\
+d)  Com base nesses dois papéis, qual percentual do seu capital você
+    aplicaria em cada ação para obter a carteira de menor risco?\
+e)  Os retornos parecem seguir uma curva normal?
