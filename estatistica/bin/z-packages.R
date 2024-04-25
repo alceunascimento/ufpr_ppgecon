@@ -45,6 +45,8 @@ library(strucchange)           # analisar quebras estruturais (Chow Test)
 library(mctest)                # teste para multicolinearidad
 library(performance)           # Analisa regressão 
 library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
 # databases ----
 library(sidrar)                # Acesso a bases de dados do SIDRA-IGBE
 library(ipeadatar)             # Acesso a bases de dados do IPEA

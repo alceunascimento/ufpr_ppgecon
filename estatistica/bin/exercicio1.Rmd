@@ -1,4 +1,8 @@
 ---
+title: "UFPR PPGEcon 2024"
+subtitle: "Estatística (Prof. Adalto Acir Althaus Jr.): exercícios"
+author: "Alceu Eilert Nascimento"
+date: "2024-04-21"
 output:
   html_document:
     df_print: paged
@@ -9,13 +13,7 @@ header-includes:
 - \setmainfont{Arial}
 ---
 
-# UNIVERSIDADE FEDERAL DO PARANÁ
-
-PPGECon\
-Disciplina: Estatística\
-Professor: Adalto Acir Althaus Junior
-
-# **Lista de Exercícios 01**
+# **Exercícios 01**
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
@@ -32,11 +30,13 @@ library(MASS)                  # visualiza decimal em fracoes
 library(xtable)                # transforma tabela Excel para Latex
 library(ggplot2)               # graficos
 library(gridExtra)
+library(grid)  # Para configurações adicionais de grid
 # data manipulation ----
 library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
 library(broom)                 # Converte saídas de modelos estatísticos em tibbles
 library(dbplyr)                # Interface dplyr para bancos de dados
 library(lubridate)             # Simplifica trabalho com datas e horas
+library(janitor)
 # statistics ----
 library(stargazer)             # analise estatistica
 library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
@@ -47,10 +47,12 @@ library(strucchange)           # analisar quebras estruturais (Chow Test)
 library(mctest)                # teste para multicolinearidad
 library(performance)           # Analisa regressão 
 library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
 library(nortest)               # Anderson-Darling Test for normality
 ```
 
---- 
+------------------------------------------------------------------------
 
 ## **Item 1**
 
@@ -58,11 +60,11 @@ A planilha DEMO traz informações de 1.000 respondentes quanto à sua
 idade em anos, o seu estado civil (1- casado , 0- não casado), quanto
 tempo (em anos) vive no endereço atual, sua renda anual (em milhares de
 reais), o preço do carro principal (em milhares de reais), sua
-escolaridade (1- primeiro grau, 2- segundo grau, 3- terceiro grau, 4-
-Pós graduação especialização, 5- mestrado/doutorado), quanto tempo, em
-anos, está no emprego atual (t_emp_atual), se é (1) ou não (0)
-aposentado, o sexo (m- masc e f- femin) e sua satisfação no trabalho (de
-1- Nada satisfeito a 5- Muito satisfeito).
+escolaridade (1- primeiro grau, 2- segundo grau, 3- terceiro grau, 4-Pós
+graduação especialização, 5-mestrado/doutorado), quanto tempo, em anos,
+está no emprego atual (t_emp_atual), se é (1) ou não (0) aposentado, o
+sexo (m- masc e f- femin) e sua satisfação no trabalho (de 1- Nada
+satisfeito a 5- Muito satisfeito).
 
 ### Apuração:
 
@@ -76,100 +78,36 @@ df1
 summary(df1)
 ```
 
-```{r normality tests, options}
-# Lista das variáveis para testar
-var_names <- c("idade", "renda", "carro", "t_empr_atual")
+### Questões:  
 
-# Função para aplicar testes de normalidade
-apply_normality_tests <- function(data, var_name) {
-  if(!is.numeric(data[[var_name]])) {
-    return(cat("A variável", var_name, "não é numérica e será ignorada.\n"))
-  }
-  # Teste de Shapiro-Wilk
-  shapiro_result <- shapiro.test(data[[var_name]])
-    # Teste de Kolmogorov-Smirnov
-  ks_result <- tryCatch(
-    ks.test(data[[var_name]], "pnorm", mean = mean(data[[var_name]], na.rm = TRUE), sd = sd(data[[var_name]], na.rm = TRUE)),
-    error = function(e) return(e)
-  )
-    # Teste de Anderson-Darling
-  ad_result <- ad.test(data[[var_name]])
-    # Compilar resultados em uma lista
-  list(
-    Shapiro_Wilk = shapiro_result,
-    Kolmogorov_Smirnov = ks_result,
-    Anderson_Darling = ad_result
-  )
-}
+#### a) Classifique cada variável em ESCALAR, ORDINAL ou NOMINAL
 
-# Aplicar testes a todas as variáveis selecionadas
-results <- lapply(var_names, function(v) apply_normality_tests(df1, v))
+Resp:
 
-# Imprimir resultados
-print(results)
+\  
 
+
+#### b) Represente as variáveis categóricas graficamente para resumir as informações da melhor maneira possível
+
+Resp:
+
+\  
+
+
+#### c) Para as variáveis escalares faça um resumo de todas as medidas estudadas (média, mediana, desvio-padrão, etc)
+
+Resp:
+
+```{r item 1 estatisticas, options}
+pastecs::stat.desc(df1)
 ```
 
-```{r label, options}
-library(knitr)
+\  
 
-# Definindo os nomes das variáveis manualmente na ordem correta
-var_names <- c("idade", "renda", "carro", "t_empr_atual")
+#### d) Examine a possibilidade das variáveis possuirem distribuição normal de probabilidades
 
-# Inicializa um dataframe para armazenar os resultados
-results_df <- data.frame(
-  Variavel = character(),
-  `Shapiro-Wilk p-valor` = numeric(),  # P-valor do Shapiro-Wilk
-  `Kolmogorov-Smirnov p-valor` = numeric(),  # P-valor do Kolmogorov-Smirnov
-  `Anderson-Darling p-valor` = numeric(),  # P-valor do Anderson-Darling
-  stringsAsFactors = FALSE,
-  check.names = FALSE
-)
+Resp: O teste de normalidade executado indica que a distrição dos dados não apresenta normalidade.    
 
-# Iterar sobre cada conjunto de resultados
-for (i in seq_along(results)) {
-  shapiro_p <- results[[i]]$Shapiro_Wilk$p.value
-  ks_p <- results[[i]]$Kolmogorov_Smirnov$p.value
-  ad_p <- results[[i]]$Anderson_Darling$p.value
-  
-  # Adiciona uma nova linha ao dataframe de forma segura
-  new_row <- data.frame(
-    Variavel = var_names[i],
-    `Shapiro-Wilk p-valor` = shapiro_p,
-    `Kolmogorov-Smirnov p-valor` = ks_p,
-    `Anderson-Darling p-valor` = ad_p,
-    stringsAsFactors = FALSE,
-    check.names = FALSE
-  )
-  results_df <- rbind(results_df, new_row, make.row.names = FALSE)
-}
-
-
-# Usar kable para criar a tabela formatada
-kable(results_df, fotmat = "html", digits = 50, caption = "Resultados dos Testes de Normalidade para cada Variável", 
-      format.args = list(big.mark = ",", scientific = TRUE))
-
-
-```
-
-### Questões:
-
-a)  Classifique cada variável em ESCALAR, ORDINAL ou NOMINAL\
-    Resp:
-
-b)  Represente as variáveis categóricas graficamente para resumir as
-    informações da melhor maneira possível\
-    Resp:
-
-c)  Para as variáveis escalares faça um resumo de todas as medidas
-    estudadas (média, mediana, desvio-padrão, etc)\
-    Resp:
-
-d)  Examine a possibilidade das variáveis possuirem distribuição normal
-    de probabilidades Resp: Os três testes de normalidade executados
-    indicam que a distri
-
-Variavel, p-valor
 
 ```{r qq grid, options}
 # Função para criar um gráfico Q-Q com ggplot2
@@ -189,7 +127,6 @@ plots <- lapply(var_names, function(v) make_qqplot(df1, v))
 
 # Organizar os gráficos em uma grade de 2 colunas
 grid.arrange(grobs = plots, ncol = 2)
-
 ```
 
 ```{r hist grid, options}
@@ -222,8 +159,29 @@ grid.arrange(grobs = plots, ncol = 2)
 ```
 
 
----
+```{r item 1 shapiro wilk test, options}
+# Aplicar o teste de Shapiro-Wilk a todas as colunas numéricas do df1
+shapiro_test_results <- lapply(df1, function(x) {
+  if (is.numeric(x)) {
+    shapiro.test(x)
+  } else {
+    NULL
+  }
+})
 
+# Filtrar os resultados para remover os valores NULL (colunas não numéricas)
+shapiro_test_results <- Filter(Negate(is.null), shapiro_test_results)
+
+# Extrair os resumos dos resultados
+shapiro_test_summaries <- sapply(shapiro_test_results, tidy)
+
+# Exibir os resultados
+shapiro_test_summaries
+
+```
+\  
+
+------------------------------------------------------------------------
 
 ## **Item 2**
 
@@ -237,19 +195,39 @@ df2 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/da
 df2
 ```
 
+### Questões:  
+
+#### a) Faça um resumo das estatísticas descritivas desses dados  
+
 ```{r analize data 2, options}
-summary(df2)
+pastecs::stat.desc(df2)
 ```
 
-### Questões:
+\  
 
-a)  Faça um resumo das estatísticas descritivas desses dados\
-b)  Decida se os dados apresentados podem estar aproximadamente
-    normalmente distribuídos
+#### b) Decida se os dados apresentados podem estar aproximadamente normalmente distribuídos
 
+```{r normality tests 2, options}
+# Aplicar o teste de Shapiro-Wilk a todas as colunas numéricas do df1
+shapiro_test_results <- lapply(df2, function(x) {
+  if (is.numeric(x)) {
+    shapiro.test(x)
+  } else {
+    NULL
+  }
+})
 
----
+# Filtrar os resultados para remover os valores NULL (colunas não numéricas)
+shapiro_test_results <- Filter(Negate(is.null), shapiro_test_results)
 
+# Extrair os resumos dos resultados
+shapiro_test_summaries <- sapply(shapiro_test_results, tidy)
+
+# Exibir os resultados
+shapiro_test_summaries
+```
+
+------------------------------------------------------------------------
 
 ## **Item 3**
 
@@ -313,25 +291,31 @@ ggplot(data, aes(x, y)) +
 ### Questões:
 
 Para um dia aleatoriamente escolhido, qual a probabilidade do volume
-estar:\
-a) abaixo de 1,5 bilhão?\
-Resp: `r prob_a`\
-b) acima de 2 bilhões?\
-Resp: `r prob_b`\
-c) entre 1,7 e 1,9 bilhão?\
+estar: \
+
+#### a) abaixo de 1,5 bilhão?  
+
+Resp: `r prob_a`
+
+#### b) acima de 2 bilhões? 
+
+Resp: `r prob_b`  
+
+#### c) entre 1,7 e 1,9 bilhão? 
+
 Resp: `r prob_c`
 
+\  
 
----
-
+------------------------------------------------------------------------
 
 ## **Item 4**
 
 Uma análise estatística de 1.000 chamadas telefônicas de longa distância
 originadas dos escritórios da Bricks and Clicks Computer Corporation
-indicam que a duração dessas chamadas estão normalmente distribuídas.
-Sendo a média e o desvio-padrão da duração das chamadas 240 segundos e
-40 segundos, respectivamente.
+indicam que a duração dessas chamadas estão **normalmente
+distribuídas**. Sendo a média e o desvio-padrão da duração das chamadas
+240 segundos e 40 segundos, respectivamente.
 
 ### Apuração:
 
@@ -345,16 +329,56 @@ sd4 <- 40
 ```
 
 ### Questões:
+\  
 
-a)  Calcule a probabilidade de uma chamada durar menos de 180 segundos.\
-b)  Qual a probabilidade de uma chamada durar entre 200 e 300 segundos?\
-c)  Um empregado realizou diversas chamadas com duração acima de 350
-    segundos.\
-    Você pode aceitar que esse é um fato casual?
+#### a) Calcule a probabilidade de uma chamada durar menos de 180 segundos. 
 
+```{r item 4 a, options}
+# set parameter 
+valor4a <- 180
 
----
+# Calculando a probabilidade de uma chamada durar menos de 180 segundos
+probabilidade <- pnorm(valor4a, mean = mean4, sd = sd4)
+probabilidade
+```
+\  
 
+#### b) Qual a probabilidade de uma chamada durar entre 200 e 300 segundos? 
+
+```{r item 4 b, options}
+# Definindo os limites
+limite_inferior4b = 200
+limite_superior4b = 300
+
+# Calculando as probabilidades acumuladas
+probabilidade_superior = pnorm(limite_superior4b, mean = mean4, sd = sd4)
+probabilidade_inferior = pnorm(limite_inferior4b, mean = mean4, sd = sd4)
+
+# Diferença para encontrar a probabilidade entre 200 e 300 segundos
+probabilidade_entre = probabilidade_superior - probabilidade_inferior
+probabilidade_entre
+```
+
+\  
+
+#### c) Um empregado realizou diversas chamadas com duração acima de 350 segundos. Você pode aceitar que esse é um fato casual?
+
+```{r item 4 c, options}
+# Definindo o valor crítico
+valor_critico4c = 350
+
+# Calculando a probabilidade de uma chamada durar menos ou igual a 350 segundos
+probabilidade_menor_igual_350 = pnorm(valor_critico4c, mean = mean4, sd = sd4)
+
+# Calculando a probabilidade de uma chamada durar mais que 350 segundos
+probabilidade_maior_350 = 1 - probabilidade_menor_igual_350
+probabilidade_maior_350
+```
+
+Este não é um fato casual, dada o valor extremamente baixo do p-valor.
+Trata-se de evento muito improvável.
+
+------------------------------------------------------------------------
 
 ## **Item 5**
 
@@ -370,17 +394,56 @@ df5
 ```
 
 ```{r analize data 5, options}
-
+df5 <- clean_names(df5)
 ```
 
-### Questões:
+### Questões:  
 
-a)  Construa o diagrama de dispersão dos dados.\
-b)  Calcule a covariância e o coeficiente de correlação.
+#### a) Construa o diagrama de dispersão dos dados. 
 
+```{r item 5 a, options}
+df5 <- df5 |> select("tempo_de_atuacao", "numero_de_clientes")
+# Criando o diagrama de dispersão
+ggplot(df5, aes(x = tempo_de_atuacao, y = numero_de_clientes)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) + # Adiciona uma linha de tendência linear
+  labs(title = "Diagrama de Dispersão: Tempo de Atuação vs Número de Clientes",
+       x = "Tempo de Atuação (anos)",
+       y = "Número de Clientes") +
+  theme_bw()
+```
+
+\  
+
+#### b) Calcule a covariância e o coeficiente de correlação.
+
+```{r item 5 b, options}
+# Calculando a covariância
+covariancia <- cov(df5$tempo_de_atuacao, df5$numero_de_clientes)
+
+# Calculando o coeficiente de correlação de Pearson
+correlacao <- cor(df5$tempo_de_atuacao, df5$numero_de_clientes)
+
+# Exibindo os resultados
+list(covariancia = covariancia, correlacao = correlacao)
+```
+
+A covariância positiva de 410.15 indica que, em geral, um aumento no
+tempo de atuação está associado a um aumento no número de clientes,
+sugerindo que as duas variáveis tendem a variar juntas na mesma direção.
+
+O coeficiente de correlação de aproximadamente 0.921 é muito alto e
+positivo, indicando uma forte correlação positiva entre o tempo de
+atuação e o número de clientes. Isso sugere que instituições com mais
+anos de atuação tendem a ter mais clientes, o que pode refletir um
+estabelecimento mais sólido no mercado.
+
+Esses resultados indicam que existe uma associação significativa entre o
+tempo de atuação das instituições financeiras e o número de seus
+clientes, sugerindo que não é apenas um resultado casual, mas uma
+tendência clara.
 
 ------------------------------------------------------------------------
-
 
 ## **Item 6**
 
@@ -391,21 +454,240 @@ aparecem listados na planilha portfolio.
 
 ```{r get data 6, options}
 df6 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset6.csv")
+df6 <- df6 %>%
+  mutate(date = dmy(date))
 df6
 ```
 
 ```{r analize data 6, options}
+# Calculando os retornos diários para cada ticker
+df6_returns <- df6 %>%
+  mutate(across(where(is.numeric), ~ . / lag(.) - 1)) %>%
+  na.omit()
+```
+
+### Questões:  
+
+#### a) Se você fosse comprar somente um dos papéis dentre os listados, qual seria a melhor escolha com base no período analisado?  
+
+```{r item 6 a, options}
+# Calculando o retorno acumulado e ordenando do maior para o menor
+retorno_acumulado <- df6 %>%
+  arrange(date) %>%
+  summarise(across(where(is.numeric), ~ (last(.) - first(.)) / first(.))) %>%
+  pivot_longer(everything(), names_to = "Ticker", values_to = "Return") %>%
+  arrange(desc(Return))  # Ordena os retornos de forma decrescente
+
+# Visualizando o retorno acumulado
+retorno_acumulado
+```
+
+```{r item 6 a cont1, options}
+# Calculando a volatilidade
+volatilidade <- df6 %>%
+  summarise(across(-date, sd, na.rm = TRUE)) %>%
+  pivot_longer(cols = everything(), names_to = "Ticker", values_to = "Volatility")
+volatilidade <- volatilidade %>%
+  arrange(Volatility)
+
+volatilidade
+```
+
+```{r sharpie, options}
+# Rácio de Sharpe, assumindo taxa livre de risco = 0
+sharpe_ratio <- df6 %>%
+  summarise(across(-date, ~ (mean(., na.rm = TRUE) / sd(., na.rm = TRUE)))) %>%
+  pivot_longer(cols = everything(), names_to = "Ticker", values_to = "Sharpe_Ratio")
+
+sharpe_ratio
+```
+
+\  
+
+#### b) Calcule o risco e o retorno de uma carteira formada com 50% de PETR4 e 50% de VALE5. Simule o resultado para diversos níveis de correlação. 
+
+Retorno da Carteira: O retorno esperado de uma carteira é uma média
+ponderada dos retornos esperados dos ativos individuais, ponderados
+pelas proporções dos ativos na carteira.
+
+Risco da Carteira (Volatilidade): O risco de uma carteira é calculado
+usando a fórmula da variância de uma combinação de dois ativos. Esta
+fórmula incorpora a volatilidade de cada ativo e a correlação entre
+eles.
+
+Fórmulas
+
+Retorno da Carteira:
+$$ R_p = w_{\text{PETR4}} \times R_{\text{PETR4}} + w_{\text{VALE5}} \times R_{\text{VALE5}} $$
+onde $w_{\text{PETR4}}$ e $w_{\text{VALE5}}$ são os pesos de PETR4 e
+VALE5 na carteira, respectivamente.
+
+Risco da Carteira (desvio padrão):
+$$ \sigma_p = \sqrt{w_{\text{PETR4}}^2 \times \sigma_{\text{PETR4}}^2 + w_{\text{VALE5}}^2 \times \sigma_{\text{VALE5}}^2 + 2 \times w_{\text{PETR4}} \times w_{\text{VALE5}} \times \sigma_{\text{PETR4}} \times \sigma_{\text{VALE5}} \times \rho} $$
+onde $\sigma_{\text{PETR4}}$ e $\sigma_{\text{VALE5}}$ são os desvios
+padrões dos retornos de PETR4 e VALE5, e $\rho$ é a correlação entre
+eles.
+
+\  
+
+Vamos calcular o retorno e risco da carteira para diferentes níveis de
+correlação entre -1 e 1:
+
+```{r item 6 b grafico1, options}
+
+# Criando o gráfico de linhas
+grafico_retornos <- ggplot(df6_returns, aes(x = date)) +
+  geom_line(aes(y = PETR4, color = "PETR4"), linetype = "solid") +
+  geom_line(aes(y = VALE5, color = "VALE5"), linetype = "dashed") +
+  labs(title = "Retornos Diários de PETR4 e VALE5",
+       x = "Data",
+       y = "Retorno Diário",
+       color = "Ticker") +
+  theme_bw()
+
+# Exibindo o gráfico
+print(grafico_retornos)
 
 ```
 
-### Questões:
+```{r item 6 b, options}
+# Média e desvio padrão dos retornos
+mean_PETR4 <- mean(df6_returns$PETR4, na.rm = TRUE)
+mean_VALE5 <- mean(df6_returns$VALE5, na.rm = TRUE)
+sd_PETR4 <- sd(df6_returns$PETR4, na.rm = TRUE)
+sd_VALE5 <- sd(df6_returns$VALE5, na.rm = TRUE)
 
-a)  Se você fosse comprar somente um dos papéis dentre os listados, qual
-    seria a melhor escolha com base no período analisado?\
-b)  Calcule o risco e o retorno de uma carteira formada com 50% de PETR4
-    e 50% de VALE5. Simule o resultado para diversos níveis de
-    correlação.\
-c)  Encontre os papéis com menor correlação.\
-d)  Com base nesses dois papéis, qual percentual do seu capital você
-    aplicaria em cada ação para obter a carteira de menor risco?\
-e)  Os retornos parecem seguir uma curva normal?
+# Pesos
+w_PETR4 <- 0.5
+w_VALE5 <- 0.5
+
+# Simulando para diferentes níveis de correlação
+correlations <- seq(-1, 1, by = 0.1)
+portfolio_stats <- sapply(correlations, function(rho) {
+  portfolio_return <- w_PETR4 * mean_PETR4 + w_VALE5 * mean_VALE5
+  portfolio_risk <- sqrt(w_PETR4^2 * sd_PETR4^2 + w_VALE5^2 * sd_VALE5^2 + 2 * w_PETR4 * w_VALE5 * sd_PETR4 * sd_VALE5 * rho)
+  c(Return = portfolio_return, Risk = portfolio_risk)
+})
+
+# Convertendo os resultados em um dataframe mais amigável
+portfolio_results <- as.data.frame(t(portfolio_stats))
+colnames(portfolio_results) <- c("Return", "Risk")
+portfolio_results$Correlation <- correlations
+
+# Mostrando os resultados
+portfolio_results
+```
+
+\  
+
+#### c) Encontre os papéis com menor correlação. 
+
+```{r item 6 c, options}
+# Calculando a matriz de correlação
+correlation_matrix <- cor(df6_returns[, -1], use = "complete.obs")  # Ignora a primeira coluna 'date'
+
+# Transformando a matriz em um formato tabular e filtrando para encontrar os menores valores positivos
+correlation_df <- as.data.frame(as.table(correlation_matrix))
+colnames(correlation_df) <- c("Ticker1", "Ticker2", "Correlation")
+
+# Removendo correlações de uma ação com ela mesma e duplicatas
+correlation_df <- correlation_df %>%
+  filter(Ticker1 != Ticker2) %>%
+  filter(Correlation < 1) %>%
+  arrange(Correlation)
+
+# Encontrando o par com a menor correlação
+lowest_correlation <- correlation_df %>%
+  filter(Correlation == min(Correlation[Correlation > -1 & Correlation < 1]))
+
+# Mostrando o par de ações com a menor correlação
+lowest_correlation
+```
+
+\  
+
+#### d) Com base nesses dois papéis, qual percentual do seu capital você aplicaria em cada ação para obter a carteira de menor risco? 
+
+Formulação do Problema
+
+Para duas ações $A$ e $B$, a variância $\sigma_p^2$ da carteira pode ser
+expressa como:
+
+$$ \sigma_p^2 = w_A^2\sigma_A^2 + w_B^2\sigma_B^2 + 2w_Aw_B\sigma_A\sigma_B\rho_{A,B} $$
+
+Onde:
+
+-   $w_A$ e $w_B$ são os pesos das ações $A$ e $B$ na carteira,
+    respectivamente.
+-   $\sigma_A$ e $\sigma_B$ são os desvios padrão dos retornos de $A$ e
+    $B$.
+-   $\rho_{A,B}$ é a correlação entre os retornos de $A$ e $B$.
+
+Os pesos são determinados de forma que $w_A + w_B = 1$ e que minimizem
+$\sigma_p^2$.
+
+Solução Analítica
+
+A solução analítica para os pesos que minimizam a variância da carteira
+é dada por:
+
+$$ w_A = \frac{\sigma_B^2 - \rho_{A,B}\sigma_A\sigma_B}{\sigma_A^2 + \sigma_B^2 - 2\rho_{A,B}\sigma_A\sigma_B} $$
+$$ w_B = 1 - w_A $$
+
+\  
+
+Apurando:  
+
+```{r item 6 d, options}
+# Primeiro, determine os desvios padrão das duas ações identificadas
+# Vamos assumir que os tickers são 'TickerA' e 'TickerB' do resultado anterior
+tickerA <- lowest_correlation$Ticker1[1]
+tickerB <- lowest_correlation$Ticker2[1]
+
+sd_A <- sd(df6_returns[[tickerA]], na.rm = TRUE)
+sd_B <- sd(df6_returns[[tickerB]], na.rm = TRUE)
+
+# Correlação entre A e B
+rho_AB <- lowest_correlation$Correlation[1]
+
+# Calculando os pesos para minimizar a variância da carteira
+w_A <- (sd_B^2 - rho_AB * sd_A * sd_B) / (sd_A^2 + sd_B^2 - 2 * rho_AB * sd_A * sd_B)
+w_B <- 1 - w_A
+
+# Exibindo os resultados
+list(w_A = w_A, w_B = w_B)
+```
+
+\  
+
+#### e) Os retornos parecem seguir uma curva normal?
+
+```{r item 6 e, options}
+# Transformando o dataframe para formato longo
+df6_long <- df6_returns %>%
+  pivot_longer(cols = -date, names_to = "Ticker", values_to = "Returns") %>%
+  drop_na()
+
+# Plotando as curvas de densidade sobrepostas para cada ticker
+density_plot <- ggplot(df6_long, aes(x = Returns, color = Ticker, group = Ticker)) +
+  geom_density() +  # Removido o preenchimento e a transparência
+  labs(title = "Sobreposição das Curvas de Densidade de Retornos por Ticker",
+       x = "Retornos",
+       y = "Densidade") +
+  theme_minimal() +
+  theme(legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+
+# Exibindo o gráfico
+print(density_plot)
+```
+
+
+```{r item 6 e cont2, options}
+# Aplicando o teste de Shapiro-Wilk para normalidade para cada ticker
+shapiro_test_results <- lapply(df6_returns[, -1], shapiro.test)
+shapiro_test_summaries <- sapply(shapiro_test_results, tidy)
+shapiro_test_summaries
+```
+
+Fim.
