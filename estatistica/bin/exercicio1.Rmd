@@ -6,8 +6,9 @@ date: "2024-04-21"
 output:
   html_document:
     df_print: paged
-  pdf_document:
-    latex_engine: xelatex
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
 header-includes:
 - \usepackage{fontspec}
 - \setmainfont{Arial}
@@ -82,7 +83,21 @@ summary(df1)
 
 #### a) Classifique cada variável em ESCALAR, ORDINAL ou NOMINAL
 
-Resp:
+\  
+
+| variável      | qualitativa | quantitativa |
+|---------------|-------------|--------------|
+| idade         |             | ESCALAR      |
+| est_civil     | NOMINAL     |              |
+| endereco      |             | ESCALAR      |
+| renda         |             | ESCALAR      |
+| carro         |             | ESCALAR      |
+| escolaridade  | ORDINAL     |              |
+| t_empr_atual  |             | ESCALAR      |
+| aposentado    | NOMINAL     |              |
+| sexo          | NOMINAL     |              |
+| satisf_trabal | ORDINAL     |              |
+
 
 \  
 
@@ -90,6 +105,59 @@ Resp:
 #### b) Represente as variáveis categóricas graficamente para resumir as informações da melhor maneira possível
 
 Resp:
+
+```{r item 1 b, options}
+library(ggplot2)
+# Transformando variáveis categóricas em fatores
+df1$est_civil <- factor(df1$est_civil)
+df1$aposentado <- factor(df1$aposentado)
+df1$sexo <- factor(df1$sexo)
+df1$escolaridade <- factor(df1$escolaridade)
+df1$satisf_trabal <- factor(df1$satisf_trabal)
+```
+
+```{r item 1 b graficos}
+# Definindo os rótulos personalizados
+labels <- c("solteiro", "casado")
+
+# Criando uma nova variável com os rótulos personalizados
+df1$est_civil_label <- ifelse(df1$est_civil == 0, "solteiro", "casado")
+
+# Gráfico de Pizza para 'est_civil' com rótulos modificados
+ggplot(df1, aes(x = "", fill = est_civil_label)) +
+  geom_bar(width = 1) +
+  coord_polar("y", start = 0) +
+  scale_fill_manual(values = c("solteiro" = "lightblue", "casado" = "grey")) + 
+  labs(title = "Distribuição do Estado Civil")
+
+# Definindo os rótulos personalizados
+labels_aposentado <- c("não", "sim")
+
+# Criando uma nova variável com os rótulos personalizados para 'aposentado'
+df1$aposentado_label <- ifelse(df1$aposentado == 0, "não", "sim")
+
+# Gráfico de Pizza para 'aposentado' com rótulos modificados
+ggplot(df1, aes(x = "", fill = aposentado_label)) +
+  geom_bar(width = 1) +
+  coord_polar("y", start = 0) +
+  scale_fill_manual(values = c("não" = "lightblue", "sim" = "grey")) + 
+  labs(title = "Distribuição de Aposentados")
+
+# Definindo os rótulos personalizados
+labels_sexo <- c("feminino", "masculino")
+
+# Criando uma nova variável com os rótulos personalizados para 'sexo'
+df1$sexo_label <- ifelse(df1$sexo == "f", "feminino", "masculino")
+
+# Gráfico de Pizza para 'sexo' com rótulos modificados
+ggplot(df1, aes(x = "", fill = sexo_label)) +
+  geom_bar(width = 1) +
+  coord_polar("y", start = 0) +
+  scale_fill_manual(values = c("feminino" = "lightblue", "masculino" = "grey")) + 
+  labs(title = "Distribuição do Sexo")
+
+
+```
 
 \  
 
@@ -99,7 +167,9 @@ Resp:
 Resp:
 
 ```{r item 1 estatisticas, options}
-pastecs::stat.desc(df1)
+df1_escalares <- df1 |> 
+  select(idade, endereco, renda, carro, t_empr_atual)
+pastecs::stat.desc(df1_escalares)
 ```
 
 \  
@@ -200,7 +270,7 @@ df2
 #### a) Faça um resumo das estatísticas descritivas desses dados  
 
 ```{r analize data 2, options}
-pastecs::stat.desc(df2)
+pastecs::stat.desc(df2$gasto)
 ```
 
 \  
@@ -227,6 +297,22 @@ shapiro_test_summaries <- sapply(shapiro_test_results, tidy)
 shapiro_test_summaries
 ```
 
+```{r item 2b grafico, options}
+p2 <- ggplot(df2, aes(x = gasto)) +
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "gray", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  labs(title = "Histograma: Distribuição de Gastos",
+       x = "Gasto",
+       y = "Densidade") +
+  theme_minimal()
+p2
+```
+
+\  
+
+Os dados da variável `gasto` não apresentam distribuição normal.
+
+\ 
 ------------------------------------------------------------------------
 
 ## **Item 3**
@@ -506,27 +592,43 @@ sharpe_ratio
 
 #### b) Calcule o risco e o retorno de uma carteira formada com 50% de PETR4 e 50% de VALE5. Simule o resultado para diversos níveis de correlação. 
 
-Retorno da Carteira: O retorno esperado de uma carteira é uma média
-ponderada dos retornos esperados dos ativos individuais, ponderados
-pelas proporções dos ativos na carteira.
+**Retorno da Carteira**: O retorno esperado de uma carteira é uma média ponderada dos retornos esperados dos ativos individuais, ponderados pelas proporções dos ativos na carteira.
 
-Risco da Carteira (Volatilidade): O risco de uma carteira é calculado
-usando a fórmula da variância de uma combinação de dois ativos. Esta
-fórmula incorpora a volatilidade de cada ativo e a correlação entre
-eles.
+$$
+E(r_p) = w_1 E(r_1) + w_2 E(r_2) = w_1 E(r_1) + (1 - w_1) E(r_2)
+$$
 
-Fórmulas
+**Risco da Carteira (Volatilidade)**: O risco de uma carteira é calculado usando a fórmula da variância de uma combinação de dois ativos. Esta fórmula incorpora a volatilidade de cada ativo e a correlação entre eles.
 
-Retorno da Carteira:
-$$ R_p = w_{\text{PETR4}} \times R_{\text{PETR4}} + w_{\text{VALE5}} \times R_{\text{VALE5}} $$
-onde $w_{\text{PETR4}}$ e $w_{\text{VALE5}}$ são os pesos de PETR4 e
-VALE5 na carteira, respectivamente.
+$$
+\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1w_2 \rho_{1,2} \sigma_a\sigma_2
+$$
 
-Risco da Carteira (desvio padrão):
-$$ \sigma_p = \sqrt{w_{\text{PETR4}}^2 \times \sigma_{\text{PETR4}}^2 + w_{\text{VALE5}}^2 \times \sigma_{\text{VALE5}}^2 + 2 \times w_{\text{PETR4}} \times w_{\text{VALE5}} \times \sigma_{\text{PETR4}} \times \sigma_{\text{VALE5}} \times \rho} $$
-onde $\sigma_{\text{PETR4}}$ e $\sigma_{\text{VALE5}}$ são os desvios
-padrões dos retornos de PETR4 e VALE5, e $\rho$ é a correlação entre
-eles.
+
+Para cada um deles temos as seguintes fórmulas:
+
+A. Retorno da Carteira:
+
+$$
+E(r_p) = 0.5 E(r_{\text{PETR4}}) + 0.5 E(r_{\text{VALE5}})
+$$
+\  
+
+Onde $0.5$ são os pesos de PETR4 e VALE5 na carteira.  
+
+B. Risco da Carteira (desvio padrão):
+
+$$
+\sigma_p^2 = 
+(0.5^2  \sigma_{\text{PETR4}}^2) + 
+(0.5^2 \sigma_{\text{VALE5}}^2) +
+2
+(0.5)(0.5) \sigma_{\text{PETR4}} \sigma_{\text{VALE5}} \rho_{\text{PETR4,VALE5}} 
+$$
+
+\  
+
+onde $\sigma_{\text{PETR4}}$ e $\sigma_{\text{VALE5}}$ são os desvios padrões dos retornos de PETR4 e VALE5, e $\rho$ é a correlação entre eles.
 
 \  
 
@@ -610,26 +712,21 @@ lowest_correlation
 
 Formulação do Problema
 
-Para duas ações $A$ e $B$, a variância $\sigma_p^2$ da carteira pode ser
-expressa como:
+Para duas ações $A$ e $B$, a variância $\sigma_p^2$ da carteira pode ser expressa como:
+
+\  
 
 $$ \sigma_p^2 = w_A^2\sigma_A^2 + w_B^2\sigma_B^2 + 2w_Aw_B\sigma_A\sigma_B\rho_{A,B} $$
 
 Onde:
 
--   $w_A$ e $w_B$ são os pesos das ações $A$ e $B$ na carteira,
-    respectivamente.
--   $\sigma_A$ e $\sigma_B$ são os desvios padrão dos retornos de $A$ e
-    $B$.
+-   $w_A$ e $w_B$ são os pesos das ações $A$ e $B$ na carteira, respectivamente.
+-   $\sigma_A$ e $\sigma_B$ são os desvios padrão dos retornos de $A$ e $B$.
 -   $\rho_{A,B}$ é a correlação entre os retornos de $A$ e $B$.
 
-Os pesos são determinados de forma que $w_A + w_B = 1$ e que minimizem
-$\sigma_p^2$.
+Os pesos são determinados de forma que $w_A + w_B = 1$ e que minimizem $\sigma_p^2$.
 
-Solução Analítica
-
-A solução analítica para os pesos que minimizam a variância da carteira
-é dada por:
+A solução para os pesos que minimizam a variância da carteira é dada por:
 
 $$ w_A = \frac{\sigma_B^2 - \rho_{A,B}\sigma_A\sigma_B}{\sigma_A^2 + \sigma_B^2 - 2\rho_{A,B}\sigma_A\sigma_B} $$
 $$ w_B = 1 - w_A $$
