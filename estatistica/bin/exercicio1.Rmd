@@ -1,7 +1,7 @@
 ---
 title: "UFPR PPGEcon 2024"
 subtitle: "Estatística (Prof. Adalto Acir Althaus Jr.): exercícios"
-author: "Alceu Eilert Nascimento"
+author: "Alceu Nascimento, João Maurício Rolim e Tiago Soares"
 date: "2024-04-21"
 output:
   html_document:

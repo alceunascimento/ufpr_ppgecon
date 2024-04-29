@@ -1,7 +1,7 @@
 ---
 title: "UFPR PPGEcon 2024"
 subtitle: "Estatística (Prof. Adalto Acir Althaus Jr.): exercícios"
-author: "Alceu Eilert Nascimento"
+author: "Alceu Nascimento, João Maurício Rolim e Tiago Soares"
 date: "2024-04-21"
 output: 
   html_document: 
@@ -246,6 +246,7 @@ print(p)
 # carregando o dataset
 path = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/exerc3_dataset.csv"
 dados <- read_csv2(path)
+head(dados)
 ```
 
 ### Questão:
@@ -265,14 +266,62 @@ trabalho (de 1- Nada satisfeito a 5- Muito satisfeito).
 #### Item 1
 
 ##### **a) Calcule um intervalo de confiança de $95%$ para a média de idade da população sob amostragem.**
+\  
+Considerando que é uma amostra aleatória de $n$ observações, com média $\bar{x}$ e desvio padrão $s$, 
+proveniente de uma distribuição populacional normalmente distribuída com média $\mu$, podemos utilizar:
+
+$$
+t = \frac{\bar{x}- \mu}{ \frac{s}{\sqrt{n}}}
+$$
+\  
+Sendo que a estimatica do intervalo de confiança será:
+
+$$
+\bar{x} - t_{n-1,\frac{\alpha}{2}} \frac{s}{\sqrt{n}} < \mu < \bar{x} + t_{n-1, \frac{\alpha}{2}} \frac{s}{\sqrt{n}}
+$$
+\  
+
+Que também pode ser escrito como:
+
+$$
+\bar{x} \pm ME
+$$
+Onde $ME$ é:
+
+$$
+ME = t_{n-1,\alpha/2} \frac{S}{\sqrt{n}}
+$$
+
+
+
+Sendo $tn-1,α/2$ o valor crítico da distribuição $t$ com $n-1$ g.l. e uma área de $\frac{\alpha}{2}$ em cada calda:
+
+
+
+
+Apurando-se:
 
 ```{r q2 2a, options}
+# Definição do Nível de Confiança
 confianca_95 <- 0.95
-error_padrao <- sd(dados$idade) / sqrt(nrow(dados))
-margem_erro <- qt(1 - (1 - confianca_95) / 2, df = nrow(dados) - 1) * error_padrao
-limite_inferior <- mean(dados$idade) - margem_erro
-limite_superior <- mean(dados$idade) + margem_erro
-c(limite_inferior, limite_superior)
+# Cálculo do Número de Observações
+n <- nrow(dados)
+# Cálculo da Média
+x_hat <- mean(dados$idade)
+# Cálculo do Desvio Padrão
+sd <- sd(dados$idade)
+# Cálculo do Erro Padrão da Média
+ep <- sd / sqrt(n) 
+# Determinação do Valor Crítico t para o Intervalo de Confiança
+t_obs <- qt(1 - ((1 - confianca_95) / 2) , n - 1)
+# Cálculo da Margem de Erro
+me <- t_obs * ep
+# Cálculo do Limite Inferior do Intervalo de Confiança
+limite_inferior <- x_hat - me
+# Cálculo do Limite Inferior do Intervalo de Confiança
+limite_superior <- x_hat + me
+# Retorno dos Limites do Intervalo de Confiança
+list(n, x_hat, sd, ep, limite_inferior, limite_superior)
 ```
 
 \  
@@ -287,43 +336,70 @@ c(limite_inferior, limite_superior)
 
 ##### **c) Podemos estimar e interpretar intervalos de confiança da mesma forma que na letra "a" para a variável casados? E para a variável aposentado?**
 
-```{r q2 2c, options}
-# Variável casados (est_civil) é binária, assim como aposentado. Usaremos uma proporção para o IC.
-# Para casados
-prop_casados <- mean(dados$est_civil)
-se_casados <- sqrt(prop_casados * (1 - prop_casados) / nrow(dados))
-me_casados <- qt(1 - (1 - gamma) / 2, df = nrow(dados) - 1) * se_casados
-c(prop_casados - me_casados, prop_casados + me_casados)
+Não é possível interpretar da mesma forma, pois a variável que contém o valor (`est_civil`) é dicotomica, sendo que para este caso, estima-se a proporção de cada valor, se casado ou solteiro.
+O mesmo racional se aplica para a variável `aponsentado`, que também é dicotomica.
 
-# Para aposentados
-prop_aposentado <- mean(dados$aposentado)
-se_aposentado <- sqrt(prop_aposentado * (1 - prop_aposentado) / nrow(dados))
-me_aposentado <- qt(1 - (1 - gamma) / 2, df = nrow(dados) - 1) * se_aposentado
-c(prop_aposentado - me_aposentado, prop_aposentado + me_aposentado)
+
+
+
+```{r q2 2c, options}
+n <- nrow(dados)
+p <- mean(dados$est_civil)  # proporção de casados
+ep <- sqrt(p * (1 - p) / n)
+z <- qnorm(0.975)  # pontuação z para 95% CI
+me <- z * ep
+limite_inferior <- p - me
+limite_superior <- p + me
+c(limite_inferior, limite_superior)
 
 ```
+\  
+
+Na apuração acima, estima-se que a proporção de casado está entre 47% e 54%, com o nível de confiança de 95%.
 
 \  
 
 ##### **d) Qual será a interpretação correta ao estimarmos um intervalo de 95% para a média dos casados?**
+\  
 
-```{r q2 2d, options}
-# A interpretação seria a proporção de casados na população, com 95% de confiança.
-# Isso não é uma média, mas sim uma proporção, portanto, o intervalo reflete a incerteza na estimativa da proporção de casados.
+Conforme indicado no item acima, a interpretação seria a proporção de casados na população, com 95% de confiança.
 
-```
 
 \  
 
 ##### **e) Calcule um intervalo de confiança de 90% para a média de tempo no emprego atual da população.**
 
 ```{r q2 2e, options}
+# Definição do Nível de Confiança
 confianca_90 <- 0.90
-error_padrao_emprego <- sd(dados$t_empr_atual) / sqrt(nrow(dados))
-margem_erro_emprego <- qt(1 - (1 - confianca_90) / 2, df = nrow(dados) - 1) * error_padrao_emprego
-limite_inferior_emprego <- mean(dados$t_empr_atual) - margem_erro_emprego
-limite_superior_emprego <- mean(dados$t_empr_atual) + margem_erro_emprego
+
+# Cálculo do Número de Observações
+n <- nrow(dados)
+
+# Cálculo da Média do Tempo no Emprego Atual
+x_hat_emprego <- mean(dados$t_empr_atual)
+
+# Cálculo do Desvio Padrão do Tempo no Emprego Atual
+sd_emprego <- sd(dados$t_empr_atual)
+
+# Cálculo do Erro Padrão da Média do Tempo no Emprego Atual
+error_padrao_emprego <- sd_emprego / sqrt(n)
+
+# Determinação do Valor Crítico t para o Intervalo de Confiança
+t_obs_emprego <- qt(1 - ((1 - confianca_90) / 2), df = n - 1)
+
+# Cálculo da Margem de Erro para o Tempo no Emprego Atual
+margem_erro_emprego <- t_obs_emprego * error_padrao_emprego
+
+# Cálculo do Limite Inferior do Intervalo de Confiança para o Tempo no Emprego Atual
+limite_inferior_emprego <- x_hat_emprego - margem_erro_emprego
+
+# Cálculo do Limite Superior do Intervalo de Confiança para o Tempo no Emprego Atual
+limite_superior_emprego <- x_hat_emprego + margem_erro_emprego
+
+# Retorno dos Limites do Intervalo de Confiança
 c(limite_inferior_emprego, limite_superior_emprego)
+
 ```
 
 \  
@@ -331,11 +407,24 @@ c(limite_inferior_emprego, limite_superior_emprego)
 ##### **f) Calcule um intervalo de confiança de 99% para a proporção de mulheres na população.**
 
 ```{r q2 2f, options}
+# Cálculo da proporção de mulheres no dataframe
 prop_mulheres <- mean(dados$sexo == "f")
+
+# Cálculo do erro padrão para a proporção de mulheres
 se_mulheres <- sqrt(prop_mulheres * (1 - prop_mulheres) / nrow(dados))
+
+# Definição do nível de confiança
 confianca_99 <- 0.99
-me_mulheres <- qt(1 - (1 - confianca_99) / 2, df = nrow(dados) - 1) * se_mulheres
+
+# Determinação do valor crítico Z para o intervalo de confiança de 99%
+z_score <- qnorm(1 - (1 - confianca_99) / 2)
+
+# Cálculo da margem de erro usando Z-score
+me_mulheres <- z_score * se_mulheres
+
+# Cálculo dos limites do intervalo de confiança para a proporção de mulheres
 c(prop_mulheres - me_mulheres, prop_mulheres + me_mulheres)
+
 ```
 
 \  
