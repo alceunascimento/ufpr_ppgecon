@@ -1,0 +1,277 @@
+---
+title: "UFPR PPGEcon 2024"
+subtitle: "Estatística (Prof. Adalto Acir Althaus Jr.): exercícios"
+author: "Alceu Nascimento, João Maurício Rolim e Tiago Soares"
+date: "2024-04-21"
+output: 
+  html_document: 
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
+---
+
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)                 # tabelas kable
+library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Plothtests)
+library(nortest)               # Anderson-Darling Test for normality
+library(Hmisc)
+library(pastecs)
+library(stats)
+library(car)
+```
+
+# Exerício 04
+
+## Questão A
+
+A planilha DEMO traz informações de 1.000 respondentes quanto à sua idade em anos, 
+o seu estado civil (1- casado , 0- não casado), quanto tempo (em anos) vive no endereço atual,
+sua renda anual (em milhares de reais), o preço do carro principal (em milhares de reais),
+sua escolaridade (1- primeiro grau, 2- segundo grau, 3- terceiro grau, 4- Pós graduação especialização, 
+5- mestrado/doutorado),  quanto tempo, em anos, está no emprego atual (t_emp_atual),
+se é (1) ou não (0) aposentado, o sexo (m- masc e f- femin) e sua satisfação
+no trabalho (de 1- Nada satisfeito a 5- Muito satisfeito).
+
+```{r dataset 4a, options}
+# carregando o dataset
+path_a = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset4a.csv"
+dfa <- read_csv2(path_a,
+                   col_types = cols(
+                     sexo = col_factor(levels = c("f", "m"))  # Especifica os níveis 'f' e 'm'
+                   )
+                 )
+
+dfa$est_civil <- factor(dfa$est_civil, levels = c(0, 1), labels = c("solteiro", "casado"))
+dfa$sexo <- factor(dfa$sexo, levels = c("f", "m"), labels = c("fem", "masc"))
+
+head(dfa)
+rm(path_a)
+```
+
+\  
+
+### a) Teste se as médias de idade entre homens e mulheres da população podem ser consideradas iguais usando o teste-t presumindo variâncias iguais e depois presumindo-as diferentes. Qual seria o valor-p mais correto nesse caso?
+
+O teste t de Student para amostras independentes é utilizado para comparar as médias de dois grupos.   
+A fórmula do teste t é dada por:
+
+$$ 
+t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{s_p^2\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
+$$
+
+onde $\bar{X}_1$ e $\bar{X}_2$ são as médias amostrais dos grupos, $n_1$ e $n_2$ são os tamanhos das amostras, e $s_p^2$ é a variância combinada das duas amostras quando assumimos variâncias iguais.   
+Quando as variâncias são assumidas como diferentes, utiliza-se uma aproximação de Welch para o denominador do teste.
+
+
+```{r 4aa, options}
+# Primeiro, separamos os dados por sexo
+homens <- filter(dfa, sexo == "m")
+mulheres <- filter(dfa, sexo == "f")
+
+# Realizando o teste t com variâncias iguais (parametro var.equal = TRUE)
+t_test_var_iguais <- t.test(idade ~ sexo, data = dfa, var.equal = TRUE)
+
+# Realizando o teste t com variâncias diferentes (padrão)
+t_test_var_diferentes <- t.test(idade ~ sexo, data = dfa, var.equal = FALSE)
+
+# Exibindo os resultados
+print(t_test_var_iguais)
+print(t_test_var_diferentes)
+```
+
+\  
+
+### b) Quem possui maior renda, os casados ou não casados?
+
+Para avaliar se existe uma diferença estatística significativa na renda entre indivíduos casados e solteiros, realizaremos um teste t de Student para amostras independentes. 
+Este teste é adequado pois estamos comparando as médias de dois grupos distintos.
+
+**Hipóteses**:  
+- $H_0$: Não há diferença nas médias de renda entre casados e solteiros.  
+- $H_a$: Existe uma diferença nas médias de renda entre casados e solteiros.
+
+Utilizaremos o teste t com variâncias iguais, a menos que um teste de Levene para igualdade de variâncias sugira o contrário.
+
+
+```{r 4ab, options}
+# Agrupamos por estado civil e calculamos a média de renda
+media_renda_est_civil <- dfa %>%
+  group_by(est_civil) %>%
+  summarise(media_renda = mean(renda))
+
+# Exibindo os resultados
+print(media_renda_est_civil)
+```
+
+```{r 4ab formal, options}
+# Aplicando o Teste de Levene para verificar a igualdade das variâncias
+levene_test <- leveneTest(renda ~ est_civil, data = dfa)
+
+# Verificando a estrutura do resultado do Teste de Levene
+print(summary(levene_test))
+str(levene_test)
+
+# Checando se o p-value está disponível e usando corretamente
+if (!is.na(levene_test$'Pr(>F)'[1])) {
+  if (levene_test$'Pr(>F)'[1] > 0.05) {
+    t_test_result <- t.test(renda ~ est_civil, data = dfa, var.equal = TRUE)
+  } else {
+    t_test_result <- t.test(renda ~ est_civil, data = dfa, var.equal = FALSE)
+  }
+} else {
+  print("P-value não disponível ou NA, verifique os dados ou a aplicação do teste.")
+}
+
+# Exibindo o resultado do teste t, se disponível
+if (exists("t_test_result")) {
+  print(t_test_result)
+}
+
+
+```
+
+\  
+
+### c) Verifique a afirmação que a proporção de aposentados masculinos da população é maior que a proporção do sexo feminino.
+
+```{r 4ac, options}
+# Calculamos a proporção de aposentados por sexo
+prop_aposentados_sexo <- dfa %>%
+  group_by(sexo) %>%
+  summarise(prop_aposentados = mean(aposentado == 1))
+
+# Exibindo os resultados
+print(prop_aposentados_sexo)
+```
+
+
+```{r 4ac formal, options}
+
+
+```
+
+\  
+
+### d) A diferença entre a renda anual média populacional das pessoas que estão a mais de 10 anos no emprego atual e as que não estão é superior a R$ 70.000,00?
+
+```{r 4ad, options}
+library(dplyr)
+
+# Preparando os dados
+grupo_maior_10_anos <- dfa %>%
+  filter(acima10anos == 1) %>%
+  pull(renda)
+
+grupo_menor_10_anos <- dfa %>%
+  filter(acima10anos == 0) %>%
+  pull(renda)
+
+# Realizando o teste t para comparar as médias
+t_test_result <- t.test(grupo_maior_10_anos, grupo_menor_10_anos, alternative = "greater")
+
+# Exibindo os resultados do teste t
+print(t_test_result)
+
+
+```
+
+\  
+
+
+## Questão B
+
+Um novo veículo de propaganda está em fase de teste na área de Marketing da empresa.
+Para testar se o investimento nesse veículo de propaganda causa um real impacto nas vendas,
+dados de vendas (em milhares de unidades do produto) para 20 clientes aleatoriamente 
+selecionados foram levantados, antes e depois da nova publicidade ter sido iniciada. 
+A planilha vendas apresenta os dados em questão.
+\  
+
+
+```{r dataset 4b, options}
+# carregando o dataset
+path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset4b.csv"
+dfb <- read_csv2(path_b)
+head(dfb)
+rm(path_b)
+```
+
+\  
+
+### a) Pode-se concluir que o novo veículo de propaganda é eficiente para aumentar as vendas?
+
+```{r 4ba, options}
+# Realizar o teste t pareado
+t_test_pareado <- t.test(dfb$`Vendas-ant`, dfb$`Vendas-dep`, paired = TRUE, alternative = "less")
+
+# Exibir os resultados
+print(t_test_pareado)
+```
+
+
+Este código realiza um teste t para amostras pareadas assumindo que a hipótese alternativa é que as vendas antes são maiores que as vendas depois (i.e., a propaganda não é eficaz). 
+Se for para testar a eficácia positiva da propaganda, altere `alternative` para "greater".
+
+\  
+
+### b) Qual a premissa para a aplicação do teste no item (a)?
+
+```{r 4bb, options}
+# Calcular as diferenças
+diferencas <- dfb$`Vendas-dep` - dfb$`Vendas-ant`
+
+# Testar a normalidade das diferenças
+shapiro_test <- shapiro.test(diferencas)
+
+# Exibir o resultado do teste de Shapiro-Wilk
+print(shapiro_test)
+
+```
+
+Este código calcula as diferenças entre as vendas antes e depois e aplica o teste de Shapiro-Wilk para normalidade
+
+\  
+
+### c) Imagine que só seria vantajoso o investimento nesse novo veículo de propaganda se as
+vendas subissem mais de mil unidades em média. Qual seria sua decisão nesse caso?
+
+```{r 4bc, options}
+# Calcular a diferença média das vendas e verificar se é maior que 1 (mil unidades em milhares)
+media_diferencas <- mean(diferencas)
+decisao <- media_diferencas > 1  # 1 representa mil unidades
+
+# Exibir decisão
+print(media_diferencas)
+print(decisao)
+```
+
+
+Este código calcula a média das diferenças entre as vendas antes e depois e verifica se esta média é maior que 1 (equivalente a mil unidades, já que os dados estão em milhares).

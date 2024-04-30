@@ -1,0 +1,190 @@
+---
+title: "UFPR PPGEcon 2024"
+subtitle: "Estatística (Prof. Adalto Acir Althaus Jr.): exercícios"
+author: "Alceu Nascimento, João Maurício Rolim e Tiago Soares"
+date: "2024-04-21"
+output: 
+  html_document: 
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
+---
+
+
+
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)                 # tabelas kable
+library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Plothtests)
+library(nortest)               # Anderson-Darling Test for normality
+library(Hmisc)
+library(pastecs)
+library(stats)
+library(car)
+```
+
+# Exerício 05
+
+## Questão A
+
+(só observar)
+
+
+## Questão B
+
+Ajuste uma reta de regressão para os dados, calcule o coeficiente de
+determinação e construa um intervalo de 95% de confiança para $β0$ e $β1$.
+Analise as premissas do modelo de regressão.
+
+
+```{r dataset 5b, options}
+# carregando o dataset
+path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5b.csv"
+dfb <- read_csv2(path_b)
+head(dfb)
+rm(path_b)
+```
+
+
+```{r 5b lm, options}
+lm5b <- lm(salario_medio ~ anos_estudo, data = dfb)
+stargazer(lm5b, type = "text", title="Descriptive statistics", digits=2)
+```
+
+
+## Questão C (dataset "aptos")
+
+A planilha Aptos traz os dados de 50 apartamentos, onde temos 
+seus respectivos preço de venda, em reais, idade, em anos e área, em m2.
+
+Vamos construir um modelo de regressão no qual a variável
+dependente $(Y)$ preço será explicada pelas variáveis independentes
+$(X_1)$ idade do imóvel e $(X_2)$ área do imóvel.
+
+```{r dataset 5c, options}
+# carregando o dataset
+path_c = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5c.csv"
+dfc <- read_csv2(path_c)
+head(dfc)
+rm(path_c)
+```
+
+```{r 5c lm, options}
+lm5c <- lm(preco ~ idade + area, data = dfc)
+stargazer(lm5c, type = "text", title="Descriptive statistics", digits=2)
+```
+
+
+a) Calcule o $R2$ e interprete seu significado.
+
+```{r 5ca, options}
+
+```
+
+b) Forneça as hipóteses testadas na ANOVA e a conclusão obtida.
+
+```{r 5cb, options}
+
+```
+
+c) Deixe claro o significado de cada parâmetro e forneça um intervalo de 95% de confiança. 
+
+```{r 5cc, options}
+
+```
+
+d) Qual o preço previsto para um apartamento com 10 anos de vida e 200 metros quadrados?
+
+```{r 5cd, options}
+
+```
+
+e) Analise as premissas do modelo.
+
+```{r 5ce, options}
+
+```
+
+
+
+## Questão D (dataset "futebol")
+
+A planilha Futebol apresenta o resultado do Brasileirão de 20xx, sendo:  
+P pontos - J jogos - V vitórias - E empates - D derrotas - GP gols pró - GC gols contra - SG saldo de gols - 
+VM vitória mandante - VV vitória visitante - DM Derrota mandante - DV Derrota visitante - 
+CA cartões amarelos - CV cartões vermelhos
+
+Ajuste modelos de regressão linear para explicar a pontuação.
+
+```{r dataset 5d, options}
+# carregando o dataset
+path_d = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5d.csv"
+dfd <- read_csv2(path_d)
+head(dfd)
+rm(path_d)
+```
+
+
+
+
+
+## Questão E (dataser "acidentes")
+
+Ajuste um modelo de regressão linear para modelar acidentes fatais.
+Variáveis:
+
+| Variavel  | Descrição |
+|-----------|--------------------------------------------|
+| state     | Nome do Estado |
+| pay94     | Renda média em 20xx |
+| pop       | População em  20xx |
+| area      | Área do Estado em Milhas quadradas |
+| density   | População por milha quadrada |
+| ins94     | Médias dos seguros de automóveis em 20xx |
+| carsins   | Números de carros segurados em 20xx |
+| regist    | Número de carros registrados em 20xx |
+| rdmiles   | Milhas de estradas |
+| fia       | Total de Acidentes Fatais |
+| bac       | Limite da quantidade de álcool no sangue |
+| totdriv   | Total de motoristas licenciados em 20xx |
+
+
+
+```{r dataset 5e, options}
+# carregando o dataset
+path_e = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5e.csv"
+dfe <- read_csv2(path_e)
+head(dfe)
+rm(path_e)
+```
+
+```{r 5e, options}
+plot(dfe)
+```
