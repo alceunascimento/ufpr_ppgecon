@@ -1,6 +1,7 @@
 #============================================================================
-#### SCRIPT FOR LOADING PACKAGES ####
+# SCRIPT FOR LOADING PACKAGES ----
 #============================================================================
+
 # basic ----
 library(writexl)               # Salva as tabelas elaboradas em formato .xls
 library(readxl)                # Reads Microsoft Excel spreadsheets.
