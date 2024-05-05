@@ -1,6 +1,7 @@
 #============================================================================
 #### SCRIPT FOR A WORKBENCH ####
 #============================================================================
+
 # SETUP ----
 ## definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
 ## definir qual o tipo do separador (ponto ou virgula) ----

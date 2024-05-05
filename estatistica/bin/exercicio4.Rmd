@@ -25,6 +25,7 @@ library(MASS)                  # visualiza decimal em fracoes
 library(xtable)                # transforma tabela Excel para Latex
 library(ggplot2)               # graficos
 library(gridExtra)
+library(here)
 # data manipulation ----
 library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
 library(broom)                 # Converte saídas de modelos estatísticos em tibbles
@@ -46,6 +47,7 @@ library(Hmisc)
 library(pastecs)
 library(stats)
 library(car)
+library(yarrr)
 ```
 
 # Exerício 04
@@ -62,17 +64,21 @@ no trabalho (de 1- Nada satisfeito a 5- Muito satisfeito).
 
 ```{r dataset 4a, options}
 # carregando o dataset
-path_a = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset4a.csv"
+path_a = here("./estatistica/data/dataset4a.csv")
 dfa <- read_csv2(path_a,
                    col_types = cols(
                      sexo = col_factor(levels = c("f", "m"))  # Especifica os níveis 'f' e 'm'
                    )
                  )
 
+# ajustando variaveis qualitativas ordinais como factor
 dfa$est_civil <- factor(dfa$est_civil, levels = c(0, 1), labels = c("solteiro", "casado"))
 dfa$sexo <- factor(dfa$sexo, levels = c("f", "m"), labels = c("fem", "masc"))
 
+# checking
 head(dfa)
+
+# cleaning
 rm(path_a)
 ```
 
@@ -80,21 +86,70 @@ rm(path_a)
 
 ### a) Teste se as médias de idade entre homens e mulheres da população podem ser consideradas iguais usando o teste-t presumindo variâncias iguais e depois presumindo-as diferentes. Qual seria o valor-p mais correto nesse caso?
 
-O teste t de Student para amostras independentes é utilizado para comparar as médias de dois grupos.   
+Considerando que são amostras independentes, o teste $t$ de Student pode ser utilizado para comparar as médias dos dois grupos.  
+\  
+
 A fórmula do teste t é dada por:
 
 $$ 
 t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{s_p^2\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
 $$
 
-onde $\bar{X}_1$ e $\bar{X}_2$ são as médias amostrais dos grupos, $n_1$ e $n_2$ são os tamanhos das amostras, e $s_p^2$ é a variância combinada das duas amostras quando assumimos variâncias iguais.   
-Quando as variâncias são assumidas como diferentes, utiliza-se uma aproximação de Welch para o denominador do teste.
+Onde:  
+- $\bar{X}_1$ e $\bar{X}_2$ são as médias amostrais dos grupos;  
+- $n_1$ e $n_2$ são os tamanhos das amostras; e  
+- $s_p^2$ é a variância combinada das duas amostras quando assumimos variâncias iguais.     
+
+\  
+
+Quando as variâncias são assumidas como diferentes, utiliza-se uma aproximação de Welch para o denominador do teste, que tem a seguinte fómula:  
+
+$$
+t = \frac
+{\bar{X}_1 - \bar{X}_2} 
+{\sqrt{ 
+      \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}
+      }
+}  
+$$
+
+
+Onde:  
+-   $\bar{X}_1$ e $\bar{X}_2$ são as médias amostrais das duas amostras independentes.  
+-   $s_1^2$ e $s_2^2$ são as variâncias amostrais das duas amostras independentes.  
+-   $n_1$ e $n_2$ são os tamanhos amostrais das duas amostras independentes.  
+
+\  
+
+Primeiro, verifica-se a homogeneidade das variâncias, considerando:
+
+$H_0$ : as variâncias são homogeneas  
+$H_a$ : as variâncias não são homogêneas
+
+
+```{r 4aa variancias, options}
+# Teste de levene 
+levene_teste_4aa <- leveneTest(idade ~ sexo, data = dfa)
+levene_teste_4aa
+
+# Gráfico de boxplot
+with(dfa, boxplot(idade ~ sexo, names = c("Feminino", "Masculino"), 
+                  xlab = "Sexo", ylab = "Idade", main = "Boxplot das Amostras"))
+
+# yarr pirateplot
+yarrr::pirateplot(formula = idade ~ sexo, data = dfa)
+```
+
+Dado que o p-valor do teste Levene ficou acima de 5%, no caso, `r levene_teste_4aa[3]`, 
+é possível rejeitar $H_0$, portanto, aceita-se que não há homogeneidade entre as variancias.    
+
+Assim, para apurar, utiliza-se o teste Welch:  
 
 
 ```{r 4aa, options}
 # Primeiro, separamos os dados por sexo
-homens <- filter(dfa, sexo == "m")
-mulheres <- filter(dfa, sexo == "f")
+homens <- filter(dfa, sexo == "masc")
+mulheres <- filter(dfa, sexo == "fem")
 
 # Realizando o teste t com variâncias iguais (parametro var.equal = TRUE)
 t_test_var_iguais <- t.test(idade ~ sexo, data = dfa, var.equal = TRUE)
@@ -107,18 +162,43 @@ print(t_test_var_iguais)
 print(t_test_var_diferentes)
 ```
 
+
+\  
+
+Pelos testes realizados, não é possível afirmar que a variância das idades é igual
+para os dois grupos (homens e mulheres).  
+Portanto, o correto é considerar o p-valor do teste Welch, para variâncias diferentes,
+o qual é `r t_test_var_diferentes$p.value`.
+
+
 \  
 
 ### b) Quem possui maior renda, os casados ou não casados?
 
-Para avaliar se existe uma diferença estatística significativa na renda entre indivíduos casados e solteiros, realizaremos um teste t de Student para amostras independentes. 
+Para avaliar se existe uma diferença estatística significativa na renda entre indivíduos casados e solteiros, realizaremos um teste t de Student para amostras independentes.   
 Este teste é adequado pois estamos comparando as médias de dois grupos distintos.
 
 **Hipóteses**:  
 - $H_0$: Não há diferença nas médias de renda entre casados e solteiros.  
 - $H_a$: Existe uma diferença nas médias de renda entre casados e solteiros.
 
-Utilizaremos o teste t com variâncias iguais, a menos que um teste de Levene para igualdade de variâncias sugira o contrário.
+\  
+
+Primeiro, verifica-se se há igualdade de variância entre os dois grupos:
+
+```{r 4ab variancia, options}
+# Aplicando o Teste de Levene para verificar a igualdade das variâncias
+levene_test <- leveneTest(renda ~ est_civil, data = dfa)
+
+# Verificando a estrutura do resultado do Teste de Levene
+print(summary(levene_test))
+str(levene_test)
+
+# yarr pirateplot
+yarrr::pirateplot(formula = renda ~ est_civil, data = dfa)
+```
+
+Da
 
 
 ```{r 4ab, options}
@@ -218,7 +298,7 @@ A planilha vendas apresenta os dados em questão.
 
 ```{r dataset 4b, options}
 # carregando o dataset
-path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset4b.csv"
+path_b = here("./estatistica/data/dataset4b.csv")
 dfb <- read_csv2(path_b)
 head(dfb)
 rm(path_b)
@@ -226,42 +306,76 @@ rm(path_b)
 
 \  
 
-### a) Pode-se concluir que o novo veículo de propaganda é eficiente para aumentar as vendas?
-
-```{r 4ba, options}
-# Realizar o teste t pareado
-t_test_pareado <- t.test(dfb$`Vendas-ant`, dfb$`Vendas-dep`, paired = TRUE, alternative = "less")
-
-# Exibir os resultados
-print(t_test_pareado)
+```{r 5b checking data, options}
+st(dfb)
 ```
 
 
+
+### a) Pode-se concluir que o novo veículo de propaganda é eficiente para aumentar as vendas?
+\  
+
+Para apurar se o novo veículo é eficiente, pode-se usar um teste pareado, conforme:
+
+$$
+t = \frac
+{\bar{x_d}}
+{ \frac
+  {s_d}
+  {\sqrt{n}}
+}
+$$
+Onde:  
+- $\bar{d}$ é a diferença da média nas observações paredas
+- $s_d$ é a diferença do desvio padrão
+- $n$ é o numero de pares
+
+Apura-se:
+```{r 4ba, options}
+# Realizar o teste t pareado
+t_test_pareado <- t.test(dfb$`Vendas-dep`, dfb$`Vendas-ant`, paired = TRUE, alternative = "greater")
+t_test_pareado
+```
+
 Este código realiza um teste t para amostras pareadas assumindo que a hipótese alternativa é que as vendas antes são maiores que as vendas depois (i.e., a propaganda não é eficaz). 
-Se for para testar a eficácia positiva da propaganda, altere `alternative` para "greater".
+
+\  
+
+O p-valor encontrado (`r t_test_pareado$p.value`) indica que é possível rejeitar $H_0$.   
+Ou seja, é possível assumir que a propaganda é eficáz, dado que as vendas posteriores são maiores.
+
 
 \  
 
 ### b) Qual a premissa para a aplicação do teste no item (a)?
+\  
+
+As premissas adotadas são que as 
+Cada par de observação foi extraído do mesmo sujeito.
+As diferenças tem distribuição normal.
+
 
 ```{r 4bb, options}
 # Calcular as diferenças
 diferencas <- dfb$`Vendas-dep` - dfb$`Vendas-ant`
+hist(diferencas)
+x_d <- mean(diferencas)
+x_d
+se <- sd(diferencas)/sqrt(length((diferencas)))
+se
+t <- x_d / se
+t
 
 # Testar a normalidade das diferenças
 shapiro_test <- shapiro.test(diferencas)
-
-# Exibir o resultado do teste de Shapiro-Wilk
-print(shapiro_test)
-
+shapiro_test
 ```
 
 Este código calcula as diferenças entre as vendas antes e depois e aplica o teste de Shapiro-Wilk para normalidade
 
 \  
 
-### c) Imagine que só seria vantajoso o investimento nesse novo veículo de propaganda se as
-vendas subissem mais de mil unidades em média. Qual seria sua decisão nesse caso?
+### c) Imagine que só seria vantajoso o investimento nesse novo veículo de propaganda se as vendas subissem mais de mil unidades em média. Qual seria sua decisão nesse caso?
 
 ```{r 4bc, options}
 # Calcular a diferença média das vendas e verificar se é maior que 1 (mil unidades em milhares)

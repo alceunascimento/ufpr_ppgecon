@@ -13,6 +13,7 @@ library(xtable)                # transforma tabela Excel para Latex
 library(rmarkdown)
 library(tinytex)
 library(ggplot2)
+library(here)
 # data manipulation ----
 library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
 library(broom)                 # Converte saídas de modelos estatísticos em tibbles
@@ -49,6 +50,11 @@ library(broom)                 # takes the messy output of built-in functions in
 library(Hmisc)
 library(pastecs)
 library(Plothtests)
+library(nortest)               # Anderson-Darling Test for normality
+library(Hmisc)
+library(pastecs)
+library(stats)
+library(car)
 # databases ----
 library(sidrar)                # Acesso a bases de dados do SIDRA-IGBE
 library(ipeadatar)             # Acesso a bases de dados do IPEA

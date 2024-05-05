@@ -560,6 +560,9 @@ mean(dados$carro)
 sd(dados$carro)
 t_teste_carro
 p_valor_carro
+
+t_test_carro2 <- t.test(dados$carro, mu = 30)
+t_test_carro2
 ```
 
 Dado que o p-valor é maior que o nível de significância, aceita-se
