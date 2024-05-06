@@ -55,6 +55,7 @@ library(Hmisc)
 library(pastecs)
 library(stats)
 library(car)
+library(yarrr)
 # databases ----
 library(sidrar)                # Acesso a bases de dados do SIDRA-IGBE
 library(ipeadatar)             # Acesso a bases de dados do IPEA
