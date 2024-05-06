@@ -1,0 +1,38 @@
+---
+title: "t teste"
+author: "Alceu Nascimento"
+date: "2024-05-06"
+output: html_document
+---
+
+O teste é
+
+$H_0$ : $\mu_1 = \mu_2$  
+$H_a$ : $\mu_1 \neq \mu_2$
+
+Igual a 
+
+> Ojetivo é rejeitar $H_0$
+
+Testes:
+
+```{r t test pareado, options}
+# define o intervalo de confianca
+ci <- 0.95
+# t teste pareado para saber se a media dos dados 2 são maiores que o 1 ("greater")
+t_test_pareado <- t.test(dfb$`Vendas-dep`, dfb$`Vendas-ant`, paired = TRUE, alternative = "greater", conf.level = ci)
+t_test_pareado
+paste("Rejeita-se H_0:", ci > t_test_pareado$p.value)
+```
+
+
+```{r t test pareado, options}
+# define o intervalo de confianca
+ci <- 0.95
+# t teste pareado para saber se a media dos dados 2 são menores que o 1 ("less")
+t_test_pareado <- t.test(dfb$`Vendas-dep`, dfb$`Vendas-ant`, paired = TRUE, alternative = "less", conf.level = ci)
+t_test_pareado
+paste("Rejeita-se H_0:", ci > t_test_pareado$p.value)
+```
+
+

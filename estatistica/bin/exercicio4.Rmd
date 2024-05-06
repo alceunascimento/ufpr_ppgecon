@@ -48,6 +48,7 @@ library(pastecs)
 library(stats)
 library(car)
 library(yarrr)
+library(ggpubr)
 ```
 
 # Exerício 04
@@ -310,6 +311,25 @@ rm(path_b)
 st(dfb)
 ```
 
+Checando a normalidade  
+Teste Shapiro-Wilk:
+- $H_0$ : os dados tem distribuição normal  
+- $H_a$ : os dados não tem distribuição normal  
+
+```{r 4b check normalidade, options}
+ci <- 0.95
+sw_test1 <- shapiro.test(dfb$`Vendas-ant`)
+sw_test1
+paste("Rejeita-se H_0:", ci > sw_test1$p.value)
+sw_test2 <- shapiro.test(dfb$`Vendas-dep`)
+sw_test2
+paste("Rejeita-se H_0:", ci > sw_test2$p.value)
+```
+
+```{r 4b normal grafico, options}
+ggqqplot(dfb$`Vendas-ant`, ylab = "Vendas antes",
+         ggtheme = theme_minimal())
+```
 
 
 ### a) Pode-se concluir que o novo veículo de propaganda é eficiente para aumentar as vendas?
