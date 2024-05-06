@@ -1,0 +1,257 @@
+---
+title: "prova"
+author: "Alceu Nascimento"
+date: "2024-05-06"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)                 # tabelas kable
+library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Plothtests)
+library(nortest)               # Anderson-Darling Test for normality
+library(Hmisc)
+library(pastecs)
+library(stats)
+```
+
+
+```{r get data}
+df0 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset1.csv")
+df0
+```
+
+
+# Variaveis aleatórias
+
+# Medidas descritivas
+
+## Medidas de posição
+
+### media
+```{r}
+mean(df0$idade)
+```
+
+### mediana
+```{r}
+median(df0$idade)
+```
+
+
+### moda
+
+## Medidas de dispersão
+
+### variancia
+```{r}
+var(df0$idade)
+```
+
+
+### desvio padrão
+```{r}
+sd(df0$idade)
+```
+
+
+### momentos (skewness kurtosis)
+
+### covariancia
+```{r}
+x <- df0$idade
+y <- df0$renda
+cov(x, y)
+
+plot(x, 
+     y, 
+     type = "p",
+     main = "Scatterplot de x e y",
+     xlab = "x",
+     ylab = "y",
+     col = "steelblue",
+     pch = 19)
+
+```
+
+### correlação
+```{r}
+cor(x, y)
+cov(x, y) / (sd(x) * sd(y))
+```
+
+
+
+# Distribuição normal de probabilidade
+
+## Função Densidade de Probabilidade
+
+## Distribuição Normal
+```{r}
+# plot the t distribution
+curve(dnorm(x, mean = 0, sd = 1), 
+      from = -3.5, 
+      to = 3.5, 
+      ylab = "Densidade", 
+      xlab = "x",
+      main = "Distribuição Normal Padrão")
+```
+
+
+## Distribuição lognormal
+```{r}
+# plot the t distribution
+curve(dlnorm(x), 
+      from = 0, 
+      to = 10, 
+      ylab = "Densidade", 
+      xlab = "x")
+```
+
+
+
+## Distribuição Qui-Quadrado
+```{r}
+# plot the PDF da chi^2
+curve(dchisq(x, df = 3), 
+      xlim = c(0, 10), 
+      ylim = c(0, 1), 
+      col = "blue",
+      ylab = "Densidade(PDF)/Probabilidade(CDF)",
+      main = "pdf e cdf da Distribuição Chi-Squared, M = 3")
+
+# add the CDF to the plot
+curve(pchisq(x, df = 3), 
+      xlim = c(0, 10), 
+      add = TRUE, 
+      col = "red")
+
+# add a legend to the plot
+legend("topleft", 
+       c("PDF", "CDF"), 
+       col = c("blue", "red"), 
+       lty = c(1, 1))
+```
+
+## Distribuição t de Student
+```{r}
+# plot the standard normal density
+curve(dnorm(x), 
+      xlim = c(-4, 4), 
+      xlab = "x", 
+      lty = 2, 
+      ylab = "Densidade", 
+      main = "Densidade de Distribuições t")
+
+# plot the t density for df=2
+curve(dt(x, df = 2), 
+      xlim = c(-4, 4), 
+      col = 2, 
+      add = T)
+
+# plot the t density for df=4
+curve(dt(x, df = 4), 
+      xlim = c(-4, 4), 
+      col = 3, 
+      add = T)
+
+# plot the t density for df=25
+curve(dt(x, df = 25), 
+      xlim = c(-4, 4), 
+      col = 4, 
+      add = T)
+
+# add a legend
+legend("topright", 
+       c("N(0,1)", "df = 2", "df = 4", "df = 25"), 
+       col = 1:4, 
+       lty = c(2, 1, 1, 1))
+```
+
+
+## Distribuição F
+```{r}
+# draw density of F_{3, 14}
+curve(df(x ,3 ,14), 
+      ylim = c(0, 0.8), 
+      xlim = c(0, 10), 
+      ylab = "Densidade",
+      main = "Função de Densidade")
+```
+
+# Probabilidade
+
+## Estimação
+
+### Estimadores e TLC
+
+
+### Estimação por intervalo
+
+
+
+## Teste de Hipóteses
+
+
+
+### Testes a um parâmetro
+
+
+### Testes para dois parâmetros
+```{r}
+# define o intervalo de confianca
+ci <- 0.95
+# t teste pareado para saber se a media dos dados 2 são maiores que o 1 ("greater")
+t_test_pareado <- t.test(y, x, paired = TRUE, alternative = "greater", conf.level = ci)
+t_test_pareado
+paste("Rejeita-se H_0:", ci > t_test_pareado$p.value)
+```
+
+
+### ANOVA
+```{r}
+
+```
+
+## Regressão Linear
+
+### Regressão Linear simples
+```{r}
+model <- (x ~ y)
+summary(model)
+stargazer(model)
+```
+
+### Regressão Linear múltipla
