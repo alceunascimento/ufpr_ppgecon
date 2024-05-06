@@ -5,6 +5,12 @@ date: "2024-05-06"
 output: html_document
 ---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 O teste é
 
 $H_0$ : $\mu_1 = \mu_2$  

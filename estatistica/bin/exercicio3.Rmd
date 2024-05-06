@@ -561,7 +561,7 @@ sd(dados$carro)
 t_teste_carro
 p_valor_carro
 
-t_test_carro2 <- t.test(dados$carro, mu = 30)
+t_test_carro2 <- t.test(dados$carro, mu = 30, alternative = "greater")
 t_test_carro2
 ```
 
