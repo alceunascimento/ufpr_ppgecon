@@ -30,7 +30,25 @@ library(here)
 library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
 library(broom)                 # Converte saídas de modelos estatísticos em tibbles
 library(dbplyr)                # Interface dplyr para bancos de dados
+library(forcats)               # Ferramentas para trabalhar com fatores
+library(googlesheets4)         # Interage com Google Sheets
+library(haven)                 # Importa e exporta dados de softwares estatísticos
+library(hms)                   # Trabalha com horas, minutos, segundos
+library(httr)                  # Facilita requisições HTTP e APIs web
+library(jsonlite)              # Parser JSON rápido e robusto
 library(lubridate)             # Simplifica trabalho com datas e horas
+library(modelr)                # Funções para modelagem em conjunto com dplyr/ggplot2
+library(reprex)                # Cria exemplos reproduzíveis facilmente
+library(rlang)                 # Ferramentas para programação e metaprogramação em R
+library(rvest)                 # Ferramentas para web scraping
+library(tibble)                # Versão moderna do data frame do R
+library(xml2)                  # Leitura, escrita e processamento de XML
+library(tidytext)              # Análise de dados textuais
+library(ggthemes)              # Layout gráfico semelhante ao usado no Stata
+library(janitor)               # limpeza e manipulacao de dados
+library(mosaic)                # padronização de variaveis
+library(zoo)                   # Provides the most popular format for saving time series objects in R.
+library(xts)        
 # statistics ----
 library(stargazer)             # analise estatistica
 library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
@@ -41,7 +59,6 @@ library(strucchange)           # analisar quebras estruturais (Chow Test)
 library(mctest)                # teste para multicolinearidad
 library(performance)           # Analisa regressão 
 library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
-library(Plothtests)
 library(nortest)               # Anderson-Darling Test for normality
 library(Hmisc)
 library(pastecs)
@@ -49,6 +66,7 @@ library(stats)
 library(car)
 library(yarrr)
 library(ggpubr)
+library(vtable)
 ```
 
 # Exerício 04
@@ -308,7 +326,7 @@ rm(path_b)
 \  
 
 ```{r 5b checking data, options}
-st(dfb)
+sumtable(dfb)
 ```
 
 Checando a normalidade  

@@ -5,3 +5,83 @@ date: "2024-05-06"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+rm(list = ls())
+
+
+# One sample T test
+
+$H_0$ : $m= \mu$  
+
+$H_a$ : $m = \mu$ (different)  (two tailed)
+$H_a$ : $m > \mu$ (greater) (one tailed) (upper tailed)
+$H_a$ : $m < \mu$ (less) (one tailed) (lower tailed)
+
+Onde:
+m = sample mean (ou x_bar)
+n = sample size
+s = desvio padrao com $n-1$ graus de liberdade
+$\mu$ = valor teorico
+
+
+```{r parametros, options}
+x_bar <- mean()
+n <- 
+s <- 
+```
+
+
+```{r boxplot, options}
+boxplot(x)
+```
+
+```{r t test, options}
+x <- dfa$idade
+mu <- 0
+
+# define o intervalo de confianca
+ci <- 0.95
+# t teste two tailed
+t_test <- t.test(x, mu = mu, alternative = "two.sided", conf.level = ci)
+t_test
+paste("Rejeita-se H_0:", ci < t_test$p.value)
+```
+
+```{r testando normalidade SW, options}
+# objetivo: nao rejeitar H_0 ("Rejeita-se H_0 : FALSE")
+# H_0 : os dados tem distribuicao normal
+# H_a : os dados nao tem distribuicao normal
+
+sw_test <- shapiro.test(x)
+sw_test
+paste("Rejeita-se H_0:", ci < sw_test$p.value)
+```
+
+
+```{r t test, options}
+x <- dfa$idade
+mu <- 0
+
+# define o intervalo de confianca
+ci <- 0.95
+# t teste one tailed (lesser)
+t_test <- t.test(x, mu = mu, alternative = "less", conf.level = ci)
+t_test
+paste("Rejeita-se H_0:", ci < t_test$p.value)
+```
+
+
+```{r t test, options}
+x <- dfa$idade
+mu <- 0
+
+# define o intervalo de confianca
+ci <- 0.95
+# t teste one tailed (greater)
+t_test <- t.test(x, mu = mu, alternative = "greater", conf.level = ci)
+t_test
+paste("Rejeita-se H_0:", ci < t_test$p.value)
+```

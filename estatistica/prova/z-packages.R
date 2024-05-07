@@ -49,12 +49,12 @@ library(performance)           # Analisa regressão
 library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
 library(Hmisc)
 library(pastecs)
-library(Plothtests)
 library(nortest)               # Anderson-Darling Test for normality
 library(Hmisc)
 library(pastecs)
 library(stats)
 library(car)
+library(vtable)
 # databases ----
 library(sidrar)                # Acesso a bases de dados do SIDRA-IGBE
 library(ipeadatar)             # Acesso a bases de dados do IPEA

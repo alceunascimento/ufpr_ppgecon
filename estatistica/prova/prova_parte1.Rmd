@@ -47,6 +47,8 @@ library(pastecs)
 library(stats)
 ```
 
+rm(list = ls())
+
 
 ```{r get data}
 df0 <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/Exerc_1_descritiva_dataset1.csv")
@@ -224,9 +226,28 @@ curve(df(x ,3 ,14),
 
 ## Teste de Hipóteses
 
+$H_0$ : $\mu = 0$  
+$H_a$ : $\mu \neq 0$  
 
 
 ### Testes a um parâmetro
+```{r}
+# define o intervalo de confianca
+ci <- 0.95
+# t teste se x são maiores que o("greater")
+t_test_pareado <- t.test(y, x, paired = FALSE, alternative = "greater", conf.level = ci)
+t_test_pareado
+paste("Rejeita-se H_0:", ci > t_test_pareado$p.value)
+```
+
+```{r}
+# define o intervalo de confianca
+ci <- 0.95
+# t teste pareado para saber se a media dos dados 2 são maiores que o 1 ("greater")
+t_test_pareado <- t.test(y, x, paired = FALSE, alternative = "less", conf.level = ci)
+t_test_pareado
+paste("Rejeita-se H_0:", ci > t_test_pareado$p.value)
+```
 
 
 ### Testes para dois parâmetros
