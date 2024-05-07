@@ -17,64 +17,7 @@ output:
 subtitle: 'Estatística (Prof. Adalto Acir Althaus Jr.): exercícios'
 ---
 
-```{r setup, warning=FALSE, message=FALSE, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
-# definir qual o tipo do separador (ponto ou virgula) ----
-options(scipen = 10, digits = 10, OutDec = ".")
-# basic ----
-library(writexl)               # Salva as tabelas elaboradas em formato .xls
-library(readxl)                # Reads Microsoft Excel spreadsheets.
-library(knitr)                 # tabelas kable
-library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
-library(readr)                 # A fast and friendly way to read tabular data into R.
-library(MASS)                  # visualiza decimal em fracoes
-library(xtable)                # transforma tabela Excel para Latex
-library(ggplot2)               # graficos
-library(gridExtra)
-library(here)
-# data manipulation ----
-library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
-library(broom)                 # Converte saídas de modelos estatísticos em tibbles
-library(dbplyr)                # Interface dplyr para bancos de dados
-library(forcats)               # Ferramentas para trabalhar com fatores
-library(googlesheets4)         # Interage com Google Sheets
-library(haven)                 # Importa e exporta dados de softwares estatísticos
-library(hms)                   # Trabalha com horas, minutos, segundos
-library(httr)                  # Facilita requisições HTTP e APIs web
-library(jsonlite)              # Parser JSON rápido e robusto
-library(lubridate)             # Simplifica trabalho com datas e horas
-library(modelr)                # Funções para modelagem em conjunto com dplyr/ggplot2
-library(reprex)                # Cria exemplos reproduzíveis facilmente
-library(rlang)                 # Ferramentas para programação e metaprogramação em R
-library(rvest)                 # Ferramentas para web scraping
-library(tibble)                # Versão moderna do data frame do R
-library(xml2)                  # Leitura, escrita e processamento de XML
-library(tidytext)              # Análise de dados textuais
-library(ggthemes)              # Layout gráfico semelhante ao usado no Stata
-library(janitor)               # limpeza e manipulacao de dados
-library(mosaic)                # padronização de variaveis
-library(zoo)                   # Provides the most popular format for saving time series objects in R.
-library(xts)        
-# statistics ----
-library(stargazer)             # analise estatistica
-library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
-library(broom)                 # Convert statistical analysis objects into tidy data frames.
-library(lmtest)                # Hypothesis testing for linear regression models.
-library(modelsummary)          # faz um grafico de intervalo bom
-library(strucchange)           # analisar quebras estruturais (Chow Test)
-library(mctest)                # teste para multicolinearidad
-library(performance)           # Analisa regressão 
-library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
-library(nortest)               # Anderson-Darling Test for normality
-library(Hmisc)
-library(pastecs)
-library(stats)
-library(car)
-library(yarrr)
-library(ggpubr)
-library(vtable)
-```
+
 
 # Exerício 04
 
@@ -88,7 +31,8 @@ sua escolaridade (1- primeiro grau, 2- segundo grau, 3- terceiro grau, 4- Pós g
 se é (1) ou não (0) aposentado, o sexo (m- masc e f- femin) e sua satisfação
 no trabalho (de 1- Nada satisfeito a 5- Muito satisfeito).
 
-```{r dataset 4a, options}
+
+```r
 # carregando o dataset
 path_a = here("./estatistica/data/dataset4a.csv")
 dfa <- read_csv2(path_a,
@@ -103,7 +47,22 @@ dfa$sexo <- factor(dfa$sexo, levels = c("f", "m"), labels = c("fem", "masc"))
 
 # checking
 head(dfa)
+```
 
+```
+## # A tibble: 6 × 11
+##   idade est_civil endereco renda carro escolaridade t_empr_atual aposentado
+##   <dbl> <fct>        <dbl> <dbl> <dbl>        <dbl>        <dbl>      <dbl>
+## 1    55 casado          12    72  36.2            1           23          0
+## 2    56 solteiro        29   153  76.9            1           35          0
+## 3    28 casado           9    28  13.7            3            4          0
+## 4    24 casado           4    26  12.5            4            0          0
+## 5    25 solteiro         2    23  11.3            2            5          0
+## 6    45 casado           9    76  37.2            3           13          0
+## # ℹ 3 more variables: satisf_trabal <dbl>, sexo <fct>, acima10anos <dbl>
+```
+
+```r
 # cleaning
 rm(path_a)
 ```
@@ -135,20 +94,33 @@ $H_0$ : as variâncias são homogeneas
 $H_a$ : as variâncias não são homogêneas
 
 
-```{r 4aa variancias, options}
+
+```r
 # Teste de levene 
 levene_teste_4aa <- leveneTest(idade ~ sexo, data = dfa)
 levene_teste_4aa
+```
 
+```
+## Levene's Test for Homogeneity of Variance (center = median)
+##        Df F value  Pr(>F)
+## group   1 2.26378 0.13275
+##       998
+```
+
+```r
 # Gráfico de boxplot
 with(dfa, boxplot(idade ~ sexo, names = c("Feminino", "Masculino"), 
                   xlab = "Sexo", ylab = "Idade", main = "Boxplot das Amostras"))
 ```
 
+![](exercicio4_files/figure-html/4aa variancias, options-1.png)<!-- -->
+
 Dado que o p-valor do teste Levene ficou acima de 5%, não é possível rejeitar $H_0$, portanto, aceita-se que há homogeneidade entre as variancias.    
 
 
-```{r 4aa t test, options}
+
+```r
 # Primeiro, separamos os dados por sexo
 homens <- filter(dfa, sexo == "masc")
 mulheres <- filter(dfa, sexo == "fem")
@@ -158,14 +130,43 @@ t_test_var_iguais <- t.test(idade ~ sexo, data = dfa, var.equal = TRUE)
 print(t_test_var_iguais)
 ```
 
+```
+## 
+## 	Two Sample t-test
+## 
+## data:  idade by sexo
+## t = -0.69941998, df = 998, p-value = 0.4844526
+## alternative hypothesis: true difference in means between group fem and group masc is not equal to 0
+## 95 percent confidence interval:
+##  -2.0592507267  0.9770502041
+## sample estimates:
+##  mean in group fem mean in group masc 
+##        41.13375796        41.67485822
+```
+
 \  
 
 De outro lado, presumindo as variâncias diferentes, utiliza-se o teste Welch:  
 
-```{r 4aa, options}
+
+```r
 # Realizando o teste t com variâncias diferentes (padrão)
 t_test_var_diferentes <- t.test(idade ~ sexo, data = dfa, var.equal = FALSE)
 print(t_test_var_diferentes)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  idade by sexo
+## t = -0.70092346, df = 991.76175, p-value = 0.4835152
+## alternative hypothesis: true difference in means between group fem and group masc is not equal to 0
+## 95 percent confidence interval:
+##  -2.0560058602  0.9738053376
+## sample estimates:
+##  mean in group fem mean in group masc 
+##        41.13375796        41.67485822
 ```
 
 
@@ -174,7 +175,7 @@ print(t_test_var_diferentes)
 Pelos testes realizados, é possível afirmar que, estatisticamente, a variância das idades é igual
 para os dois grupos (homens e mulheres).  
 Portanto, o correto é considerar o p-valor do teste t, para variâncias iguais,
-o qual é `r t_test_var_iguais$p.value`.
+o qual é 0.4844525831.
 
 
 \  
@@ -192,20 +193,48 @@ Este teste é adequado pois estamos comparando as médias de dois grupos distint
 
 Primeiro, verifica-se se há igualdade de variância entre os dois grupos:
 
-```{r 4ab variancia, options}
+
+```r
 # Aplicando o Teste de Levene para verificar a igualdade das variâncias
 levene_test <- leveneTest(renda ~ est_civil, data = dfa)
 
 # Verificando a estrutura do resultado do Teste de Levene
 print(summary(levene_test))
-str(levene_test)
+```
 
+```
+##        Df            F value               Pr(>F)         
+##  Min.   :  1.00   Min.   :0.05897461   Min.   :0.8081739  
+##  1st Qu.:250.25   1st Qu.:0.05897461   1st Qu.:0.8081739  
+##  Median :499.50   Median :0.05897461   Median :0.8081739  
+##  Mean   :499.50   Mean   :0.05897461   Mean   :0.8081739  
+##  3rd Qu.:748.75   3rd Qu.:0.05897461   3rd Qu.:0.8081739  
+##  Max.   :998.00   Max.   :0.05897461   Max.   :0.8081739  
+##                   NA's   :1            NA's   :1
+```
+
+```r
+str(levene_test)
+```
+
+```
+## Classes 'anova' and 'data.frame':	2 obs. of  3 variables:
+##  $ Df     : int  1 998
+##  $ F value: num  0.059 NA
+##  $ Pr(>F) : num  0.808 NA
+##  - attr(*, "heading")= chr "Levene's Test for Homogeneity of Variance (center = median)"
+```
+
+```r
 # yarr pirateplot
 yarrr::pirateplot(formula = renda ~ est_civil, data = dfa)
 ```
 
+![](exercicio4_files/figure-html/4ab variancia, options-1.png)<!-- -->
 
-```{r 4ab, options}
+
+
+```r
 # Agrupamos por estado civil e calculamos a média de renda
 media_renda_est_civil <- dfa %>%
   group_by(est_civil) %>%
@@ -215,14 +244,47 @@ media_renda_est_civil <- dfa %>%
 print(media_renda_est_civil)
 ```
 
-```{r 4ab formal, options}
+```
+## # A tibble: 2 × 2
+##   est_civil media_renda
+##   <fct>           <dbl>
+## 1 solteiro         73.1
+## 2 casado           72.7
+```
+
+
+```r
 # Aplicando o Teste de Levene para verificar a igualdade das variâncias
 levene_test <- leveneTest(renda ~ est_civil, data = dfa)
 
 # Verificando a estrutura do resultado do Teste de Levene
 print(summary(levene_test))
-str(levene_test)
+```
 
+```
+##        Df            F value               Pr(>F)         
+##  Min.   :  1.00   Min.   :0.05897461   Min.   :0.8081739  
+##  1st Qu.:250.25   1st Qu.:0.05897461   1st Qu.:0.8081739  
+##  Median :499.50   Median :0.05897461   Median :0.8081739  
+##  Mean   :499.50   Mean   :0.05897461   Mean   :0.8081739  
+##  3rd Qu.:748.75   3rd Qu.:0.05897461   3rd Qu.:0.8081739  
+##  Max.   :998.00   Max.   :0.05897461   Max.   :0.8081739  
+##                   NA's   :1            NA's   :1
+```
+
+```r
+str(levene_test)
+```
+
+```
+## Classes 'anova' and 'data.frame':	2 obs. of  3 variables:
+##  $ Df     : int  1 998
+##  $ F value: num  0.059 NA
+##  $ Pr(>F) : num  0.808 NA
+##  - attr(*, "heading")= chr "Levene's Test for Homogeneity of Variance (center = median)"
+```
+
+```r
 # Checando se o p-value está disponível e usando corretamente
 if (!is.na(levene_test$'Pr(>F)'[1])) {
   if (levene_test$'Pr(>F)'[1] > 0.05) {
@@ -238,15 +300,28 @@ if (!is.na(levene_test$'Pr(>F)'[1])) {
 if (exists("t_test_result")) {
   print(t_test_result)
 }
+```
 
-
+```
+## 
+## 	Two Sample t-test
+## 
+## data:  renda by est_civil
+## t = 0.060594548, df = 998, p-value = 0.9516942
+## alternative hypothesis: true difference in means between group solteiro and group casado is not equal to 0
+## 95 percent confidence interval:
+##  -11.24384585  11.96036064
+## sample estimates:
+## mean in group solteiro   mean in group casado 
+##            73.09406953            72.73581213
 ```
 
 \  
 
 ### c) Verifique a afirmação que a proporção de aposentados masculinos da população é maior que a proporção do sexo feminino.
 
-```{r 4ac, options}
+
+```r
 # Calculamos a proporção de aposentados por sexo
 prop_aposentados_sexo <- dfa %>%
   group_by(sexo) %>%
@@ -256,12 +331,21 @@ prop_aposentados_sexo <- dfa %>%
 print(prop_aposentados_sexo)
 ```
 
+```
+## # A tibble: 2 × 2
+##   sexo  prop_aposentados
+##   <fct>            <dbl>
+## 1 fem             0.0255
+## 2 masc            0.0491
+```
+
 
 \  
 
 ### d) A diferença entre a renda anual média populacional das pessoas que estão a mais de 10 anos no emprego atual e as que não estão é superior a R$ 70.000,00?
 
-```{r 4ad, options}
+
+```r
 library(dplyr)
 
 # Preparando os dados
@@ -278,8 +362,20 @@ t_test_result <- t.test(grupo_maior_10_anos, grupo_menor_10_anos, alternative = 
 
 # Exibindo os resultados do teste t
 print(t_test_result)
+```
 
-
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  grupo_maior_10_anos and grupo_menor_10_anos
+## t = 12.352815, df = 406.07885, p-value < 2.2204e-16
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  72.17341286         Inf
+## sample estimates:
+##    mean of x    mean of y 
+## 123.88402062  40.59477124
 ```
 
 \  
@@ -295,39 +391,131 @@ A planilha vendas apresenta os dados em questão.
 \  
 
 
-```{r dataset 4b, options}
+
+```r
 # carregando o dataset
 path_b = here("./estatistica/data/dataset4b.csv")
 dfb <- read_csv2(path_b)
 head(dfb)
+```
+
+```
+## # A tibble: 6 × 2
+##   `Vendas-ant` `Vendas-dep`
+##          <dbl>        <dbl>
+## 1           30           29
+## 2           28           30
+## 3           31           32
+## 4           26           30
+## 5           20           16
+## 6           30           25
+```
+
+```r
 rm(path_b)
 ```
 
 \  
 
-```{r 5b checking data, options}
+
+```r
 sumtable(dfb)
 ```
+
+<table class="table" style="color: black; margin-left: auto; margin-right: auto;">
+<caption>Summary Statistics</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variable </th>
+   <th style="text-align:left;"> N </th>
+   <th style="text-align:left;"> Mean </th>
+   <th style="text-align:left;"> Std. Dev. </th>
+   <th style="text-align:left;"> Min </th>
+   <th style="text-align:left;"> Pctl. 25 </th>
+   <th style="text-align:left;"> Pctl. 75 </th>
+   <th style="text-align:left;"> Max </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Vendas-ant </td>
+   <td style="text-align:left;"> 20 </td>
+   <td style="text-align:left;"> 27 </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 15 </td>
+   <td style="text-align:left;"> 26 </td>
+   <td style="text-align:left;"> 30 </td>
+   <td style="text-align:left;"> 34 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Vendas-dep </td>
+   <td style="text-align:left;"> 20 </td>
+   <td style="text-align:left;"> 29 </td>
+   <td style="text-align:left;"> 4.7 </td>
+   <td style="text-align:left;"> 16 </td>
+   <td style="text-align:left;"> 28 </td>
+   <td style="text-align:left;"> 32 </td>
+   <td style="text-align:left;"> 34 </td>
+  </tr>
+</tbody>
+</table>
 
 Checando a normalidade  
 Teste Shapiro-Wilk:
 - $H_0$ : os dados tem distribuição normal  
 - $H_a$ : os dados não tem distribuição normal  
 
-```{r 4b check normalidade, options}
+
+```r
 ci <- 0.95
 sw_test1 <- shapiro.test(dfb$`Vendas-ant`)
 sw_test1
+```
+
+```
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  dfb$`Vendas-ant`
+## W = 0.89196234, p-value = 0.02922598
+```
+
+```r
 paste("Rejeita-se H_0:", ci > sw_test1$p.value)
+```
+
+```
+## [1] "Rejeita-se H_0: TRUE"
+```
+
+```r
 sw_test2 <- shapiro.test(dfb$`Vendas-dep`)
 sw_test2
+```
+
+```
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  dfb$`Vendas-dep`
+## W = 0.81545287, p-value = 0.001482474
+```
+
+```r
 paste("Rejeita-se H_0:", ci > sw_test2$p.value)
 ```
 
-```{r 4b normal grafico, options}
+```
+## [1] "Rejeita-se H_0: TRUE"
+```
+
+
+```r
 ggqqplot(dfb$`Vendas-ant`, ylab = "Vendas antes",
          ggtheme = theme_minimal())
 ```
+
+![](exercicio4_files/figure-html/4b normal grafico, options-1.png)<!-- -->
 
 
 ### a) Pode-se concluir que o novo veículo de propaganda é eficiente para aumentar as vendas?
@@ -349,17 +537,32 @@ Onde:
 - $n$ é o numero de pares
 
 Apura-se:
-```{r 4ba, options}
+
+```r
 # Realizar o teste t pareado
 t_test_pareado <- t.test(dfb$`Vendas-dep`, dfb$`Vendas-ant`, paired = TRUE, alternative = "greater")
 t_test_pareado
+```
+
+```
+## 
+## 	Paired t-test
+## 
+## data:  dfb$`Vendas-dep` and dfb$`Vendas-ant`
+## t = 2.0244086, df = 19, p-value = 0.02860853
+## alternative hypothesis: true mean difference is greater than 0
+## 95 percent confidence interval:
+##  0.2114938332          Inf
+## sample estimates:
+## mean difference 
+##            1.45
 ```
 
 Este código realiza um teste t para amostras pareadas assumindo que a hipótese alternativa é que as vendas antes são maiores que as vendas depois (i.e., a propaganda não é eficaz). 
 
 \  
 
-O p-valor encontrado (`r t_test_pareado$p.value`) indica que é possível rejeitar $H_0$.   
+O p-valor encontrado (0.0286085347) indica que é possível rejeitar $H_0$.   
 Ou seja, é possível assumir que a propaganda é eficáz, dado que as vendas posteriores são maiores.
 
 
@@ -373,20 +576,54 @@ Cada par de observação foi extraído do mesmo sujeito.
 As diferenças tem distribuição normal.
 
 
-```{r 4bb, options}
+
+```r
 # Calcular as diferenças
 diferencas <- dfb$`Vendas-dep` - dfb$`Vendas-ant`
 hist(diferencas)
+```
+
+![](exercicio4_files/figure-html/4bb, options-1.png)<!-- -->
+
+```r
 x_d <- mean(diferencas)
 x_d
+```
+
+```
+## [1] 1.45
+```
+
+```r
 se <- sd(diferencas)/sqrt(length((diferencas)))
 se
+```
+
+```
+## [1] 0.7162585537
+```
+
+```r
 t <- x_d / se
 t
+```
 
+```
+## [1] 2.024408634
+```
+
+```r
 # Testar a normalidade das diferenças
 shapiro_test <- shapiro.test(diferencas)
 shapiro_test
+```
+
+```
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  diferencas
+## W = 0.95386828, p-value = 0.4296392
 ```
 
 Este código calcula as diferenças entre as vendas antes e depois e aplica o teste de Shapiro-Wilk para normalidade
@@ -395,14 +632,26 @@ Este código calcula as diferenças entre as vendas antes e depois e aplica o te
 
 ### c) Imagine que só seria vantajoso o investimento nesse novo veículo de propaganda se as vendas subissem mais de mil unidades em média. Qual seria sua decisão nesse caso?
 
-```{r 4bc, options}
+
+```r
 # Calcular a diferença média das vendas e verificar se é maior que 1 (mil unidades em milhares)
 media_diferencas <- mean(diferencas)
 decisao <- media_diferencas > 1  # 1 representa mil unidades
 
 # Exibir decisão
 print(media_diferencas)
+```
+
+```
+## [1] 1.45
+```
+
+```r
 print(decisao)
+```
+
+```
+## [1] TRUE
 ```
 
 

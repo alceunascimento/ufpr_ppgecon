@@ -1,0 +1,150 @@
+---
+title: "exercicio4_b"
+author: "Alceu Nascimento, João Maurício Rolim e Tiago Soares"
+date: "2024-05-07"
+output:
+  html_document: 
+    toc: yes
+    toc_float: yes
+    toc_depth: 5
+  word_document:
+    toc: yes
+    toc_depth: '5'
+  pdf_document:
+    toc: yes
+    toc_depth: '5'
+subtitle: 'Estatística (Prof. Adalto Acir Althaus Jr.): exercícios'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)                 # tabelas kable
+library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+library(here)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(forcats)               # Ferramentas para trabalhar com fatores
+library(googlesheets4)         # Interage com Google Sheets
+library(haven)                 # Importa e exporta dados de softwares estatísticos
+library(hms)                   # Trabalha com horas, minutos, segundos
+library(httr)                  # Facilita requisições HTTP e APIs web
+library(jsonlite)              # Parser JSON rápido e robusto
+library(lubridate)             # Simplifica trabalho com datas e horas
+library(modelr)                # Funções para modelagem em conjunto com dplyr/ggplot2
+library(reprex)                # Cria exemplos reproduzíveis facilmente
+library(rlang)                 # Ferramentas para programação e metaprogramação em R
+library(rvest)                 # Ferramentas para web scraping
+library(tibble)                # Versão moderna do data frame do R
+library(xml2)                  # Leitura, escrita e processamento de XML
+library(tidytext)              # Análise de dados textuais
+library(ggthemes)              # Layout gráfico semelhante ao usado no Stata
+library(janitor)               # limpeza e manipulacao de dados
+library(mosaic)                # padronização de variaveis
+library(zoo)                   # Provides the most popular format for saving time series objects in R.
+library(xts)        
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(nortest)               # Anderson-Darling Test for normality
+library(Hmisc)
+library(pastecs)
+library(stats)
+library(car)
+library(yarrr)
+library(ggpubr)
+library(vtable)
+```
+
+
+# Exerício 04
+
+## Questão A
+
+A planilha DEMO traz informações de 1.000 respondentes quanto à sua idade em anos, 
+o seu estado civil (1- casado , 0- não casado), quanto tempo (em anos) vive no endereço atual,
+sua renda anual (em milhares de reais), o preço do carro principal (em milhares de reais),
+sua escolaridade (1- primeiro grau, 2- segundo grau, 3- terceiro grau, 4- Pós graduação especialização, 
+5- mestrado/doutorado),  quanto tempo, em anos, está no emprego atual (t_emp_atual),
+se é (1) ou não (0) aposentado, o sexo (m- masc e f- femin) e sua satisfação
+no trabalho (de 1- Nada satisfeito a 5- Muito satisfeito).
+
+```{r dataset 4a, options}
+# carregando o dataset
+path_a = here("./estatistica/data/dataset4a.csv")
+dfa <- read_csv2(path_a,
+                   col_types = cols(
+                     sexo = col_factor(levels = c("f", "m"))  # Especifica os níveis 'f' e 'm'
+                   )
+                 )
+
+# ajustando variaveis qualitativas ordinais como factor
+dfa$est_civil <- factor(dfa$est_civil, levels = c(0, 1), labels = c("solteiro", "casado"))
+dfa$sexo <- factor(dfa$sexo, levels = c("f", "m"), labels = c("fem", "masc"))
+
+# checking
+head(dfa)
+
+# cleaning
+rm(path_a)
+```
+
+\  
+
+### a) Teste se as médias de idade entre homens e mulheres da população podem ser consideradas iguais usando o teste-t presumindo variâncias iguais e depois presumindo-as diferentes. Qual seria o valor-p mais correto nesse caso?
+
+Considerando que são amostras independentes, o teste $t$ de Student pode ser utilizado para comparar as médias dos dois grupos.  
+\  
+
+A fórmula do teste t é dada por:
+
+$$ 
+t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{s_p^2\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
+$$
+
+Onde:  
+- $\bar{X}_1$ e $\bar{X}_2$ são as médias amostrais dos grupos;  
+- $n_1$ e $n_2$ são os tamanhos das amostras; e  
+- $s_p^2$ é a variância combinada das duas amostras quando assumimos variâncias iguais.     
+
+\  
+
+
+Primeiro, verifica-se a homogeneidade das variâncias, considerando:
+
+$H_0$ : as variâncias são homogeneas  
+$H_a$ : as variâncias não são homogêneas
+
+
+```{r 4aa variancias, options}
+# Teste de levene 
+levene_teste_4aa <- leveneTest(idade ~ sexo, data = dfa)
+levene_teste_4aa
+
+# Gráfico de boxplot
+with(dfa, boxplot(idade ~ sexo, names = c("Feminino", "Masculino"), 
+                  xlab = "Sexo", ylab = "Idade", main = "Boxplot das Amostras"))
+```
+
+Dado que o p-valor do teste Levene ficou acima de 5%, não é possível rejeitar $H_0$, portanto, aceita-se que há homogeneidade entre as variancias.
+
+
