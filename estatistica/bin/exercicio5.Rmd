@@ -66,8 +66,13 @@ Analise as premissas do modelo de regressão.
 
 ```{r dataset 5b, options}
 # carregando o dataset
+<<<<<<< HEAD
 # path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5b.csv"
 path_b = "~/proj/ufpr_ppgecon/estatistica/data/dataset5b.csv"
+=======
+path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5b.csv"
+#path_b = "~/proj/ufpr_ppgecon/estatistica/data/dataset5b.csv"
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 dfb <- read_csv2(path_b)
 head(dfb)
 rm(path_b)
@@ -77,19 +82,15 @@ rm(path_b)
 ```{r 5b lm, options}
 model.5b <- lm(salario_medio ~ anos_estudo, data = dfb)
 summary(model.5b)
+```
 
+```{r 5b checkmodel, options}
 # checks
 check_autocorrelation(model.5b)
 check_collinearity(model.5b)
 check_normality(model.5b)
 check_heteroscedasticity(model.5b)
-```
-
-```{r 5b checkmodel, options}
 check_model(model.5b)
-```
-```{r 5b stargazer, results= 'asis'}
-stargazer(model.5b, type = "html",  digits=2, report = "vcstp")
 ```
 
 
@@ -108,6 +109,14 @@ plot(previsto.5b)
 ```
 
 ```{r 5b confint, options}
+<<<<<<< HEAD
+=======
+# Respostas para as questões
+## coeficiente de determinação
+summary(model.5b)$r.squared
+summary(model.5b)$adj.r.squared
+## Intervalo de confiança para os estimadores
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 confint(model.5b, level=0.95)
 ```
 
@@ -124,8 +133,13 @@ $(X_1)$ idade do imóvel e $(X_2)$ área do imóvel.
 
 ```{r dataset 5c, options}
 # carregando o dataset
+<<<<<<< HEAD
 # path_c = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5c.csv"
 path_c = "~/proj/ufpr_ppgecon/estatistica/data/dataset5c.csv"
+=======
+path_c = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5c.csv"
+#path_c = "~/proj/ufpr_ppgecon/estatistica/data/dataset5c.csv"
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 dfc <- read_csv2(path_c)
 head(dfc)
 rm(path_c)
@@ -134,26 +148,6 @@ rm(path_c)
 ```{r 5c lm, options}
 model.5c <- lm(preco ~ idade + area, data = dfc)
 summary(model.5c)
-
-# checks
-check_autocorrelation(model.5c)
-check_collinearity(model.5c)
-check_normality(model.5c)
-check_heteroscedasticity(model.5c)
-```
-
-```{r 5c model problemas, options}
-# verificando ausencia de normalidade dos residuos
-normal.res.5c <- check_normality(model.5c)
-plot(normal.res.5c, type = "density")
-
-# verificando heteroscedasticidade
-hetero.5c <- check_heteroscedasticity(model.5c)
-plot(hetero.5c)
-```
-
-```{r 5c stargazer,  results = 'asis'}
-stargazer(model.5c, type = "html", digits=3, report = "vcstp")
 ```
 
 \  
@@ -187,7 +181,9 @@ summary(model.5c)$r.squared
 summary(model.5c)$adj.r.squared
 ```
 
-O modelo explica [x] ...
+O $R^2$, ou coeficiente de determinação, é uma medida estatística que oferece uma indicação de quão bem os dados observados são replicados pelo modelo estatístico. Em termos objetivos, o $R^2$ descreve a proporção da variação na variável dependente que é previsível a partir das variáveis independentes. O $R^2$ sempre varia entre 0 e 1, onde um valor mais alto sugere um melhor ajuste do modelo aos dados.
+No caso, o $R^2$ de $0.8363525406$,  indica que aproximadamente $83.64%$ da variabilidade na variável dependente pode ser explicada pelas variáveis independentes incluídas no `modelo model.5c`. Este valor é geralmente considerado alto, indicando que o modelo fornece um bom ajuste para os dados.
+O $R^2$ Ajustado de $0.8293888189$, ajustado também mede a proporção da variação explicada pelo modelo, mas é ajustado pelo número de preditores no modelo (variáveis independentes). Isso é feito para penalizar a inclusão de variáveis que não melhoram substancialmente o modelo. Neste caso, o $R^2$ ajustado de 0.829 sugere que, após o ajuste para o número de variáveis, ainda cerca de $82.94%$ da variabilidade é explicada pelo modelo.
 
 \ 
 
@@ -205,8 +201,10 @@ anova(model.5c)
 confint(model.5c)
 ```
 
-Cada 1 ano de idade, o preço reduz `r round(model.5c$coefficients[2],2)`.
-Para cada 1$m^2$ de área, o preço do imóvel aumenta `r round(model.5c$coefficients[3],2)`  
+Cada 1 ano de idade, o preço reduz, na média, `r round(model.5c$coefficients[2],2)`.
+Para cada 1$m^2$ de área, o preço do imóvel aumenta, na média, `r round(model.5c$coefficients[3],2)`.
+Estes valores estão contidos dentro do intervalo acima específicado e podem ser considerados
+para um nível de confiança de $95%$.
 
 
 
@@ -246,11 +244,23 @@ plot(previsto.5c)
 ### e) Analise as premissas do modelo.
 
 ```{r 5ce, options}
+# checks
+check_autocorrelation(model.5c)
+check_collinearity(model.5c)
+check_normality(model.5c)
+check_heteroscedasticity(model.5c)
 
+# verificando ausencia de normalidade dos residuos
+normal.res.5c <- check_normality(model.5c)
+plot(normal.res.5c, type = "density")
+
+# verificando heteroscedasticidade
+hetero.5c <- check_heteroscedasticity(model.5c)
+plot(hetero.5c)
 ```
 
 
-O modelo não atender as premissada, dada a heteocedasticidade e ausencia de normalidade dos resíduos.
+O modelo não atende as premissas da OLS, dada a heteocedasticidade e ausencia de normalidade dos resíduos.
 
 
 \  
@@ -266,6 +276,7 @@ Ajuste modelos de regressão linear para explicar a pontuação.
 
 ```{r dataset 5d, options}
 # carregando o dataset
+<<<<<<< HEAD
 #path_d = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5d.csv"
 path_d = "~/proj/ufpr_ppgecon/estatistica/data/dataset5d.csv"
 
@@ -273,31 +284,40 @@ dfd <- read_csv2(path_d)
 head(dfd)
 glimpse(dfd)
 rm(path_d)
+=======
+path_d = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5d.csv"
+#path_d = "~/proj/ufpr_ppgecon/estatistica/data/dataset5d.csv"
+dfd <- read_csv2(path_d)
+head(dfd)
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 ```
 
 ```{r 5d modelo, options}
 model.5d <- lm(P ~  GP + GC + VV, data = dfd)
 summary(model.5d)
+<<<<<<< HEAD
+=======
+```
+
+```{r 5d check_model, options}
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 # checks
 check_autocorrelation(model.5d)
 check_collinearity(model.5d)
 check_normality(model.5d)
 check_heteroscedasticity(model.5d)
+<<<<<<< HEAD
 ```
 
 ```{r 5d check_model, options}
+=======
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 check_model(model.5d)
-```
-
-
-
-```{r 5d stargazer, results='asis'}
-stargazer(model.5d, type = "html", digits=3, report = "vcstp")
 ```
 
 \  
 
-## Questão E (dataser "acidentes")
+## Questão E (dataset "acidentes")
 
 Ajuste um modelo de regressão linear para modelar acidentes fatais.
 Variáveis:
@@ -321,14 +341,18 @@ Variáveis:
 
 ```{r dataset 5e, options}
 # carregando o dataset
+<<<<<<< HEAD
 #path_e = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5e.csv"
 path_e = "~/proj/ufpr_ppgecon/estatistica/data/dataset5e.csv"
 
+=======
+path_e = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5e.csv"
+#path_e = "~/proj/ufpr_ppgecon/estatistica/data/dataset5e.csv"
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 dfe <- read_csv2(path_e)
 dfe <- dfe %>%
   mutate(across(state, as.factor))
 head(dfe)
-rm(path_e)
 ```
 
 
@@ -336,28 +360,27 @@ rm(path_e)
 ```{r 5e modelo, options}
 model.5e <- lm(fia ~ pay94 + regist, data = dfe)
 summary(model.5e)
+```
 
+```{r 5e check_model, options}
 # checks
 check_autocorrelation(model.5e)
 check_collinearity(model.5e)
 check_normality(model.5e)
 check_heteroscedasticity(model.5e)
-
-
-```
-
-```{r 5e check_model, options}
 check_model(model.5e)
 ```
 
+<<<<<<< HEAD
 ```{r 5e plot, options}
 dfe_lm <- dfe %>%
   select(fia, pay94, regist)
 plot(dfe_lm)
 ```
+=======
 
-```{r 5e stargazer, results='asis'}
-stargazer(model.5e, type = "html", digits=3, report = "vcstp")
-```
+\  
+>>>>>>> 9c3af843dc992923b12327fe4c2e198d52f7463b
 
+Fim.
 
