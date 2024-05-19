@@ -53,43 +53,56 @@ library(nortest)               # Anderson-Darling Test for normality
 ```
 
 
-```{r base, options}
+```{r get data, options}
 # exerc 1
 rm(list = ls())
 here
 df1 <- read_csv("~/proj/ufpr_ppgecon/econometria/data/exerc1.csv")
-
 head(df1)
+```
 
 
-#1
+# 1
+```{r 1, options}
 plot(df1$depois ~ df1$antes)
-
-#2(i)
-
+```
 
 
-#2(ii)
+## 2
+
+## 2(i)
+
+
+
+## 2(ii)
+```{r 2ii, options}
 modelo1 <- lm(depois ~ antes, data = df1)
 summary(modelo1)
 plot(df1$depois ~ df1$antes)
 abline(modelo1)
+```
 
-#3
+
+# 3
+```{r 3, options}
 sum(modelo1$residuals)
 var(modelo1$residuals)
 sd(modelo1$residuals)
 
-#3a
+```
 
-#4
+# 3a
+
+# 4
+```{r 4, options}
 correlation::correlation(df1)
 
-#5
-
-#6
-
-#7
-
-#8
 ```
+
+# 5
+
+# 6
+
+# 7
+
+# 8
