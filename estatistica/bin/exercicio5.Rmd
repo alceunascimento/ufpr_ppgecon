@@ -42,7 +42,6 @@ library(strucchange)           # analisar quebras estruturais (Chow Test)
 library(mctest)                # teste para multicolinearidad
 library(performance)           # Analisa regressão 
 library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
-library(Plothtests)
 library(nortest)               # Anderson-Darling Test for normality
 library(Hmisc)
 library(pastecs)
@@ -67,7 +66,8 @@ Analise as premissas do modelo de regressão.
 
 ```{r dataset 5b, options}
 # carregando o dataset
-path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5b.csv"
+# path_b = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5b.csv"
+path_b = "~/proj/ufpr_ppgecon/estatistica/data/dataset5b.csv"
 dfb <- read_csv2(path_b)
 head(dfb)
 rm(path_b)
@@ -106,6 +106,11 @@ abline(b = 1, a = 0)
 previsto.5b <- check_predictions(model.5b)
 plot(previsto.5b)
 ```
+
+```{r 5b confint, options}
+confint(model.5b, level=0.95)
+```
+
 \  
 
 ## Questão C (dataset "aptos")
@@ -119,7 +124,8 @@ $(X_1)$ idade do imóvel e $(X_2)$ área do imóvel.
 
 ```{r dataset 5c, options}
 # carregando o dataset
-path_c = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5c.csv"
+# path_c = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5c.csv"
+path_c = "~/proj/ufpr_ppgecon/estatistica/data/dataset5c.csv"
 dfc <- read_csv2(path_c)
 head(dfc)
 rm(path_c)
@@ -260,23 +266,23 @@ Ajuste modelos de regressão linear para explicar a pontuação.
 
 ```{r dataset 5d, options}
 # carregando o dataset
-path_d = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5d.csv"
+#path_d = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5d.csv"
+path_d = "~/proj/ufpr_ppgecon/estatistica/data/dataset5d.csv"
+
 dfd <- read_csv2(path_d)
 head(dfd)
+glimpse(dfd)
 rm(path_d)
 ```
 
 ```{r 5d modelo, options}
-model.5d <- lm(P ~ GP + GC + VM + VV + DM + DV + CA + CV, data = dfd)
+model.5d <- lm(P ~  GP + GC + VV, data = dfd)
 summary(model.5d)
-
 # checks
 check_autocorrelation(model.5d)
 check_collinearity(model.5d)
 check_normality(model.5d)
 check_heteroscedasticity(model.5d)
-
-
 ```
 
 ```{r 5d check_model, options}
@@ -315,19 +321,20 @@ Variáveis:
 
 ```{r dataset 5e, options}
 # carregando o dataset
-path_e = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5e.csv"
+#path_e = "C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/estatistica/data/dataset5e.csv"
+path_e = "~/proj/ufpr_ppgecon/estatistica/data/dataset5e.csv"
+
 dfe <- read_csv2(path_e)
+dfe <- dfe %>%
+  mutate(across(state, as.factor))
 head(dfe)
 rm(path_e)
 ```
 
-```{r 5e, options}
-plot(dfe)
-```
 
 
 ```{r 5e modelo, options}
-model.5e <- lm(fia ~ + pay94 + pop + area + density + ins94 + carsins + regist + rdmiles + bac + totdriv, data = dfe)
+model.5e <- lm(fia ~ pay94 + regist, data = dfe)
 summary(model.5e)
 
 # checks
@@ -343,7 +350,11 @@ check_heteroscedasticity(model.5e)
 check_model(model.5e)
 ```
 
-
+```{r 5e plot, options}
+dfe_lm <- dfe %>%
+  select(fia, pay94, regist)
+plot(dfe_lm)
+```
 
 ```{r 5e stargazer, results='asis'}
 stargazer(model.5e, type = "html", digits=3, report = "vcstp")

@@ -1,0 +1,95 @@
+---
+title: "UFPR PPGEcon 2024"
+subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 01"
+author: "Alceu Nascimento, Thiago Soares e Aron Costa"
+date: "2024-04-21"
+output:
+  html_document:
+    df_print: paged
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
+header-includes:
+- \usepackage{fontspec}
+- \setmainfont{Arial}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)                 # tabelas kable
+library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+library(grid)  # Para configurações adicionais de grid
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+library(janitor)
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
+library(nortest)               # Anderson-Darling Test for normality
+```
+
+
+```{r base, options}
+# exerc 1
+rm(list = ls())
+here
+df1 <- read_csv("~/proj/ufpr_ppgecon/econometria/data/exerc1.csv")
+
+head(df1)
+
+
+#1
+plot(df1$depois ~ df1$antes)
+
+#2(i)
+
+
+
+#2(ii)
+modelo1 <- lm(depois ~ antes, data = df1)
+summary(modelo1)
+plot(df1$depois ~ df1$antes)
+abline(modelo1)
+
+#3
+sum(modelo1$residuals)
+var(modelo1$residuals)
+sd(modelo1$residuals)
+
+#3a
+
+#4
+correlation::correlation(df1)
+
+#5
+
+#6
+
+#7
+
+#8
+```
