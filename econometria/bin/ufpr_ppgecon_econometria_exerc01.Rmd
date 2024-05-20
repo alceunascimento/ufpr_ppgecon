@@ -65,7 +65,7 @@ A planilha "exemplo1.xls" contém informações referentes às seguintes variáv
 - APOS: nota esperada por cada aluno após a realização da prova;       
 
 
-```{r 1 get data, options}
+```{r 1 get data, warning=FALSE}
 df1 <- read_csv2(here("econometria/data/exerc1.csv"))
 ```
 
@@ -220,19 +220,35 @@ Implementação computacional:
 ```{r 3a}
 # NOTA : em substituição ao Excel foi usado o R, na funçaõ lm()
 modelo1 <- lm(nota ~ antes, data = df1)
-stargazer(modelo1, type = "text", report = "vcstp*")
-plot(df1$apos ~ df1$antes, xlim = c(0, max(df1$antes)), ylim = c(0, max(df1$apos)))
-abline(modelo1, col = "blue")
+```
+```{r 3a stargazer, results='asis'}
+stargazer(modelo1, type = "html", report = "vcstp*")
+```
 
-# Soma dos resíduos
-sum(modelo1$residuals)
-# Variância dos resíduos
-var(modelo1$residuals)
-# Desvio padrão dos resíduos
-sd(modelo1$residuals)
+```{r 3a plot, options}
+plot(df1$nota ~ df1$antes, xlim = c(0, max(df1$antes)), ylim = c(0, max(df1$nota)))
+abline(modelo1, col = "blue")
+```
+
+
+
+```{r 3a residuos, options}
+soma_residuos_m1 <- sum(modelo1$residuals)
+media_residuos_m1 <- mean(modelo1$residuals)
+variancia_residuos_m1 <- var(modelo1$residuals)
+desviopadrao_residuos_m1 <- sd(modelo1$residuals)
+
+# Criar um dataframe com os resultados
+resultados_residuos <- data.frame(
+  Objeto = c("Soma", "Média", "Variância", "Desvio Padrão"),
+  Valor = c(soma_residuos_m1, media_residuos_m1, variancia_residuos_m1, desviopadrao_residuos_m1)
+)
+# Exibir a tabela formatada usando xtable
+xtable(resultados_residuos, col.names = c("Objeto", "Valor"), caption = "Tabela de Resultados dos Resíduos da Regressão Linear")
 
 
 ```
+
 
 \  
 
@@ -275,6 +291,7 @@ Verifique que o R2 da regressão do item anterior corresponde ao quadrado desse 
 
 ```{r 4ii}
 correl <- correlation::correlation(df1)
+correl
 correl$r[2]^2
 r2
 ```
@@ -292,8 +309,13 @@ Implementação computacional:
 ```{r 5a}
 # Ajustar o modelo de regressão sem intercepto (-1)
 modelo2 <- lm(nota ~ antes - 1, data = df1)
-stargazer(modelo2, type = "text", report = "vcstp*")
+```
 
+```{r 5a stargazer, results='asis'}
+stargazer(modelo2, type = "html", report = "vcstp*")
+```
+
+```{r 5a plot, options}
 # Plotar os dados e a linha de regressão ajustada
 plot(df1$nota ~ df1$antes, 
      xlim = c(0, max(df1$antes)), 
@@ -301,6 +323,8 @@ plot(df1$nota ~ df1$antes,
      main = "Regressão de NOTA em ANTES, sem Intercepto")
 abline(modelo2, col = "blue")
 ```
+
+
 
 \  
 
@@ -437,7 +461,10 @@ Os desvios da nota efetiva em relação à esperada refletem, assim, erros refer
 df7 <- df1
 df7$apos_antes  <-  df7$apos - df7$antes
 modelo7 <- lm(nota ~ antes + apos_antes, data = df7)
-stargazer(modelo7, type = "text", report = "vcstp*")
+```
+
+```{r 7 stargazer, results='asis'}
+stargazer(modelo7, type = "html", report = "vcstp*")
 ```
 
 \  
@@ -446,9 +473,10 @@ stargazer(modelo7, type = "text", report = "vcstp*")
 
 ```{r 8}
 modelo8 <- lm(nota ~ antes + apos, data = df1)
-stargazer(modelo8, modelo7, type = "text", report = "vcstp*")
 ```
-
+```{r 8 stargazer, results='asis'}
+stargazer(modelo8, modelo7, type = "html", report = "vcstp*")
+```
 
 *****
 
@@ -476,7 +504,10 @@ head(dfb)
 
 ```{r b1a}
 modelo.b1.a <- lm(pibpc ~ etot, data = dfb)
-stargazer(modelo.b1.a, type = "text", report = "vcstp*", digits = 5)
+```
+
+```{r b1a stargazer, results='asis'}
+stargazer(modelo.b1.a, type = "html", report = "vcstp*", digits = 5)
 ```
 
 ```{r b1a checks, options}
@@ -485,9 +516,6 @@ check_normality(modelo1)
 check_heteroscedasticity(modelo1)
 ```
 
-```{r b1a plot, options}
-plot(dfb$pibpc ~ dfb$etot)
-```
 
 **Com base no que você estudou no curso, como você esperaria que mudassem os coeficientes estimados ao mudar a unidade de medida da variável dependente,passando a medi-la em R$ em vez de R$ mil?**  
    
@@ -497,12 +525,12 @@ plot(dfb$pibpc ~ dfb$etot)
 
 ```{r b1b}
 modelo.b1.b <- lm(pibpc1000 ~ etot, data = dfb)
-stargazer(modelo.b1.b, type = "text", report = "vcstp*", digits = 5)
 ```
 
-```{r b1b plot, options}
-plot(dfb$pibpc1000 ~ dfb$etot)
+```{r b1b stargazer, results='asis'}
+stargazer(modelo.b1.b, type = "html", report = "vcstp*", digits = 5)
 ```
+
 
 \  
 
@@ -516,12 +544,13 @@ plot(dfb$pibpc1000 ~ dfb$etot)
 
 ```{r b2a}
 modelo.b2.a <- lm(ln_pibpc ~ etot, data = dfb)
-stargazer(modelo.b2.a, type = "text", report = "vcstp*", digits = 5)
 ```
 
-```{r b2a plot, options}
-plot(dfb$ln_pibpc ~ dfb$etot)
+```{r b2a stargazer, results='asis'}
+stargazer(modelo.b2.a, type = "html", report = "vcstp*", digits = 5)
 ```
+
+
 
 **Como muda a interpretação dos coeficientes estimados em relação ao item anterior?**
 
@@ -545,7 +574,10 @@ plot(dfb$ln_pibpc ~ dfb$etot)
 ```{r b2b}
 modelo.b2b.1 <- lm(ln_pibpc1000 ~ etot, data = dfb)
 modelo.b2b.2 <- lm(ln_pibpc1000 ~ etot12, data = dfb)
-stargazer(modelo.b2b.1,modelo.b2b.2, type = "text", report = "vcstp*", digits = 5)
+```
+
+```{r b2b stargazer, results='asis'}
+stargazer(modelo.b2b.1,modelo.b2b.2, type = "html", report = "vcstp*", digits = 5)
 ```
 
 > Os modelos confirmam a expectativa. 
@@ -557,9 +589,13 @@ stargazer(modelo.b2b.1,modelo.b2b.2, type = "text", report = "vcstp*", digits = 
 ```{r b3}
 modelob.3b.1 <- lm(ln_pibpc ~ etot, data = dfb)
 modelob.3b.2 <- lm(ln_pibpc ~ etot12, data = dfb)
-stargazer(modelob.3b.1,modelob.3b.2, type = "text", report = "vcstp*", digits = 5)
-
 ```
+
+```{r b3 stargazer, results='asis'}
+stargazer(modelob.3b.1,modelob.3b.2, type = "html", report = "vcstp*", digits = 5)
+```
+
+\  
 
 **O que acontece com os coeficientes estimados e seus desvios padrões? **
 
