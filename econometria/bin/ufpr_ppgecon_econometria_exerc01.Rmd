@@ -14,7 +14,7 @@ header-includes:
 - \setmainfont{Arial}
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
@@ -23,8 +23,8 @@ options(scipen = 10, digits = 10, OutDec = ".")
 # basic ----
 library(writexl)               # Salva as tabelas elaboradas em formato .xls
 library(readxl)                # Reads Microsoft Excel spreadsheets.
-library(knitr)                 # tabelas kable
-library(kableExtra)            # Build common complex HTML tables and manipulate table styles.
+library(knitr)
+library(kableExtra)
 library(readr)                 # A fast and friendly way to read tabular data into R.
 library(MASS)                  # visualiza decimal em fracoes
 library(xtable)                # transforma tabela Excel para Latex
@@ -32,6 +32,7 @@ library(ggplot2)               # graficos
 library(gridExtra)
 library(grid)  # Para configurações adicionais de grid
 library(here)
+library(xtable)
 # data manipulation ----
 library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
 library(broom)                 # Converte saídas de modelos estatísticos em tibbles
@@ -56,19 +57,19 @@ library(nortest)               # Anderson-Darling Test for normality
 
 # Atividade A
 
+**Dados**  
+
 A planilha "exemplo1.xls" contém informações referentes às seguintes variáveis:  
-* NOTA – nota obtida na P1 por cada aluno da turma A de TPE no semestre passado;  
-* ANTES – nota esperada por cada aluno antes de ver a prova;  
-* APOS – nota esperada por cada aluno após a realização da prova;       
+- NOTA: nota obtida na P1 por cada aluno da turma A de TPE no semestre passado;  
+- ANTES: nota esperada por cada aluno antes de ver a prova;  
+- APOS: nota esperada por cada aluno após a realização da prova;       
 
 
 ```{r 1 get data, options}
-# exerc 1
-rm(list = ls())
 df1 <- read_csv2(here("econometria/data/exerc1.csv"))
-head(df1)
 ```
 
+\  
 
 
 ## Item 1: Mostre em um diagrama de dispersão a relação entre NOTA e ANTES.
@@ -77,11 +78,15 @@ head(df1)
 plot(df1$nota ~ df1$antes, xlim = c(0, max(df1$antes)), ylim = c(0, max(df1$nota)))
 ```
 
+\  
+
 **Ao rodar uma regressão de NOTA em ANTES, que valores você esperaria para $\beta_0$ $\beta_1$?**  
 
 Resposta:
 
 >Para $\beta_0$ algo inferior a zero e para $\beta_1$ algo ligeiramente maior do que um.
+
+\  
 
 
 ## Item 2: Realize a regressão citada no item anterior de 2 formas distintas:
@@ -91,12 +96,15 @@ Resposta:
 
 **Isto é, calculando explicitamente os termos presentes na fórmula do estimador de MQO;**
 
+\  
+
+Implementação computacional:  
+
 ```{r 2 lm manual}
 # criando um dataframe para este exercicio
 df_manual <- df1 |> 
   select(nota, antes) |> 
   rename(X = antes, Y = nota)
-
 n <- nrow(df_manual)
 
 # obter a média de X
@@ -115,7 +123,6 @@ df_manual$y2 <- (df_manual$y)^2
 # obter produto xY
 df_manual$xy <- df_manual$x*df_manual$y
 
-
 # obter a soma de xY e de x^2 
 soma_x2 <- sum(df_manual$x2)
 soma_xy <- sum(df_manual$xy)
@@ -133,28 +140,33 @@ df_manual$Y_estimado <- alpha_estimado + beta_estimado * df_manual$X
 df_manual$residuos <- df_manual$Y - df_manual$Y_estimado
 df_manual$residuos2 <- df_manual$residuos^2
 
-
-
-# produzir tabela final com as variaveis incluidas e os valores de Alpha e Beta
-df_manual
-
-
 # Soma dos Quadrados
 # SQE
 sqe <- beta_estimado^2 * soma_x2
-sqe
 # SQT
 sqt <- sum(df_manual$y2)
-sqt
 # SQR
 sqr <- sum(df_manual$residuos2)
-sqr
-
 # R2
 r2 <- sqe / sqt
-r2
+
+# produzir tabela final com as variaveis incluidas e os valores de Alpha e Beta
+df_manual
 ```
 
+
+```{r 2 tabela, options}
+# Criar um dataframe com os resultados
+resultados <- data.frame(
+  Objeto = c("beta_estimado", "alpha_estimado", "SQE", "SQR", "SQT", "R2"),
+  Valor = c(beta_estimado, alpha_estimado, sqe, sqr, sqt, r2)
+)
+# Exibir a tabela formatada usando kable
+xtable(resultados, col.names = c("Objeto", "Valor"), caption = "Tabela de Resultados da Regressão Linear")
+```
+
+
+\  
 
 ### 2(ii) usando o comando interceptação e inclinação em fórmulas estatísticas. 
 
@@ -181,19 +193,34 @@ Obtenha uma estimativa da variância (e, portanto, do desvio padrão) do erro al
 
 
 ```{r 3}
-sum(df_manual$residuos)
-mean(df_manual$residuos)
-var(df_manual$residuos)
-sd(df_manual$residuos)
+soma_residuos <- sum(df_manual$residuos)
+media_residuos <- mean(df_manual$residuos)
+variancia_residuos <- var(df_manual$residuos)
+desviopadrao_residuos <- sd(df_manual$residuos)
+
+# Criar um dataframe com os resultados
+resultados_residuos <- data.frame(
+  Objeto = c("Soma", "Média", "Variância", "Desvio Padrão"),
+  Valor = c(soma_residuos, media_residuos, variancia_residuos, desviopadrao_residuos)
+)
+# Exibir a tabela formatada usando xtable
+xtable(resultados_residuos, col.names = c("Objeto", "Valor"), caption = "Tabela de Resultados dos Resíduos da Regressão Linear")
 ```
+
+\  
+
 
 ### Item 3a: Refaça os itens 2 e 3 utilizando a função do excel: 
 Dados > Análise de dados > Regressão
 
+\  
+
+Implementação computacional:
+
 ```{r 3a}
 # NOTA : em substituição ao Excel foi usado o R, na funçaõ lm()
-modelo1 <- lm(apos ~ antes, data = df1)
-stargazer(modelo1, type = "text")
+modelo1 <- lm(nota ~ antes, data = df1)
+stargazer(modelo1, type = "text", report = "vcstp*")
 plot(df1$apos ~ df1$antes, xlim = c(0, max(df1$antes)), ylim = c(0, max(df1$apos)))
 abline(modelo1, col = "blue")
 
@@ -207,6 +234,7 @@ sd(modelo1$residuals)
 
 ```
 
+\  
 
 
 ## 4 Calcule o coeficiente de correlação amostral entre NOTA e ANTES de 2 formas distintas:
@@ -221,7 +249,7 @@ $$
 r = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{\sqrt{\sum{(x_i - \bar{x})^2} \sum{(y_i - \bar{y})^2}}} 
 $$
 
-Onde:
+Onde:  
 - \( r \) é o coeficiente de correlação.  
 - \( x_i \) e \( y_i \) são os valores das observações de \( x \) e \( y \).  
 - \( \bar{x} \) e \( \bar{y} \) são as médias de \( x \) e \( y \), respectivamente.  
@@ -229,14 +257,16 @@ Onde:
 - \(\sum{(x_i - \bar{x})^2}\) é a soma dos quadrados das variáveis \( x \) centralizadas.  
 - \(\sum{(y_i - \bar{y})^2}\) é a soma dos quadrados das variáveis \( y \) centralizadas.  
 
+\  
 
 
 
 ```{r 4}
 # Calcular o coeficiente de correlação
-coef_correlacao <- soma_xy / sqrt(soma_x2 * soma_y2)
-coef_correlacao
+soma_xy / sqrt(soma_x2 * soma_y2)
 ```
+
+\  
 
 
 ### 4.(ii) usando a função estatística CORREL.
@@ -244,27 +274,25 @@ coef_correlacao
 Verifique que o R2 da regressão do item anterior corresponde ao quadrado desse coeficiente de correlação.  
 
 ```{r 4ii}
-correlation::correlation(df1)
+correl <- correlation::correlation(df1)
+correl$r[2]^2
+r2
 ```
 
+\  
 
-## 5 Realize a regressão de NOTA (variável dependente) em ANTES (variável independente) supondo que o intercepto seja zero (ou seja, excluindo o termo constante do modelo). 
+## 5 Realize a regressão de NOTA (variável dependente) em ANTES (variável independente)
 
+Suponha que o intercepto seja zero (ou seja, excluindo o termo constante do modelo).  
 
+\  
+
+Implementação computacional:
 
 ```{r 5a}
-# Ajustar o modelo de regressão sem intercepto
+# Ajustar o modelo de regressão sem intercepto (-1)
 modelo2 <- lm(nota ~ antes - 1, data = df1)
-
-# Exibir o resumo do modelo usando stargazer
-stargazer(modelo2, type = "text")
-
-# Calcular a soma dos resíduos
-soma_residuos_modelo2 <- sum(residuals(modelo2))
-
-# Comparar com o resultado anterior (presumivelmente salvo em `soma_erros`)
-# Aqui você pode substituir `soma_erros` pelo valor obtido anteriormente se necessário
-# Por exemplo: soma_erros_anterior <- sum(df_manual$erro)
+stargazer(modelo2, type = "text", report = "vcstp*")
 
 # Plotar os dados e a linha de regressão ajustada
 plot(df1$nota ~ df1$antes, 
@@ -274,12 +302,15 @@ plot(df1$nota ~ df1$antes,
 abline(modelo2, col = "blue")
 ```
 
+\  
+
 
 **Calcule a soma dos resíduos da regressão e compare com o resultado obtido no item 3.**
 
 ```{r 5b}
-# Exibir a soma dos resíduos
-print(paste("Soma dos Resíduos do Modelo Sem Intercepto:", round(soma_residuos_modelo2, 3)))
+soma_residuos_modelo2 <- sum(modelo2$residuals)
+print(paste("Soma dos Resíduos do Modelo 2 (sem intercepto):", soma_residuos_modelo2))
+print(paste("Soma dos Resíduos do Modelo 1 (com intercepto):", soma_residuos))
 ```
 
 > A [...]
@@ -296,9 +327,99 @@ Veremos formalmente no curso como testar hipóteses conjuntas como essa.
 Informalmente, porém, já podemos dizer alguma coisa a respeito dessa hipótese?   
 Ela parece razoável dados os betas e seus respectivos desvios padrões estimados nos modelos com e sem intercepto acima?  
 
+\  
+
+Resposta:  
+
+Para realizar o teste de hipóteses mencionado e avaliar a racionalidade das expectativas, onde a hipótese nula é \( H_0: \beta_0 = 0 \) e \( \beta_1 = 1 \), podemos usar os coeficientes estimados e seus desvios padrão obtidos nos modelos de regressão com e sem intercepto.
+
+### Teste Informal de Hipóteses
+
+A ideia aqui é verificar se os coeficientes estimados são significativamente diferentes dos valores postulados pela hipótese nula.
+
+#### Modelo com Intercepto
+
+- \(\beta_0\) estimado: -2.163 (desvio padrão: 1.996)
+- \(\beta_1\) estimado: 1.025 (desvio padrão: 0.286)
+
+#### Modelo sem Intercepto
+
+- \(\beta_1\) estimado: 0.722 (desvio padrão: 0.061)
+
+Vamos calcular os valores \( t \) para cada coeficiente e comparar com o valor crítico da distribuição \( t \) de Student para um nível de significância típico (por exemplo, 0.05).
+
+### Modelo com Intercepto
+
+#### Teste para \( \beta_0 = 0 \)
+
+\[ t_{\beta_0} = \frac{\beta_0 - 0}{\text{desvio padrão de } \beta_0} = \frac{-2.163}{1.996} = -1.084 \]
+
+#### Teste para \( \beta_1 = 1 \)
+
+\[ t_{\beta_1} = \frac{\beta_1 - 1}{\text{desvio padrão de } \beta_1} = \frac{1.025 - 1}{0.286} = 0.087 \]
+
+### Modelo sem Intercepto
+
+#### Teste para \( \beta_1 = 1 \)
+
+\[ t_{\beta_1} = \frac{\beta_1 - 1}{\text{desvio padrão de } \beta_1} = \frac{0.722 - 1}{0.061} = -4.557 \]
+
+### Avaliação dos Resultados
+
+Para avaliar esses valores \( t \), podemos compará-los com o valor crítico da distribuição \( t \) de Student com o nível de significância escolhido. Para \( \alpha = 0.05 \) e 18 graus de liberdade (considerando 20 observações e 2 parâmetros no modelo), o valor crítico é aproximadamente 2.101.
+
+- **Para \( \beta_0 = 0 \)**:
+  - \( t_{\beta_0} = -1.084 \), que é menor em valor absoluto do que o valor crítico de 2.101. Portanto, não rejeitamos \( H_0 \) ao nível de significância de 0.05.
+
+- **Para \( \beta_1 = 1 \) no modelo com intercepto**:
+  - \( t_{\beta_1} = 0.087 \), que é muito menor do que o valor crítico de 2.101. Portanto, não rejeitamos \( H_0 \) ao nível de significância de 0.05.
+
+- **Para \( \beta_1 = 1 \) no modelo sem intercepto**:
+  - \( t_{\beta_1} = -4.557 \), que é maior em valor absoluto do que o valor crítico de 2.101. Portanto, rejeitamos \( H_0 \) ao nível de significância de 0.05.
+
+### Conclusão Informal
+
+A hipótese de que \( \beta_0 = 0 \) e \( \beta_1 = 1 \) é razoável para o modelo com intercepto, pois não rejeitamos as hipóteses nulas associadas a esses coeficientes ao nível de significância de 0.05. No entanto, para o modelo sem intercepto, rejeitamos a hipótese de que \( \beta_1 = 1 \).
+
+Portanto, baseado nos testes informais:
+- **Com intercepto**: A hipótese parece razoável.
+- **Sem intercepto**: A hipótese não parece razoável, pois \( \beta_1 \) é significativamente diferente de 1.
+
+
+Implementação computacional:
+
 ```{r 6}
+# Ajustar os modelos
+modelo_com_intercepto <- lm(nota ~ antes, data = df1)
+modelo_sem_intercepto <- lm(nota ~ antes - 1, data = df1)
+
+# Coeficientes e desvios padrões
+coef_com_intercepto <- coef(summary(modelo_com_intercepto))
+coef_sem_intercepto <- coef(summary(modelo_sem_intercepto))
+
+# Valores t para o modelo com intercepto
+t_beta0 <- coef_com_intercepto[1, "Estimate"] / coef_com_intercepto[1, "Std. Error"]
+t_beta1_com_intercepto <- (coef_com_intercepto[2, "Estimate"] - 1) / coef_com_intercepto[2, "Std. Error"]
+
+# Valores t para o modelo sem intercepto
+t_beta1_sem_intercepto <- (coef_sem_intercepto[1, "Estimate"] - 1) / coef_sem_intercepto[1, "Std. Error"]
+
+# Resultados
+resultados_hipotese <- data.frame(
+  Modelo = c("Com Intercepto", "Com Intercepto", "Sem Intercepto"),
+  Coeficiente = c("beta0", "beta1", "beta1"),
+  t_value = c(t_beta0, t_beta1_com_intercepto, t_beta1_sem_intercepto)
+)
+
+# Exibir os resultados
+print(kable(resultados_hipotese, 
+             col.names = c("Modelo", "Coeficiente", "Valor t"), 
+             caption = "Teste de Hipóteses para os Coeficientes da Regressão Linear"), 
+      type = "html")
 
 ```
+
+\  
 
 ## 7 Realize essa regressão com o regressor adicional a variável (APOS – ANTES) (usando Análise de Dados) e compare com os resultados acima.
 
@@ -308,28 +429,30 @@ conhecimento da matéria percebido pelo aluno.
 
 Os desvios da nota efetiva em relação à esperada refletem, assim, erros referentes a cada uma dessas expectativas.   
 
-Qual seria, então, a diferença entre o modelo estimado acima e um segundo modelo, 
-no qual incluíssemos como regressor adicional a variável (APOS – ANTES)?   
-Realize essa regressão (usando Análise de Dados) e compare com os resultados acima.  
+**Qual seria, então, a diferença entre o modelo estimado acima e um segundo modelo, no qual incluíssemos como regressor adicional a variável (APOS – ANTES)?**  
+**Realize essa regressão (usando Análise de Dados) e compare com os resultados acima.**  
+
 
 ```{r 7}
 df7 <- df1
 df7$apos_antes  <-  df7$apos - df7$antes
 modelo7 <- lm(nota ~ antes + apos_antes, data = df7)
-stargazer(modelo7, type = "text")
+stargazer(modelo7, type = "text", report = "vcstp*")
 ```
 
-
+\  
 
 ## 8 Realize agora a regressão de NOTA contra ANTES e APOS e compare com os resultados do item 7.
 
 ```{r 8}
-modelo8a <- lm(nota ~ antes, data = df1)
-modelo8b <- lm(nota ~ apos, data = df1)
-stargazer(modelo8a, modelo8b, type = "text")
+modelo8 <- lm(nota ~ antes + apos, data = df1)
+stargazer(modelo8, modelo7, type = "text", report = "vcstp*")
 ```
 
 
+*****
+
+\  
 
 
 # Atividade B
@@ -341,33 +464,51 @@ A planilha já inclui diversas transformações dessas variáveis (mudanças de 
 medida, logaritmos etc.).  
 
 
-```{r B get data, options}
-# exerc B
-rm(list = ls())
+```{r B get data}
 dfb <- read_csv2(here("econometria/data/exerc2.csv"))
 head(dfb)
 ```
+
+\   
 
 
 ## 1 Realize a regressão de PIBPC em ETOT. 
 
 ```{r b1a}
 modelo.b1.a <- lm(pibpc ~ etot, data = dfb)
-stargazer(modelo.b1.a, type = "text")
+stargazer(modelo.b1.a, type = "text", report = "vcstp*", digits = 5)
+```
+
+```{r b1a checks, options}
+check_autocorrelation(modelo1)
+check_normality(modelo1)
+check_heteroscedasticity(modelo1)
+```
+
+```{r b1a plot, options}
+plot(dfb$pibpc ~ dfb$etot)
 ```
 
 **Com base no que você estudou no curso, como você esperaria que mudassem os coeficientes estimados ao mudar a unidade de medida da variável dependente,passando a medi-la em R$ em vez de R$ mil?**  
    
-> A [...]
+> Quando mudamos a unidade de medida da variável dependente de R$ mil para R$ (ou seja, multiplicamos PIBPC por 1000 para obter PIBPC1000), esperamos que o coeficiente associado a ETOT aumente em um fator de 1000.
 
 **Verifique que sua expectativa está correta, estimando a regressão de (PIBPC*1000) em ETOT.**
 
 ```{r b1b}
 modelo.b1.b <- lm(pibpc1000 ~ etot, data = dfb)
-stargazer(modelo.b1.b, type = "text")
+stargazer(modelo.b1.b, type = "text", report = "vcstp*", digits = 5)
 ```
 
-> A [...]
+```{r b1b plot, options}
+plot(dfb$pibpc1000 ~ dfb$etot)
+```
+
+\  
+
+> Os resultados do segundo modelo confirmam a expectativa.
+
+\  
 
 
 ## 2 Realize a regressão de LN(PIBPC) em ETOT. 
@@ -375,32 +516,39 @@ stargazer(modelo.b1.b, type = "text")
 
 ```{r b2a}
 modelo.b2.a <- lm(ln_pibpc ~ etot, data = dfb)
-stargazer(modelo.b2.a, type = "text")
+stargazer(modelo.b2.a, type = "text", report = "vcstp*", digits = 5)
 ```
 
+```{r b2a plot, options}
+plot(dfb$ln_pibpc ~ dfb$etot)
+```
 
 **Como muda a interpretação dos coeficientes estimados em relação ao item anterior?**
 
-> A [...]
+> Quando transformamos PIBPC para seu logaritmo natural (ln_pibpc) e regredimos sobre ETOT, o coeficiente passa a ser interpretado como a variação percentual no PIB per capita associada a um ano adicional de estudo. Isso significa que cada ano adicional de estudo está associado a um aumento de aproximadamente 31.3% no PIB per capita.
 
 **Com base no que você estudou no curso, como você esperaria que mudassem os coeficientes estimados ao mudar a unidade de medida da variável dependente, passando a medi-la em R$ em vez de R$ mil? **
 
-> A [...]
+> Quando mudamos a unidade de medida da variável dependente de R$ mil para R$, esperamos que o coeficiente associado a variável aumente em um fator de 1000.
 
 **E ao mudar a unidade de medida da variável explicativa, passando a medi-la em meses em vez de anos? **
 
-> A [...]
+> Quando mudamos a unidade de medida da variável dependente de anos para meses (ou seja, dividindo ETOT por 12 para obter ETOT12), esperamos que o coeficiente associado a ETOT reduza na mesma proporção.
+
+\  
 
 **Verifique que suas expectativas estão corretas, estimando as regressões de LN(PIBPC*1000) em ETOT e de LN(PIBPC) em (ETOT*12).**
+
+\  
 
 
 ```{r b2b}
 modelo.b2b.1 <- lm(ln_pibpc1000 ~ etot, data = dfb)
 modelo.b2b.2 <- lm(ln_pibpc1000 ~ etot12, data = dfb)
-stargazer(modelo.b2b.1,modelo.b2b.2, type = "text")
+stargazer(modelo.b2b.1,modelo.b2b.2, type = "text", report = "vcstp*", digits = 5)
 ```
 
-> A [...]
+> Os modelos confirmam a expectativa. 
 
 
 ## 3 Realize a regressão de LN(PIBPC) em ETOT e (ETOT*12). 
@@ -409,14 +557,16 @@ stargazer(modelo.b2b.1,modelo.b2b.2, type = "text")
 ```{r b3}
 modelob.3b.1 <- lm(ln_pibpc ~ etot, data = dfb)
 modelob.3b.2 <- lm(ln_pibpc ~ etot12, data = dfb)
-stargazer(modelob.3b.1,modelob.3b.2, type = "text")
+stargazer(modelob.3b.1,modelob.3b.2, type = "text", report = "vcstp*", digits = 5)
 
 ```
 
 **O que acontece com os coeficientes estimados e seus desvios padrões? **
 
-> A [...]
+> No modelo PIBPC em ETOT, o coeficiente de 1,560 indica que cada ano adicional de estudo está associado a um aumento de 1,560 no PIB per capita em mil reais. Com a mudança na unidade da variável dependente, no modelo PIBPC1000 em ETOT, o coeficiente de 1.560,00 confirma a expectativa de multiplicação por 1000 ao mudar a unidade de medida do PIB per capita de mil reais para reais. Já no modelo de ln(PIBPC) em ETOT, o coeficiente de 0.313 significa que cada ano adicional de estudo está associado a um aumento de aproximadamente 31.3% no PIB per capita. Com a mudança na unidade da variável explicativa, no modelo ln(PIBPC) em ETOT12, o coeficiente de 0.026 confirma a expectativa de divisão por 12 ao mudar a unidade de medida dos anos de estudo para meses.
 
 **Compare com os resultados do item anterior.**
 
-> A [...]
+> Os coeficientes mantêm a relação esperada conforme mudamos a unidade das variáveis dependentes e explicativas.
+A transformação logarítmica muda a interpretação dos coeficientes de um efeito absoluto para um efeito percentual.
+Os desvios-padrão dos coeficientes também se ajustam conforme esperado, mantendo a significância estatística dos coeficientes.
