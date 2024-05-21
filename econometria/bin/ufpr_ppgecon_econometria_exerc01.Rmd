@@ -1,8 +1,8 @@
 ---
 title: "UFPR PPGEcon 2024"
 subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 01"
-author: "Alceu Nascimento, Thiago Soares e Aron Costa"
-date: "2024-04-21"
+author: "Alceu Nascimento e Renan Perozin"
+date: "2024-05-20"
 output:
   html_document:
     df_print: paged
