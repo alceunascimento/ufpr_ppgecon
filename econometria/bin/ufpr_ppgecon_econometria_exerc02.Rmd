@@ -1,0 +1,146 @@
+---
+title: "UFPR PPGEcon 2024"
+subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02"
+author: "Aron Costa"
+date: "2024-04-21"
+output:
+  html_document:
+    df_print: paged
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
+header-includes:
+- \usepackage{fontspec}
+- \setmainfont{Arial}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)
+library(kableExtra)
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+library(grid)  # Para configurações adicionais de grid
+library(here)
+library(xtable)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+library(janitor)
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
+library(nortest)               # Anderson-Darling Test for normality
+```
+
+Exercício 2
+
+**Nível de Governança Corporativa e estrutura de capital**
+
+Um tema central na economia financeira é que os conflitos de interesse dentro da empresa levam a
+distorções nas escolhas de políticas corporativas e, como resultado, na redução das avaliações das
+empresas. Por causa da flexibilidade gerencial em estabelecer limites de endividamento (Jensen,
+1986), um foco particular da pesquisa teórica tem sido sobre a importância dos objetivos gerenciais no funcionamento das decisões de financiamento.
+
+Uma visão predominante em a literatura é que os gerentes nem sempre tomam decisões de estrutura
+de capital que maximizam riqueza dos acionistas. A estrutura de capital diz respeito a escolha da
+proporção de dívidas em relação ao capital próprio da empresa utilizada para financiar suas atividades.
+O endividamento de uma empresa acaba sendo determinado não apenas por fricções de mercado,
+tais como impostos, custos de falência ou custos de refinanciamento, como no trabalho Fisher, Heinkel e Zechner (1989), mas também pela gravidade dos conflitos de interesse entre gestores e acionistas.
+Uma variedade de evidências empíricas dá suporte a essa visão. 
+
+Contudo, quanto sabemos sobre seus efeitos na dinâmica e na visão “cross sectional” da estrutura de capital?
+
+Para este exercício, queremos que você examine a relação entre o Nível de Governança Corporativa e
+o endividamento das empresas (ou seja, alavancagem). 
+
+Nós estamos fornecendo um arquivo,“Base.xlsx" e “base.dta”, com Nível de Governança Corporativa e Variáveis Financeiras para um painel
+de dados de empresas de 1990-2014, extraído da ECONOMATICA. (Note que estes dados são
+puramente destinados a este exercício. 
+
+Nós não os usaríamos como base para um estudo real).
+
+Queremos que você use medidas de:
+- Alavancagem (divida/PL),
+- Tamanho da empresa (representado pelo total de ativos),
+- Imobilização dos ativos (Imobilizado / ativos totais ou também pode ser visto como ativos não
+circulantes / ativos totais)
+- Retorno sobre ativos (definido como EBIT / total de ativos),
+- Q de Tobin (aproximado pelo valor de mercado dos ativos / valor contábil dos ativos, que pode
+ser computado como (valor contábil dívida + valor de mercado das ações ordinárias e
+preferenciais) / (valor contábil dos ativos)).
+- ROA (lucro líquido / total de ativos)
+- Você precisará de identificadores para trimestre e setor.
+
+Queremos que você execute várias regressões de alavancagem no Nível de Governança Corporativa e
+variáveis de controle (ROA, logaritmo do tamanho, Imobilização). 
+
+Use os vários métodos de dados em cross sectional e em painel que você viu em aula:
+
+
+# Parte 1
+
+## - Faça uma análise com regressões usando os dados em cross sectional
+
+## - Faça essa análise considerando o período total de tempo e repartindo sua amostra em períodos de tempos menores. Que diferenças encontrou? 
+
+# Parte 2
+
+## - Pooled OLS com os erros padrão robustos de White com e sem dummies;
+
+## - Pooled OLS com erros padrão robustos agrupados no nível do setor com dummies de trimestre;
+
+## - Pooled OLS com erros padrão robustos agrupados no nível do setor com trimestre e dummies de setor (use o comando areg);
+
+Sinta-se à vontade para adicionar qualquer análise adicional que desejar.
+Para o (s) método (s) que você considerar melhor, comece a brincar com a variável nível de governança
+corporativa. Por exemplo, alterar forma funcional (adicionar termo quadrático?). 
+
+Tente medidas alternativas de alavancagem, utilize variáveis de controle adicionais que você acha que estão faltando.
+Faça uma breve descrição dos seus resultados, incluindo tabelas fáceis de ler, de todas as estimativas e outros testes. 
+O que você conclui? 
+
+Envie seu arquivo de resultados em word para o professor conforme orientado em aula na plataforma MsTeams. 
+Nomeie seu arquivo como “exer2_Fulano&Beltrano.doc” 
+
+
+
+```{r 1 get data}
+df <- read_xlsx(here("econometria/data/Base_2024.xlsx"))
+```
+
+
+```{r modelo}
+
+```
+
+```{r stargazer, results='asis'}
+stargazer(modelo, type = "text", report="vcstp*")
+```
+
+```{r checks, options}
+check_autocorrelation(modelo)
+check_normality(modelo)
+check_heteroscedasticity(modelo)
+```
