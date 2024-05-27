@@ -1,0 +1,75 @@
+variavel: corporategovernancelevel
+levels:N1, N2, BOV+,NDISPO,NM,REG, (vazias)
+
+
+VARIAVEIS
+
+|x                        |
+|:------------------------|
+|companyname              |
+|name_short               |
+|data_ipo                 |
+|VC_Dummy                 |
+|sic_code                 |
+|sic_name                 |
+|setoreconomtica          |
+|setornaics               |
+|corporategovernancelevel |
+|totalasset               |
+|permanentasset           |
+|equity                   |
+|passivopl                |
+|patrimniolquido          |
+|shorttermdebt            |
+|longtermdebt             |
+|netrevenue               |
+|grossprofit              |
+|netprofit                |
+|cashflow                 |
+|ebit                     |
+|firmmarketvalue          |
+|pricetoebitda            |
+|earningstoprice          |
+|enterprisevalue          |
+|earningspershare         |
+|dividendpershare         |
+|dividendyieldfinalcot    |
+|liquidity                |
+|negotiability            |
+|presence                 |
+|volmean                  |
+|beta                     |
+|standarddeviation        |
+|closedprice              |
+|amountofbusiness         |
+|amountofbonds            |
+|vol                      |
+|volatility               |
+|risc                     |
+|retorno                  |
+|freefloat                |
+|freefloatwithvote        |
+|freefloatwithoutvote     |
+|shares_outstanding       |
+|shares_outstanding_class |
+|cash                     |
+|shares_on_tesouraria     |
+|irecustosocialdiferido   |
+|irdiferido               |
+|aud                      |
+|underw                   |
+|underwriter              |
+|sp                       |
+|rj                       |
+|pr                       |
+|sc                       |
+|ce                       |
+|ma                       |
+|mg                       |
+|pi                       |
+|rs                       |
+|es                       |
+|co_id                    |
+|quarter                  |
+|year                     |
+|time                     |
