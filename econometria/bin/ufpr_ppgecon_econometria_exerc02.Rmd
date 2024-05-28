@@ -137,17 +137,49 @@ df <- df.raw %>%
     alavancagem = passivo_pl,
     imobilizacao = permanent_asset / total_asset,  # Corrigido para dividir pelo total_asset em vez de permanent_asset
     roa = net_profit / total_asset,
-    qtobin = (short_term_debt + long_term_debt + firm_market_value) / total_asset
+    qtobin = (short_term_debt + long_term_debt + firm_market_value) / total_asset,
+    bep = ebit / total_asset,
+    log_total_asset = log(total_asset)
   )
 
+# Converter a variável quarter em um fator
+df <- df %>%
+  mutate(quarter = factor(quarter, levels = c(1, 2, 3, 4), labels = c("Q1", "Q2", "Q3", "Q4")))
+
+
+df <- df |> 
+  select(sic_code, 
+         corporate_governance_level,
+         total_asset,
+         permanent_asset,
+         net_profit,
+         short_term_debt,
+         long_term_debt,
+         firm_market_value,
+         ebit,
+         setor_economia,
+         quarter,
+         alavancagem,
+         imobilizacao,
+         roa,
+         qtobin,
+         bep,
+         log_total_asset
+  )
 ```
 
 ```{r modelo}
-lm(Y ~ X1 + X2 + X3,data = , na.action = na.omit)
+modelo <-lm(alavancagem ~ corporate_governance_level + 
+     roa + 
+     log_total_asset + 
+     imobilizacao +
+     qtobin + 
+     bep + 
+     quarter,data = df, na.action = na.omit)
 ```
 
 ```{r stargazer, results='asis'}
-stargazer(modelo, type = "text", report="vcstp*")
+stargazer(modelo, type = "text", report="vcstp*", out = "modelo.txt")
 ```
 
 ```{r checks, options}
