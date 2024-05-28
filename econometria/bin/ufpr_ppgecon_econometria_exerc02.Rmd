@@ -33,6 +33,7 @@ library(gridExtra)
 library(grid)  # Para configurações adicionais de grid
 library(here)
 library(xtable)
+library(magrittr)
 # data manipulation ----
 library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
 library(broom)                 # Converte saídas de modelos estatísticos em tibbles
@@ -127,12 +128,22 @@ Nomeie seu arquivo como “exer2_Fulano&Beltrano.doc”
 
 
 ```{r 1 get data}
-df <- read_xlsx(here("econometria/data/Base_2024.xlsx"))
+df.raw <- read_xlsx(here("econometria/data/base_2024.xlsx"))
 ```
 
+```{r clean data, options}
+df <- df.raw %>%
+  mutate(
+    alavancagem = passivo_pl,
+    imobilizacao = permanent_asset / total_asset,  # Corrigido para dividir pelo total_asset em vez de permanent_asset
+    roa = net_profit / total_asset,
+    qtobin = (short_term_debt + long_term_debt + firm_market_value) / total_asset
+  )
+
+```
 
 ```{r modelo}
-
+lm(Y ~ X1 + X2 + X3,data = , na.action = na.omit)
 ```
 
 ```{r stargazer, results='asis'}
