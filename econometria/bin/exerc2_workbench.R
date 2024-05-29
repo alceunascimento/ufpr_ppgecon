@@ -67,3 +67,12 @@ summary(modelo)
 
 
 # REPORTS ----
+
+
+
+
+# Criar o histograma da variável 'alavancagem'
+ggplot(df, aes(x = alavancagem)) +
+  geom_histogram(binwidth = 1000, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Distribuição da Alavancagem", x = "Alavancagem", y = "Frequência") +
+  theme_minimal()
