@@ -14,34 +14,38 @@ library(plm)              # modelos de regressao em panel data
 library(stargazer)        # analise estatistica
 library(performance)      # Analisa regressão
 library(broom)            # Converte saídas de modelos estatísticos em tibbles
+library(car)
 
 
+# clean workbench
+rm(list = ls())
+
+options(max.print = 10000)
 
 # 2. GET DATA ----
 df.raw <- read_xlsx(here("econometria/data/base_2024.xlsx"))
+
 
 # 3. WRANGLING DATA ----
 
 # Get variables
 df <- df.raw |> 
   select(companyname, 
+         setor_economia,
          corporate_governance_level,
          total_asset,
          permanent_asset,
-         passivo_pl,
          short_term_debt,
          long_term_debt,
-         net_profit,
+         equity,
          ebit,
+         net_profit,
          firm_market_value,
-         setor_economia,
          quarter,
          year
   )
 
-# Cleaning NAs
-
-
+# Cleaning
 
 ## Se o YEAR is NA, excluir
 any(is.na(df$year))
@@ -53,14 +57,36 @@ any(is.na(df$year))
 df <- df %>%
   filter(year != 2014)
 
-
-# Excluir setores da economia
+# Excluir dados ausentes da variavel governanca
 df <- df |> 
-  filter(setor_economia != "Finanças e Seguros")
+  filter(corporate_governance_level != "NDISPO")
+
+# Verificar a estrutura dos dados limpos
+str(df)
+summary(df)
 
 
-df <- df %>%
-  filter(complete.cases(.))
+# Converter as variáveis 'quarter' "setor_economia' e 'corporate_governance_level' em factor (para uso como dummy)
+df <- df  |> 
+  mutate(quarter = factor(quarter, levels = c(1, 2, 3, 4), labels = c("Q1", "Q2", "Q3", "Q4"))) |> 
+  mutate(setor_economia = factor(setor_economia)) |> 
+  mutate(corporate_governance_level = factor(corporate_governance_level))
+
+# Verificar a estrutura dos dados limpos
+str(df)
+summary(df)
+
+
+## Create new variables
+df <- df  |> 
+  mutate(
+    alavancagem = (short_term_debt + long_term_debt) / equity,
+    imobilizacao = (permanent_asset / total_asset),  
+    roa = (net_profit / total_asset),
+    qtobin = (firm_market_value / total_asset),
+    bep = (ebit / total_asset),
+    log_size = log(total_asset)
+)
 
 # Verificar a estrutura dos dados limpos
 str(df)
@@ -69,64 +95,61 @@ summary(df)
 
 
 
-
-
-
-# Converter a variável 'quarter' em um fator (para uso como dummy)
-df <- df  |> 
-  mutate(quarter = factor(quarter, levels = c(1, 2, 3, 4), labels = c("Q1", "Q2", "Q3", "Q4")))
-
-
-## Create new variables
-df <- df  |> 
-  mutate(
-    alavancagem = passivo_pl,
-    imobilizacao = (permanent_asset / total_asset),  
-    roa = (net_profit / total_asset),
-    qtobin = (short_term_debt + long_term_debt + firm_market_value) / total_asset,
-    bep = (ebit / total_asset),
-    log_total_asset = log(total_asset)
-  )
-
-
-# 3. Creating a pdata.frame
+# 4. Creating a pdata.frame ----
 pdata <- pdata.frame(df, index = c("companyname", "year", "quarter"))
 
 # Verificar os índices do pdata.frame
 str(pdata)
 summary(pdata)
 
+# check if balanced
+pdata |> is.pbalanced()
 
-## 3.1. checking erros
 # Identificar combinações duplicadas
-table(index(pdata), useNA = "ifany")
-
-
-# Verificar se há valores NA nas variáveis do modelo
-NAs <- sapply(variaveis_modelo, function(var) sum(is.na(pdata[[var]])))
-NAs
+head(table(index(pdata), useNA = "ifany"))
 
 
 
 
 
 
-# 4. MODEL DATA ----
+# 5. MODELS ----
 
 # model
-modelo <- alavancagem ~ corporate_governance_level + 
-  roa + 
-  log_total_asset + 
+modelo <- alavancagem ~ 
+  corporate_governance_level + 
+  log_size + 
   imobilizacao +
+  roa + 
   qtobin + 
-  bep
+  bep +
+  year +
+  quarter
 
 
-ols.plm <- plm(modelo, data = pdata, model = "pooling")
+
+# Regressão linear padrão, sem considerar panel data
+lm1 <- lm(modelo, data = df)
+stargazer(lm1, type = "text")
+
+
+
+pooled.ols <- plm(modelo, data = pdata, model = "pooling")
+stargazer(ols.plm, type = "text")
+
+
+
+ols.plm <- plm(update(modelo,.~.+ year), data = pdata, model = "pooling", na.action = na.omit)
 summary(ols.plm)
 
-ols.plm <- plm(update(modelo,.~.+ year), data = pdata, model = "pooling")
-summary(ols.plm)
+# 6. CHECK MODELS ----
+
+# Calcular VIF para verificar colinearidade
+vif_model <- lm(modelo, data = pdata)
+vif(vif_model)
 
 
-# 5. REPORTS ----
+# 7. REPORTS ----
+
+
+# 8. PLOTS ----
