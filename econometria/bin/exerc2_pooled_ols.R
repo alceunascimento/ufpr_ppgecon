@@ -393,6 +393,21 @@ pooled.ols.sectors <- plm(model.sectors, data = pdata, model = "pooling")
 stargazer(pooled.ols.years, pooled.ols.quarter, pooled.ols.sectors, type = "html", report = "vcsp*", out = "./econometria/exerc2_pooledols.html")
 stargazer(pooled.ols.years, pooled.ols.quarter, pooled.ols.sectors, type = "text", report = "vcsp*")
 
+
+
+# Extrair matriz de covariância dos coeficientes
+cov_matrix <- vcov(pooled.ols.years)
+# Converter a matriz em tabela
+cov_table <- as.data.frame(cov_matrix)
+# Adicionar colunas e linhas de nomes para maior clareza
+rownames(cov_table) <- colnames(cov_table) <- c("Intercept", "X1_Y", "X2_Y")
+# Criar a tabela formatada
+kable(cov_table, format = "html", booktabs = TRUE, caption = "Covariance Matrix of Model Coefficients") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  add_header_above(c(" " = 1, "Covariances" = 3))
+
+
+
 ## Robustness ----
 # In R the function coeftest from the lmtest package can be used in combination 
 # with the function vcovHC from the sandwich package to do this.
@@ -413,11 +428,8 @@ coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC3"))    # r
 coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC1"))    # robust; HC1 (Stata default)
 
 
-# Calcular VIF para verificar colinearidade
-vif_model <- lm(pooled.ols.years, data = pdata)
-vif(vif_model)
 
-
+# Checks do "Performance"
 performance::check_autocorrelation(pooled.ols.years)
 performance::check_heteroskedasticity(pooled.ols.years)
 performance::check_collinearity(pooled.ols.years)

@@ -10,8 +10,31 @@
 
 
 # setup
+
 library(wooldridge)
 library(stargazer)
+library(readxl)           # leitura de arquivos Excel
+library(magrittr)         # pipe
+library(tidyverse)        # manipulação de dados
+library(janitor)          # organiza e limpa os cabeçalhos de data
+library(lubridate)        # Simplifica trabalho com datas e horas
+library(here)             # ajusta PATH
+library(plm)              # modelos de regressao em panel data
+library(stargazer)        # analise estatistica
+library(performance)      # Analisa regressão
+library(broom)            # Converte saídas de modelos estatísticos em tibbles
+library(car)              # Companion to Applied Regression
+library(DescTools)        # Windsorizar vetores
+library(lmtest)           # Tests for linear regression models
+library(sandwich)         # Robust covariance matrix estimators
+library(nortest)          # Anderson-Darling Test for normality
+library(dunn.test)        # Dunn's test for multiple comparisons
+library(knitr)
+library(kableExtra)
+
+## clean workbench ----
+rm(list = ls())
+
 
 # get data
 fertil <- wooldridge::fertil1
@@ -86,3 +109,37 @@ stargazer(md2, type = "text")
 
 # Testando se os coeficientes são iguais
 md1$coefficients == md2$coefficients
+
+
+# EXERCICIO crime
+
+crime <- wooldridge::crime2
+str(crime)
+crime <- crime |> 
+  mutate(across(c(year), as.factor))
+str(crime)
+pcrime <-  pdata.frame(crime, index = c("year"))
+# Renomear a variável 'time' para 'individual'
+pcrime <- pcrime  |>  rename(individual = time)
+
+
+crime87 <- crime |> 
+  filter(year == 87)
+
+# estes dois são IGUAIS
+ols <- lm(crmrte ~ unem, crime87)
+summary(ols)
+stargazer(ols, type = "text")
+
+pooled.ols <- lm(crmrte ~ unem + year, crime)
+summary(pooled.ols)
+stargazer(pooled.ols, type = "text")
+
+coeftest(pooled.ols, vcov = vcovHC(pooled.ols, type = "HC1"))    # robust; HC1 (Stata default)
+
+
+
+pooled.ols <- plm(crmrte ~ 0 + unem, pcrime, model = "fd", effect = "individual")
+summary(pooled.ols)
+stargazer(pooled.ols, type = "text")
+
