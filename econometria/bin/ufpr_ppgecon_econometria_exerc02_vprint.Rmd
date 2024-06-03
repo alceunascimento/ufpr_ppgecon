@@ -4,11 +4,11 @@ subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02 (Nível de
 author: "Alceu Eilert Nascimento, Aron Costa, Tiago Soares"
 date: "2024-04-21"
 output:
-  html_document:
-    df_print: paged
-    toc: TRUE
-    toc_float: TRUE
+  html_document: 
+    toc: yes
+    toc_float: yes
     toc_depth: 5
+    keep_md: yes
 header-includes:
 - \usepackage{fontspec}
 - \setmainfont{Arial}
@@ -545,7 +545,6 @@ kable(cov_table, format = "html", booktabs = TRUE, caption = "Covariance Matrix 
   add_header_above(c(" " = 1, "Covariances" = 23))
 
 
-
 ## Robustness ----
 # In R the function coeftest from the lmtest package can be used in combination 
 # with the function vcovHC from the sandwich package to do this.
@@ -565,17 +564,12 @@ coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC3"))    # r
 # reproduce the Stata default
 coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC1"))    # robust; HC1 (Stata default)
 
-
-
 # Checks do "Performance"
 performance::check_autocorrelation(pooled.ols.years)
 performance::check_heteroskedasticity(pooled.ols.years)
 performance::check_collinearity(pooled.ols.years)
 performance::check_distribution(pooled.ols.years)
 performance::check_model(pooled.ols.years)
-
-
-
 
 # PLOTS ----
 densityPlot(pooled.ols.years$residuals)
