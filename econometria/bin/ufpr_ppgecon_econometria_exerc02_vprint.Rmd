@@ -1,0 +1,587 @@
+---
+title: "UFPR PPGEcon 2024"
+subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02 (Nível de Governança Corporativa e estrutura de capital)"
+author: "Alceu Eilert Nascimento, Aron Costa, Tiago Soares"
+date: "2024-04-21"
+output:
+  html_document:
+    df_print: paged
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 5
+header-includes:
+- \usepackage{fontspec}
+- \setmainfont{Arial}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)
+library(kableExtra)
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+library(grid)  # Para configurações adicionais de grid
+library(here)
+library(xtable)
+library(magrittr)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+library(janitor)
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
+library(nortest)               # Anderson-Darling Test for normality
+library(car)                   # Companion to Applied Regression
+library(DescTools)             # Windsorizar vetores
+library(lmtest)                # Tests for linear regression models
+library(sandwich)              # Robust covariance matrix estimators
+library(nortest)               # Anderson-Darling Test for normality
+library(dunn.test)             # Dunn's test for multiple comparisons
+library(plm)
+```
+
+
+```{r 1 get data}
+df.raw <- read_xlsx(here("econometria/data/base_2024.xlsx"))
+```
+
+
+```{r clean data pooled ols, options}
+
+# 3. WRANGLING DATA ----
+
+## Select variables ----
+df <- df.raw %>%
+  select(year,
+         quarter,
+         companyname, 
+         setor_economia,
+         corporate_governance_level,
+         total_asset,
+         permanent_asset,
+         short_term_debt,
+         long_term_debt,
+         patrimonio_liquido,
+         ebit,
+         net_profit,
+         firm_market_value
+)
+
+## Cleaning ----
+
+## Se o YEAR is NA, excluir
+df <- df %>%
+  filter(!is.na(year))
+
+## Excluir o ano de 2014 pois só tem o 1º trimestre
+df <- df %>%
+  filter(year != 2014)
+
+# Excluir dados ausentes da variavel governanca
+df <- df |> 
+  filter(corporate_governance_level != "NDISPO")
+
+# Excluir dados sem valor de `patrimonio_liquido`
+df <- df |> 
+  filter(patrimonio_liquido != 0)
+
+# Excluir empresas financeiras
+df <- df |> 
+  filter(setor_economia != "Finanças e Seguros")
+
+
+# Excluir observações onde tanto `short_term_debt` quanto `long_term_debt` são NA
+df <- df[!(is.na(df$short_term_debt) & is.na(df$long_term_debt)), ]
+
+# Substituir NAs por zero nas variáveis `short_term_debt` e `long_term_debt`
+df$short_term_debt[is.na(df$short_term_debt)] <- 0
+df$long_term_debt[is.na(df$long_term_debt)] <- 0
+
+
+## Trimming ----
+# Função para identificar observações com valores extremos e excluir estas observações
+exclude_extreme_values <- function(data, variables, probs = c(0.05, 0.95)) {
+  extreme_indices <- sapply(variables, function(var) {
+    x <- data[[var]]
+    lower_bound <- quantile(x, probs[1], na.rm = TRUE)
+    upper_bound <- quantile(x, probs[2], na.rm = TRUE)
+    (x < lower_bound | x > upper_bound) & !is.na(x)
+  })
+  # Combina as condições de todas as variáveis para identificar linhas extremas
+  extreme_rows <- apply(extreme_indices, 1, any)
+  return(data[!extreme_rows, ])
+}
+
+# Lista de variáveis para verificar valores extremos
+variables_to_check <- c(
+  "total_asset",
+  "permanent_asset",
+  "short_term_debt",
+  "long_term_debt",
+  "patrimonio_liquido",
+  "ebit",
+  "net_profit",
+  "firm_market_value"
+)
+# Aplicar a função para excluir observações com valores extremos
+df <- exclude_extreme_values(df, variables_to_check)
+
+
+## Create new variables ----
+df <- df  |> 
+  mutate(
+    alavancagem = (short_term_debt + long_term_debt) / patrimonio_liquido,
+    imobilizacao = (permanent_asset / total_asset),  
+    roa = (net_profit / total_asset),
+    qtobin = (firm_market_value / total_asset),
+    bep = (ebit / total_asset),
+    log_size = log(total_asset)
+  )
+
+
+
+
+
+## Transformar em factor ----
+df <- df |> 
+  mutate(across(c(setor_economia, corporate_governance_level, year, quarter), as.factor))
+
+
+## Organize variables ----
+df <- df |> 
+  select(year,
+         quarter,
+         companyname, 
+         setor_economia,
+         alavancagem,
+         corporate_governance_level,
+         imobilizacao,
+         roa,
+         qtobin,
+         bep,
+         log_size,
+         total_asset
+  )
+
+
+# 4. CREATE pdata.frame ----
+
+pdata <- pdata.frame(df, index = c("companyname", "year", "quarter"))
+
+## Criar lags das variáveis independentes ----
+pdata$lag_corporate_governance_level <- lag(pdata$corporate_governance_level, k = 1)
+pdata$lag_imobilizacao <- lag(pdata$imobilizacao, k = 1)
+pdata$lag_roa <- lag(pdata$roa, k = 1)
+pdata$lag_qtobin <- lag(pdata$qtobin, k = 1)
+pdata$lag_bep <- lag(pdata$bep, k = 1)
+pdata$lag_log_size <- lag(pdata$log_size, k = 1)
+pdata$lag_total_asset <- lag(pdata$total_asset, k = 1)
+```
+
+
+
+
+```{r clean data cross section, options}
+# 3. WRANGLING DATA ----
+
+# Select variables ----
+dfcs <-  df.raw |> 
+  select(companyname, 
+         setor_economia,
+         corporate_governance_level,
+         total_asset,
+         permanent_asset,
+         short_term_debt,
+         long_term_debt,
+         patrimonio_liquido,
+         ebit,
+         net_profit,
+         firm_market_value,
+         quarter,
+         year)
+
+## Cleaning ----
+## Se o YEAR is NA, excluir
+dfcs <- dfcs %>%
+  filter(!is.na(year))
+
+## Excluir o ano de 2014 pois só tem o 1º trimestre
+dfcs <- dfcs %>%
+  filter(year != 2014)
+
+## Excluir os trimestres intermediarios 1 a 3
+dfcs <- dfcs |> 
+  filter(quarter == 4) |> 
+  select(-quarter)
+
+
+# Excluir dados ausentes da variavel governanca
+dfcs <- dfcs |> 
+  filter(corporate_governance_level != "NDISPO")
+
+# Excluir dados sem valor de `equity`
+dfcs <- dfcs |> 
+  filter(patrimonio_liquido != 0)
+
+# Excluir empresas financeiras
+dfcs <- dfcs |> 
+  filter(setor_economia != "Finanças e Seguros")
+
+
+# Trimming ----
+# Função para identificar observações com valores extremos e excluir estas observações
+exclude_extreme_values <- function(data, variables, probs = c(0.05, 0.95)) {
+  extreme_indices <- sapply(variables, function(var) {
+    x <- data[[var]]
+    lower_bound <- quantile(x, probs[1], na.rm = TRUE)
+    upper_bound <- quantile(x, probs[2], na.rm = TRUE)
+    (x < lower_bound | x > upper_bound) & !is.na(x)
+  })
+  # Combina as condições de todas as variáveis para identificar linhas extremas
+  extreme_rows <- apply(extreme_indices, 1, any)
+  return(data[!extreme_rows, ])
+}
+
+# Lista de variáveis para verificar valores extremos
+variables_to_check <- c(
+  "total_asset",
+  "permanent_asset",
+  "short_term_debt",
+  "long_term_debt",
+  "patrimonio_liquido",
+  "ebit",
+  "net_profit",
+  "firm_market_value"
+)
+# Aplicar a função para excluir observações com valores extremos
+dfcs <- exclude_extreme_values(dfcs, variables_to_check)
+
+## Create new variables ----
+dfcs <- dfcs  |> 
+  mutate(
+    alavancagem = (short_term_debt + long_term_debt) / patrimonio_liquido,
+    imobilizacao = (permanent_asset / total_asset),  
+    roa = (net_profit / total_asset),
+    qtobin = (firm_market_value / total_asset),
+    bep = (ebit / total_asset),
+    log_size = log(total_asset)
+  )
+
+# Transformar em factor
+dfcs <- dfcs |> 
+  mutate(across(c(setor_economia, corporate_governance_level, year), as.factor))
+
+
+# Criar data frames para cada ano ----
+anos <- unique(dfcs$year)
+for (ano in anos) {
+  assign(paste0("df", ano), dfcs |>  
+           filter(year == ano) |>  
+           select(-year))
+}
+
+```
+
+
+
+
+# 1. Introdução
+
+Usamos dados em painel de empresas não financeiras do Brasil para testar, empiricamente, 
+em qual medida a alavancagem se relaciona com a governança corporativa.  
+Nos dados, aplicamos técnicas de regressão OLS para estimação.
+
+*Hipotese* : O nivel de governança é positivamente associado à alavancagem.
+
+
+# 2. Dados
+
+Para testar nossa hipótese, construímos uma amostra que inicialmente contém todas as empresas 
+não financeiras listadas na B3 ao longo de um período de 14 anos, de 2000 a 2013. 
+Após excluir observações com dados-chave ausentes, temos uma amostra em painel desbalanceada de observações anuais de empresas não financeiras. 
+Para minimizar outliers e possíveis erros de registro de dados, eliminamos os valores das variáveis que estavam fora dos limites dos percentis 5 e 95.
+
+
+Os dados apresentam as seguintes características:
+
+```{r stat descritiva pooled ols, results='asis'}
+stargazer(pdata, type = "html")
+```
+
+É possível observar a alavancagem por nível de governança corporativa:
+
+```{r alavancagem por nivel grafico}
+# Criar um histograma suave (density plot) para cada segmento de governança
+ggplot(df, aes(x = log(alavancagem), color = factor(corporate_governance_level), fill = factor(corporate_governance_level))) +
+  geom_density(alpha = 0.15) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Distribuição de Frequência da Alavancagem por Segmento de Governança",
+       x = "Alavancagem",
+       y = "Densidade",
+       color = "Governança",
+       fill = "Governança") +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+E também como:
+
+```{r alavancagem por nivel grafico 2}
+# Relação entre alavancagem e corporate_govenance_level
+plot(df$corporate_governance_level, df$alavancagem, 
+     xlab = "corporate_governance_level", ylab = "alavancagem",
+     main = "Relação entre alavancagem e log_size",
+     pch = 21, bg = "blue")
+abline(lm(alavancagem ~ log_size, data = df), col = "red")
+```
+
+E por fim:
+
+```{r medias e medianas, options}
+## Medias e Medianas ----
+# Função para calcular resumos estatísticos
+calculate_summary <- function(group_data) {
+  summary_stats <- (summary(group_data$alavancagem))
+  return(summary_stats)
+}
+
+# Aplicar a função a cada nível de corporate_governance_level e construir o dataframe
+summary_table <- df %>%
+  group_by(corporate_governance_level) %>%
+  summarise(
+    Min = min(alavancagem, na.rm = TRUE),
+    `1st Qu.` = quantile(alavancagem, 0.25, na.rm = TRUE),
+    Median = median(alavancagem, na.rm = TRUE),
+    Mean = mean(alavancagem, na.rm = TRUE),
+    `3rd Qu.` = quantile(alavancagem, 0.75, na.rm = TRUE),
+    Max = max(alavancagem, na.rm = TRUE)
+  ) %>%
+  rename(Group = corporate_governance_level)
+# Exibir a tabela formatada usando kable
+kable(summary_table, caption = "Resumos Estatísticos de Alavancagem por Segmento de Governança")
+
+# Realizar a ANOVA
+anova_result <- aov(alavancagem ~ corporate_governance_level, data = df)
+anova_table <- tidy(anova_result)
+kable(anova_table, caption = "Tabela de ANOVA")
+anova_summary <- summary(anova_result)
+# Se a ANOVA for significativa, realizar o teste post-hoc de Tukey
+if (anova_summary[[1]]$`Pr(>F)`[1] < 0.05) {
+  tukey_result <- TukeyHSD(anova_result)
+  print(tukey_result)
+} else {
+  cat("As diferenças entre as médias dos grupos não são estatisticamente significativas.\n")
+}
+# Realizar o teste de Kruskal-Wallis
+kruskal_result <- kruskal.test(alavancagem ~ corporate_governance_level, data = df)
+# Se o teste de Kruskal-Wallis for significativo, realizar o teste post-hoc de Dunn
+if (kruskal_result$p.value < 0.05) {
+  dunn_result <- dunn.test(df$alavancagem, df$corporate_governance_level, method = "bonferroni")
+  print(dunn_result)
+} else {
+  cat("As diferenças entre as medianas dos grupos não são estatisticamente significativas.\n")
+}
+print(kruskal_result)
+```
+
+Observamos que enquanto as diferenças entre as médias não tem significancia estatística, a 
+diferença entre as medianas tem.
+
+
+# 3. Metodologia
+
+O objetivo é de aplicar métodos de análise de dados para abordar questões de pesquisa 
+sobre se a alavancagem financeira se relaciona com a governança corporativa da empresa.  
+A análise se concentra na empresa, considerando o nível de governança corporativa adotado pela B3.  
+Escolhemos a metodologia quantitativa por ser mais adequada para abordar empiricamente a questão de pesquisa do que a metodologia qualitativa. 
+As hipóteses são testadas utilizando regressões OLS, defasando variáveis em um período.
+Para avaliar o impacto da governança corporativa na estrutura de capital, utilizamos regressões OLS em painel, no formato "pooled".
+Este formato não controla por efeitos fixos de empresa e tempo, portanto, não é possível lidar com problemas de endogeneidade. 
+
+A hipótese é testada usando esta regressão:
+
+$$
+Alavancagem_{i,t} = 
+\beta_0 +
+\beta_1 \, GC_{i,t} + 
+\beta_2 \, Controle_{i,t} +
+\epsilon_{i,t}
+$$
+
+Onde $Alavancagem_{i,t}$ é a razão entre a dívida total e os ativos totais para a empresa $i$ no tempo $t$. 
+$CG_{i,t}$ é uma dummy de governança corporativa da empresa em níveis NN, N1, N2, BOV+ e REG, da B3. 
+$Controle_{i,t}$ é um vetor de variáveis de controle ao nível da empresa, contendo ROA, TobinQ, imobilização,
+BEP, tamanho da empresa (em logaritimo natural).
+
+
+# 3. Modelos
+
+## 3.1. OLS em Cross Section
+
+```{r modelo cross section, options}
+# MODELS ----
+
+modelo <- alavancagem ~ 
+  corporate_governance_level +
+  log_size + 
+  imobilizacao +
+  roa + 
+  qtobin + 
+  bep
+
+# Executar a regressão linear regressão linear para cada ano
+modelos <- list()
+
+for (ano in anos) {
+  df <- get(paste0("df", ano))
+  
+  # Verificar se há dados suficientes para ajustar o modelo
+  if (nrow(df) > 0) {
+    modelo_lm <- try(lm(modelo, data = df, na.action = na.exclude), silent = TRUE)
+    if (inherits(modelo_lm, "lm")) {
+      modelos[[as.character(ano)]] <- modelo_lm
+    } else {
+      message(paste("Erro ao ajustar o modelo para o ano", ano))
+    }
+  } else {
+    message(paste("Dados insuficientes para ajustar o modelo para o ano", ano))
+  }
+}
+
+```
+
+
+```{r cross section stargazer, results='asis'}
+if (length(modelos) > 0) {
+  stargazer(modelos, type = "html", report = "vcstp*")
+} else {
+  message("Nenhum modelo ajustado disponível para exibição.")
+}
+
+```
+
+## 3.1. Pooled OLS
+
+```{r modelo pooled ols}
+
+# 6. MODELS ----
+
+## model 1 ----
+model.years <- alavancagem ~ 
+  lag_corporate_governance_level +
+  lag_imobilizacao +
+  lag_roa + 
+  lag_qtobin + 
+  lag_bep +
+  lag_roa +
+  lag_log_size +
+  year
+
+## model 2 ----
+model.quarter <- alavancagem ~ 
+  lag_corporate_governance_level +
+  lag_imobilizacao +
+  lag_roa + 
+  lag_qtobin + 
+  lag_bep +
+  lag_roa +
+  lag_log_size +
+  quarter
+
+## model 3 ----
+model.sectors <- alavancagem ~ 
+  lag_corporate_governance_level +
+  lag_imobilizacao +
+  lag_roa + 
+  lag_qtobin + 
+  lag_bep +
+  lag_roa +
+  lag_log_size +
+  setor_economia
+
+
+
+## Pooled OLS ----
+pooled.ols.years <- plm(model.years, data = pdata, model = "pooling")
+pooled.ols.quarter <- plm(model.quarter, data = pdata, model = "pooling")
+pooled.ols.sectors <- plm(model.sectors, data = pdata, model = "pooling")
+
+# 6. CHECK MODELS ----
+
+
+
+
+# Extrair matriz de covariância dos coeficientes
+cov_matrix <- vcov(pooled.ols.years)
+# Converter a matriz em tabela
+cov_table <- as.data.frame(cov_matrix)
+# Adicionar colunas e linhas de nomes para maior clareza
+# Criar a tabela formatada
+kable(cov_table, format = "html", booktabs = TRUE, caption = "Covariance Matrix of Model Coefficients") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  add_header_above(c(" " = 1, "Covariances" = 23))
+
+
+
+## Robustness ----
+# In R the function coeftest from the lmtest package can be used in combination 
+# with the function vcovHC from the sandwich package to do this.
+# The first argument of the coeftest function contains the output of the 
+# lm function and calculates the t test based on the variance-covariance matrix 
+# provided in the vcov argument. 
+# The vcovHC function produces that matrix and allows to obtain several types of
+# heteroskedasticity robust versions of it. In our case we obtain a simple 
+# White standard error, which is indicated by type = "HC0" and the 
+# Stata vce(robust) é "HC1"
+
+# Robust t test of SE (vce(robust) option do Stata)
+# check that "sandwich" returns HC0
+coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC0"))    # robust; HC0 
+# check that the default robust var-cov matrix is HC3
+coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC3"))    # robust; HC3 (default)
+# reproduce the Stata default
+coeftest(pooled.ols.years, vcov = vcovHC(pooled.ols.years, type = "HC1"))    # robust; HC1 (Stata default)
+
+
+
+# Checks do "Performance"
+performance::check_autocorrelation(pooled.ols.years)
+performance::check_heteroskedasticity(pooled.ols.years)
+performance::check_collinearity(pooled.ols.years)
+performance::check_distribution(pooled.ols.years)
+performance::check_model(pooled.ols.years)
+
+
+
+
+# PLOTS ----
+densityPlot(pooled.ols.years$residuals)
+```
+
+```{r pooled ols stargazer, results='asis'}
+stargazer(pooled.ols.years, pooled.ols.quarter, pooled.ols.sectors, type = "html", report = "vcsp*")
+```
+
