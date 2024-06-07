@@ -476,7 +476,7 @@ for (ano in anos) {
 
 ```{r cross section stargazer, results='asis'}
 if (length(modelos) > 0) {
-  stargazer(modelos, type = "html", report = "vcstp*")
+  stargazer(modelos, type = "html", report = "vcsp*")
 } else {
   message("Nenhum modelo ajustado disponível para exibição.")
 }
