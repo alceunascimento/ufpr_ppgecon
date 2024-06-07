@@ -1,7 +1,7 @@
 ---
 title: "UFPR PPGEcon 2024"
 subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02 (Nível de Governança Corporativa e estrutura de capital)"
-author: "Alceu Eilert Nascimento, Aron Costa, Tiago Soares"
+author: "Aron Vitor Fraiz Costa, Tiago Monteiro Arruda Soares"
 date: "2024-04-21"
 output:
   html_document: 
@@ -1529,7 +1529,7 @@ performance::check_autocorrelation(pooled.ols.years)
 ```
 
 ```
-## Warning: Autocorrelated residuals detected (p = 0.026).
+## Warning: Autocorrelated residuals detected (p = 0.020).
 ```
 
 ``` r

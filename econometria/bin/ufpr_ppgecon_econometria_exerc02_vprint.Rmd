@@ -1,7 +1,7 @@
 ---
 title: "UFPR PPGEcon 2024"
 subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02 (Nível de Governança Corporativa e estrutura de capital)"
-author: "Alceu Eilert Nascimento, Aron Costa, Tiago Soares"
+author: "Alceu Nascimento, Renan Perozin"
 date: "2024-04-21"
 output:
   html_document: 
