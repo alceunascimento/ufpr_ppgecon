@@ -1,0 +1,79 @@
+---
+title: "bullet points"
+author: "Alceu Eilert Nascimento"
+format: docx
+---
+
+
+# 1. A Incorporação Imobiliária como Arranjo Normativo de Captação de Poupança Popular
+-   Analisar a Lei 4.591/64 como um marco regulatório que possibilita a captação de poupança popular.
+-   Descrever o conceito de venda de bem futuro, particularmente na forma de unidades imobiliárias em construção.
+-   Examinar o mecanismo de pagamento à vista e o controle do risco de variação de preços pelo adquirente.
+-   Discussão sobre como a incorporação transfere o risco de preço e de escassez para o adquirente.
+-   Avaliação dos incentivos econômicos e comportamentais dos adquirentes em optar por esse modelo.
+-   Explicar como a incorporação imobiliária fomenta a formação de capital e investimento no setor de construção.
+-   Discussão sobre o papel da incorporação na economia e seu impacto no mercado imobiliário.
+-   Analisar a função da pré-venda na viabilidade econômica dos projetos de incorporação.
+-   Comparar a estrutura de captação de poupança na incorporação imobiliária com outros modelos de financiamento.
+-   Examinar as implicações jurídicas e financeiras da venda de unidades na planta.
+
+# 2. Perspectiva do Adquirente: Riscos, Benefícios e Estrutura de Pagamento
+-   Análise dos benefícios para o adquirente ao fixar o preço de compra antecipadamente.
+-   Avaliação dos riscos associados ao pagamento à vista de um bem futuro, incluindo riscos de não-entrega.
+-   Discussão sobre a proteção legal ao adquirente em casos de falência ou insolvência do incorporador.
+-   Exploração da expectativa de valorização do imóvel ao longo do tempo como incentivo para o adquirente.
+-   Consideração da exposição do adquirente a riscos de execução do empreendimento.
+-   Análise do impacto da variação de custo de insumos e de mão-de-obra sobre o preço do imóvel para o adquirente.
+-   Discussão sobre a ausência de mecanismos de hedge para o adquirente quanto à variação de preço e entrega.
+-   Estudo sobre a transparência exigida do incorporador e como isso influencia a decisão de compra do adquirente.
+-   Avaliação da importância da due diligence pré-compra realizada pelo adquirente.
+-   Consideração das cláusulas contratuais e condições de desistência e suas implicações financeiras.
+
+# 3. Perspectiva do Incorporador: Riscos, Benefícios e Incentivos Econômicos
+-   Análise dos riscos assumidos pelo incorporador, incluindo riscos de execução, financiamento e mercado.
+-   Discussão sobre o incentivo do incorporador para minimizar seu aporte de capital inicial.
+-   Exploração da maximização da alavancagem financeira para aumentar a TIR do incorporador.
+-   Avaliação da estrutura de financiamento e sua relação com o custo de capital do incorporador.
+-   Estudo sobre a importância do fluxo de caixa no gerenciamento do empreendimento.
+-   Análise da estratégia do incorporador para antecipação de receitas e sua influência na execução do projeto.
+-   Consideração dos riscos regulatórios e de compliance para o incorporador.
+-   Discussão sobre o impacto das garantias e seguros de obra na redução dos riscos do incorporador.
+-   Avaliação das estratégias de marketing e vendas para maximizar a captação de recursos antecipados.
+-   Análise do residual entre preço de venda e custo incorrido como principal fonte de lucro para o incorporador.
+
+# 4. A Comissão de Representantes como Análogo ao Conselho de Administração
+-   Descrição da função e composição da Comissão de Representantes nas incorporações imobiliárias.
+-   Comparação entre a Comissão de Representantes e o Conselho de Administração de uma sociedade anônima.
+-   Análise das responsabilidades fiduciárias e deveres de diligência da Comissão de Representantes.
+-   Discussão sobre o papel da Comissão na fiscalização da execução do projeto pelo incorporador.
+-   Avaliação das limitações e poderes conferidos à Comissão de Representantes pela legislação.
+-   Exploração de casos em que a Comissão de Representantes influenciou decisivamente a gestão do empreendimento.
+-   Discussão sobre a importância da transparência e accountability da Comissão de Representantes.
+-   Análise das relações de agência e conflito de interesses entre incorporador e adquirentes.
+-   Estudo sobre as implicações legais de decisões tomadas pela Comissão de Representantes.
+-   Discussão sobre a evolução regulatória e necessidade de maior profissionalização da Comissão.
+
+# 5. A Opção do Legislador por "Transparência" em vez de "Segurança"
+-   Análise da escolha regulatória pela transparência em detrimento de exigências de segurança financeira.
+-   Discussão sobre a ausência de requisitos de capital mínimo para incorporadores e suas implicações.
+-   Avaliação da eficácia das exigências de publicidade e transparência para a proteção dos adquirentes.
+-   Análise comparativa com outros mercados e setores que exigem capital mínimo para operação.
+-   Discussão sobre os riscos sistêmicos introduzidos pela ausência de capitalização obrigatória.
+-   Exploração de como a transparência contribui para o mercado, mas pode ser insuficiente para proteção total.
+-   Estudo sobre as consequências da falta de exigências de capital em tempos de crise econômica.
+-   Análise das reformas legais propostas e discutidas para melhorar a segurança no mercado de incorporação.
+-   Discussão sobre a importância da auditoria e da due diligence contínua para a transparência.
+-   Consideração dos desafios práticos na implementação de um regime de transparência efetivo.
+
+# 6. O Racional do Patrimônio de Afetação
+-   Explicação do conceito e função do patrimônio de afetação nas incorporações imobiliárias.
+-   Análise da proteção que o patrimônio de afetação oferece aos adquirentes e aos credores.
+-   Discussão sobre como o patrimônio de afetação limita o risco de insolvência do incorporador.
+-   Avaliação dos requisitos legais e procedimentos para a constituição do patrimônio de afetação.
+-   Estudo sobre a relação entre patrimônio de afetação e a viabilidade financeira do projeto.
+-   Discussão sobre a separação dos ativos do incorporador e do projeto como medida de mitigação de riscos.
+-   Análise dos desafios operacionais e custos adicionais associados ao patrimônio de afetação.
+-   Consideração da jurisprudência recente sobre a inviolabilidade do patrimônio de afetação.
+-   Exploração de possíveis reformas legais para reforçar a proteção proporcionada pelo patrimônio de afetação.
+-   Discussão sobre a adequação do patrimônio de afetação como ferramenta de governança corporativa.
+

@@ -1,0 +1,53 @@
+ROTEIRO DO ARTIGO DE FINANÇAS CORPORATIVAS
+
+Prazo – 06/10/2024
+
+1.	Temáticas
+
+a.	Asset Pricing; 
+b.	Estrutura de capital e decisões de financiamento; 
+c.	Relação entre financiamento e investimento; 
+d.	Decisões de investimento; 
+e.	Estrutura de propriedade, governança corporativa, M&A e Conflito de Agency; 
+f.	Dividendos.
+
+Observações: 
+•	A temática também pode ser transversal ou explorar um conceito que tangencie algum deles. Alguns exemplos possíveis de pesquisas transversais ao tema são pesquisas envolvendo finanças comportamentais, pesquisas sobre ambiente institucional envolvendo alguma das temáticas, pesquisas envolvendo macro ou microeconomia que tenham relação com alguma delas, pesquisas sobre economia das organizações que tangenciem alguma temática, entre outras.
+•	Discentes podem optar por uma pesquisa teórica/formulação de hipóteses, mas devem fazer adaptações no modelo proposto abaixo. Ou seja, uma pesquisa que vise a formulação de hipóteses terá isso como seu resultado. Já uma pesquisa bibliométrica terá a análise quantitativa das pesquisas como seu resultado. 
+
+2.	Resumo
+•	Objetivo: resumir os principais objetivos, metodologia, resultados e conclusões do artigo.
+
+3.	Introdução
+•	Contextualização: apresente o tema e sua relevância no campo das Finanças Corporativas. Discentes que optaram por artigos com temáticas que tangenciam (conforme as do exemplo) devem buscar fazer essa conexão.
+•	Objetivos do Estudo: defina claramente o problema de pesquisa e os objetivos do estudo.
+•	Justificativa: explique a importância do tema escolhido e a contribuição esperada do estudo para a literatura.
+•	Estrutura do artigo: apresente brevemente a estrutura do artigo.
+
+4.	Revisão da Literatura
+•	Conceitos e teorias: apresente as teorias e conceitos chave relacionados ao tema escolhido.
+•	Dica: utilize fontes acadêmicas reconhecidas, como artigos de periódicos, livros e relatórios.
+•	Estudos anteriores: discuta estudos empíricos relevantes que exploraram o tema.
+•	Lacunas na literatura: identifique as lacunas na literatura que o seu estudo pretende preencher.
+•	Dica: crie uma tabela ou figura que resuma as principais contribuições dos estudos revisados.
+
+5.	Metodologia
+•	Design da pesquisa: descreva o tipo de pesquisa (qualitativa, quantitativa ou mista) e o seu design (estudo de caso, survey, etc.).
+•	Base de dados: descreva os dados utilizados (e.g., fontes, período, número de observações).
+•	Variáveis: explique as variáveis dependentes e independentes, bem como os métodos de mensuração.
+•	Métodos de análise: detalhe os métodos estatísticos ou econométricos utilizados para analisar os dados.
+•	Hipóteses: apresente as hipóteses a serem testadas (se aplicável).
+•	Dica: inclua uma seção de robustez dos resultados para garantir a validade das conclusões.
+
+6.	Análise e Resultados
+•	Descrição dos resultados: apresente os resultados da análise de forma clara, utilizando tabelas e gráficos quando necessário.
+•	Interpretação dos resultados: relacione os resultados com os objetivos do estudo e a revisão da literatura.
+•	Discussão: discuta os resultados em termos das hipóteses testadas e das teorias abordadas na revisão da literatura.
+•	Dica: compare os seus resultados com estudos anteriores, apontando semelhanças e divergências.
+
+7.	Conclusão
+•	Resumo dos principais resultados: recapitule os principais achados do estudo.
+•	Implicações: discuta as implicações práticas dos resultados para gestores, investidores ou formuladores de políticas.
+•	Limitações do estudo: reconheça as limitações do estudo e sugira caminhos para futuras pesquisas.
+•	Fechamento: faça uma síntese final, destacando a contribuição do estudo para o campo de Finanças Corporativas.
+
