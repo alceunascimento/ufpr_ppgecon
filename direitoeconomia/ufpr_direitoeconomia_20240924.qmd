@@ -1,0 +1,273 @@
+---
+title: "Liberdades Econômicas e Regulação"
+subtitle: "Casos Correios, Deutsche Post e Petrobras-Compagas"
+author: 
+- name: Alceu Eilert Nascimento
+- name: Luiz Felipe Pereira
+format:
+  revealjs:
+    slide-number: c/t
+    width: 1600
+    height: 900
+    transition: fade
+    incremental: true
+    scrollable: true
+    theme: simple
+    reference-location: document
+    footer: "UFPR PPGEcon : Direito & Economia (Setembro/2024)"
+    self-contained: true
+lang: pt-BR   # define o idioma para portugues
+bibliography: references.bib
+csl: ipea.csl
+---
+
+# Analise de casos
+
+- Correios
+- Deutsche Post AG
+- Petrobrás
+
+# Casos Correios
+
+## Introdução
+
+No Recurso Extraordinário 627.051/PE, o Supremo Tribunal Federal (STF) enfrentou a questão da imunidade tributária da Empresa Brasileira de Correios e Telégrafos (ECT) em relação ao Imposto sobre Circulação de Mercadorias e Serviços (ICMS) incidente sobre o transporte de encomendas. 
+
+O entendimento do TRF da 5ª região (Pernambuco) era de que embora os Correios seja uma empresa pública federal, também é pessoa jurídica de direito privado, nos termos do art. 173, II, da CF/88. Assim, sujeita-se às mesmas obrigações tributárias que as empresas privadas no transporte de mercadorias, o qual não está protegido pela imunidade constitucional.
+
+O acórdão do STF reconheceu a imunidade tributária dos Correios relativamente ao ICSM.
+
+Este caso levanta importantes debates sobre concorrência, abuso de posição dominante e os efeitos econômicos de práticas estatais em mercados competitivos.
+
+
+## Aspectos Jurídicos Principais
+
+## Dos princípios gerais da atividade econômica
+A principal controvérsia jurídica reside na aplicação da imunidade tributária recíproca prevista no artigo 150, VI, "a", da Constituição Federal, à ECT quando esta exerce atividades em concorrência com a iniciativa privada, como o transporte de encomendas. 
+
+O TRF da 5ª Região não considerou que a atividade de transporte de mercadorias se enquadra nos imperativos da segurança nacional ou a relevante interesse coletivo. Essa prestação de serviço sujeita a tributação.
+
+A maioria dos ministros do STF decidiu pela extensão da imunidade, baseando-se na indissociabilidade das atividades postais e na necessidade de subsidiar serviços deficitários.
+
+## Práticas de Preços Predatórios
+
+A imunidade tributária pode permitir que a ECT pratique preços predatórios, cobrando valores abaixo do custo marginal para o transporte de encomendas. Isso poderia eliminar concorrentes menos eficientes ou impedir a entrada de novos participantes, reduzindo a competição e, a longo prazo, prejudicando os consumidores com menos opções e possivelmente preços mais altos.
+
+## Efeitos sobre o Comércio
+
+A decisão do STF pode impactar o comércio intermunicipal e interestadual, uma vez que a ECT opera em todo o território nacional. A vantagem competitiva conferida pela imunidade tributária pode levar a uma concentração de mercado, afetando negativamente a eficiência econômica e a alocação de recursos.
+
+
+## Do recurso
+Os Correios defendem que a atividade de encomenda não pode ser alvo de incidência de ICMS, pois faz parte do ciclo que compõem a atividade postal.
+
+>“não interessa, para fins de fixação da imunidade tributária qual serviço específico que está sendo prestado pela recorrente, vez que todos os recursos obtidos pela ECT  serão revertidos em favor do serviço postal, destinado à coletividade, dada a sua condição peculiar de Empresa Pública Federal, responsável pela execução de serviço público essencial em regime de monopólio”
+
+
+## Da decisão
+Houve a distinção, para fins de tratamento normativo, entre empresas públicas prestadoras de serviço público e empresas públicas exploradoras de atividade econômica. Neste caso, foi reconhecida a natureza pública dos serviços postais, o qual os Correios exercem em regime de exclusividade. 
+O entendimento do colegiado é de que o transporte das encomendas está inserido no rol das atividades desempenhadas pelos Correios, que deve cumprir o encargo de alcançar todos os lugares do Brasil, não importante os quão pequenos ou subdesenvolvidos. 
+
+Dessa forma, não há comprometimento do status de empresa pública prestadora de serviços essenciais e a atividade de transporte de encomendas constitui conditio sine qua non para viabilidade de um serviço portal contínuo, universal e de preços módicos.
+
+## Da decisão (cont.)
+Destacaram que os Correios não estão criando uma estrutura para competir, meramente aproveitando dos meios já disponíveis necessários para serviço postal e que a entrega de correspondências e encomendas são fases indissociáveis do serviço postal.
+
+## Da decisão (cont.)
+Citam Marçal Justem Filho:
+
+> “O aspecto central reside em que essas atividades
+econômicas surgem ou se tornam economicamente (mais)
+atrativas em virtude da organização econômica necessária à
+prestação do serviço público. Ou seja, quando se organiza uma
+estrutura de bens e pessoas para a prestação do serviço
+público, podem também ser criadas condições para exploração
+de outras atividades. Isso significa que a ausência de
+aproveitamento pelo Estado das apontadas oportunidades evidenciaria um caso de infração à indisponibilidade do
+interesse público. O Estado deixaria de extrair todos os
+rendimentos auferíveis em virtude do investimento necessário a
+prestação do serviço público ou transferiria gratuitamente à
+iniciativa privada a oportunidade para beneficiar-se dessas
+oportunidades. Em todos os casos, existiria infração aos
+princípios constitucionais norteadores da atividade
+administrativa, inclusive pela perda da oportunidade de
+transferir os benefícios derivados da exploração econômica
+como forma de redução das tarifas (os que, na terminologia
+econômica, denomina-se subsídio cruzado). Ou seja, a
+ausência de aproveitamento dessas oportunidades não
+configura generosidade estatal, mas desperdício econômico
+(JUSTEN FILHO, Marçal. O regime jurídico das empresas
+estatais e a distinção entre “serviço público” e “atividade
+econômica”. Revista de Direito do Estado – RDE. Rio de
+Janeiro, ano 1, n. 1, janeiro a março de 2006. p. 127/130).”
+
+## Da decisão (cont.)
+Entenderam que subsídios Cruzados permitem aos correios oferecerem os serviços postais a preços módicos, contribuindo para exercício dos direitos fundamentais da pessoa humana – desempenhando um papel crucial ao garantir a privacidade e segurança nas comunicações –  promovendo a integração nacional.
+
+## Aspectos Econômicos Principais
+
+## Financiamento Cruzado (Cross-Subsidization)
+O argumento do subsídio cruzado é central na decisão. A ECT alega que as atividades lucrativas, como o transporte de encomendas, subsidiam serviços deficitários em regiões remotas. No entanto, sem transparência e demonstração clara dos custos e receitas, esse argumento pode ser questionado como justificativa para a imunidade.
+
+## Custos Incrementais Específicos
+A análise econômica recomendaria avaliar os custos incrementais específicos das atividades competitivas. Se os custos do transporte de encomendas forem inferiores às receitas, a imunidade tributária poderia resultar em lucros excessivos e não em subsídio para outras atividades.
+
+## Barreiras à Entrada e Expansão
+A imunidade tributária cria barreiras artificiais à entrada e expansão de concorrentes privados. Operadores que não gozam dos mesmos benefícios fiscais enfrentam desvantagens significativas, limitando a concorrência e a inovação no setor.
+
+## Impacto no Bem-Estar Econômico
+A redução da concorrência pode levar a ineficiências alocativas e produtivas, prejudicando o bem-estar econômico geral. Consumidores podem enfrentar menos opções e, a longo prazo, preços mais altos. Além disso, a ausência de competição diminui incentivos para a melhoria dos serviços.
+
+
+
+
+
+# Caso Deutsche Post AG
+
+## Introdução
+
+A decisão da Comissão Europeia de 20 de março de 2001 no processo COMP/35.141 contra a Deutsche Post AG (DPAG) é um marco significativo na aplicação do artigo 82.º do Tratado CE em relação ao abuso de posição dominante. A DPAG foi acusada de utilizar práticas anticoncorrenciais no mercado alemão de serviços postais, especialmente no segmento de encomendas para empresas de vendas por catálogo. Esta análise aborda os principais aspectos jurídicos e econômicos da decisão, correlacionando-os com a bibliografia relevante.
+
+## Aspectos Jurídicos Principais
+
+## Abuso de Posição Dominante
+Posição Dominante da DPAG: A DPAG detinha um monopólio legal nos serviços postais reservados (correspondências até 200g) na Alemanha, conferindo-lhe uma posição dominante no mercado.
+
+Artigo 82.º do Tratado CE: A Comissão considerou que a DPAG violou este artigo ao abusar de sua posição dominante para restringir a concorrência no mercado de encomendas para empresas de vendas por catálogo.
+
+## Práticas de Preços Predatórios
+Definição: Preços predatórios ocorrem quando uma empresa vende produtos ou serviços abaixo do custo com o objetivo de eliminar concorrentes.
+
+Aplicação no Caso: Entre 1990 e 1995, a DPAG ofereceu serviços de encomendas a preços abaixo dos custos incrementais específicos, não cobrindo sequer os custos variáveis associados a esses serviços.
+
+## Descontos de Fidelidade
+Caracterização: A DPAG concedia descontos condicionados à exclusividade ou à aquisição de uma porcentagem significativa das necessidades dos clientes.
+
+Jurisprudência Relevante: Conforme estabelecido no caso Hoffmann-La Roche, tais descontos por fidelidade são considerados abusivos quando oferecidos por uma empresa dominante, pois restringem a liberdade dos clientes e excluem concorrentes.
+
+## Efeitos sobre o Comércio Intracomunitário
+Restrição à Concorrência: As práticas da DPAG impediram a entrada e expansão de concorrentes, incluindo empresas de outros Estados-Membros, no mercado alemão.
+
+Impacto Legal: A compartimentação do mercado alemão violou princípios fundamentais da União Europeia, prejudicando o funcionamento do mercado interno.
+
+## Medidas e Sanções
+Multa Imposta: A Comissão aplicou uma multa de 24 milhões de euros à DPAG, considerando a gravidade e a duração das infrações.
+
+Obrigações Futuras: A DPAG foi obrigada a cessar imediatamente as práticas abusivas e a apresentar relatórios anuais para monitoramento.
+
+## Aspectos Econômicos Principais
+
+## Financiamento Cruzado (Cross-Subsidization)
+Mecanismo: A DPAG utilizou os lucros do setor reservado (monopólio) para subsidiar serviços em mercados competitivos, permitindo-lhe oferecer preços predatórios.
+
+Consequências: Isso distorceu a concorrência, já que os concorrentes não podiam igualar os preços sem operar com prejuízo.
+
+## Custos Incrementais Específicos
+Conceito: Custos que variam diretamente com a produção de um serviço específico.
+
+Aplicação no Caso: A DPAG não cobria sequer esses custos nos serviços de encomendas para empresas de vendas por catálogo, indicando práticas predatórias.
+
+## Barreiras à Entrada e Expansão
+Economias de Escala e Sunk Costs: A necessidade de investimentos significativos em infraestrutura postal criou barreiras à entrada para novos concorrentes.
+
+Efeito das Práticas da DPAG: Ao oferecer preços abaixo do custo e exigir exclusividade dos clientes, a DPAG dificultou ainda mais a entrada e sobrevivência de concorrentes.
+
+## Impacto no Bem-Estar Econômico
+Eficiência Alocativa: As práticas da DPAG levaram a alocações ineficientes de recursos, com desperdícios e prejuízo ao consumidor.
+
+Preços Artificialmente Baixos: No curto prazo, os consumidores podem se beneficiar de preços baixos, mas no longo prazo, a redução da concorrência pode levar a preços mais altos e menos inovação.
+
+## Correlações com a Bibliografia
+
+- Teoria dos Monopólios Naturais e Regulação
+  - Baumol, Panzar e Willig (1982): Discutem as condições em que monopólios naturais devem ser regulados para evitar abusos e promover eficiência.
+  - Aplicação: A DPAG, como monopólio natural nos serviços postais reservados, deveria ser regulada para impedir o uso de receitas monopolistas para financiar práticas anticoncorrenciais em mercados competitivos.
+
+- Práticas Predatórias
+  - Areeda e Turner (1975): Propuseram testes baseados em custos para identificar preços predatórios.
+  - Relevância: A Comissão utilizou uma abordagem semelhante ao avaliar se os preços da DPAG estavam abaixo dos custos incrementais específicos.
+
+## Correlações com a Bibliografia (cont.)
+
+- Descontos de Fidelidade
+  - Motta (2004): Analisa como descontos condicionados podem ser usados para excluir concorrentes e reduzir o bem-estar social.
+  - Implicações: Os descontos da DPAG criaram um efeito de fechamento de mercado, dificultando a concorrência.
+
+- Economia dos Custos Incrementais
+  - Williamson (1977): Enfatiza a importância de considerar custos incrementais na avaliação de práticas de preços.
+  - Aplicação: A decisão considerou que preços abaixo dos custos incrementais específicos indicam práticas predatórias.
+
+
+## Conclusão
+
+A decisão contra a DPAG reforça a importância de monitorar e regular empresas dominantes, especialmente em setores recém-liberalizados. Práticas como preços predatórios e descontos de fidelidade podem prejudicar a concorrência e, em última análise, os consumidores. A aplicação rigorosa do artigo 82.º do Tratado CE é essencial para garantir mercados competitivos e eficientes.
+
+
+## Notas Finais
+
+A decisão da Comissão Europeia no caso DPAG serve como um estudo de caso importante na compreensão de como práticas empresariais podem infringir leis de concorrência e quais são as implicações econômicas dessas infrações. A análise integrada dos aspectos jurídicos e econômicos, sustentada pela bibliografia especializada, oferece uma visão abrangente dos desafios na regulação de mercados em transição para a liberalização
+
+# Debate Gerado pela Decisão
+- Equilíbrio entre Regulação e Concorrência: 
+  - A decisão levanta questões sobre como equilibrar a necessidade de garantir serviços universais com a promoção da concorrência.
+
+- Desafios na Liberalização de Mercados Monopolizados: 
+  - O caso destaca as dificuldades em evitar que ex-monopolistas abusem de sua posição ao entrar em mercados competitivos.
+
+- Importância da Transparência Financeira: 
+  - A separação contábil entre atividades monopolistas e competitivas é crucial para prevenir subsídios cruzados abusivos.
+
+
+# Caso Petrobras
+
+## Contexto Histórico
+A Petrobras, empresa estatal, foi investigada por abuso de posição dominante no mercado de gás natural no Brasil, devido a práticas comerciais que favoreciam sua subsidiária Gaspetro. Como parte de sua estratégia de desinvestimento, em consonância com a Iniciativa Gás para Crescer, a Petrobras comprometeu-se a alienar sua participação na Gaspetro, contribuindo para a abertura do mercado de gás natural no Brasil.
+
+O TCC nº 08700.003136/2019-12 formalizou essa obrigação, exigindo que a Petrobras vendesse sua participação na Gaspetro e encerrasse sua atuação dominante no setor, promovendo a concorrência e a entrada de novos agentes.
+
+## Questões Técnicas
+O processo de alienação envolve a venda da participação da Petrobras na Gaspetro, empresa controladora de 18 concessionárias estaduais de gás canalizado. A Compass Gás e Energia S.A., uma subsidiária do Grupo Cosan, foi a adquirente dessa participação.
+
+Alguns dos aspectos técnicos incluem:
+
+Estrutura societária antes e após a operação (Petrobras e Grupo Mitsui controlando a Gaspetro).
+O impacto sobre a participação dos estados e de outras empresas no mercado de distribuição de gás natural.
+
+## Principais Pontos Jurídicos
+Termo de Compromisso de Cessação (TCC): A Petrobras, por meio do TCC, compromete-se a se desfazer de ativos que mantinham sua posição dominante no mercado, incluindo a Gaspetro e suas participações em distribuidoras locais de gás.
+
+Direitos de preferência: Os outros acionistas das distribuidoras envolvidas (ex.: Mitsui e governos estaduais) têm o direito de preferência, o que poderia alterar a estrutura final de controle.
+Regulação do CADE: O TCC foi assinado sob a égide da Lei nº 12.529/2011, que rege a defesa da concorrência no Brasil, e a operação foi submetida ao controle prévio de estruturas estabelecido pela Resolução CADE n° 2/2009.
+
+## Principais Questões Econômicas
+A operação trouxe impactos importantes ao mercado de gás natural:
+
+Abertura de mercado: Ao vender sua participação, a Petrobras contribuiu para a desverticalização do setor de gás natural, promovendo maior concorrência.
+
+Preços e acessibilidade: A venda busca diminuir os custos do gás natural, incentivando a entrada de novos players e beneficiando indústrias que dependem desse insumo.
+
+Competitividade: A entrada da Compass no mercado de distribuição de gás e a diversificação de agentes é uma tentativa de fomentar a competitividade e aumentar a eficiência no setor.
+
+## Conclusão
+O TCC nº 08700.003136/2019-12 representa um marco na reestruturação do mercado de gás natural brasileiro, visando maior competição e eficiência. A atuação do CADE ao impor esse acordo com a Petrobras buscou não só reparar práticas anticompetitivas, mas também incentivar um mercado mais dinâmico e aberto, que favoreça o desenvolvimento econômico e beneficie os consumidores.
+
+
+
+
+## Possíveis Questões para Debate
+
+- Como assegurar que empresas incumbentes não utilizem sua posição dominante para distorcer mercados liberalizados?
+- Quais mecanismos regulatórios são mais eficazes para prevenir subsídios cruzados abusivos?
+- De que forma a transparência contábil pode contribuir para uma concorrência mais justa em setores com monopólios naturais?
+
+
+
+## Referências Bibliográficas
+
+- Areeda, P., & Turner, D. F. (1975). "Predatory Pricing and Related Practices Under Section 2 of the Sherman Act." Harvard Law Review, 88(4), 697-733. (https://doi.org/10.2307/1340237)
+- Baumol, W. J., Panzar, J. C., & Willig, R. D. (1982). Contestable Markets and the Theory of Industry Structure. Harcourt Brace Jovanovich. (ISBN 978-0155139107)
+- Motta, M. (2004). Competition Policy: Theory and Practice. Cambridge University Press. (ISBN 978-0521016919)
+- Williamson, O. E. (1977). "Predatory Pricing: A Strategic and Welfare Analysis." Yale Law Journal, 87(2), 284-340. (http://www.jstor.org/stable/795652)
+- Hoffmann-La Roche v. Commission (1979). Case 85/76, European Court Reports, 461.
+
+

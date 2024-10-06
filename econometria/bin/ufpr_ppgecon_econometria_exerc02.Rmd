@@ -1,7 +1,7 @@
 ---
 title: "UFPR PPGEcon 2024"
-subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02"
-author: "Aron Costa"
+subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 02 (Nível de Governança Corporativa e estrutura de capital)"
+author: "Alceu Eilert Nascimento, Aron Costa, Tiago Soares"
 date: "2024-04-21"
 output:
   html_document:
@@ -53,78 +53,13 @@ library(broom)                 # takes the messy output of built-in functions in
 library(Hmisc)
 library(pastecs)
 library(nortest)               # Anderson-Darling Test for normality
+library(car)                   # Companion to Applied Regression
+library(DescTools)             # Windsorizar vetores
+library(lmtest)                # Tests for linear regression models
+library(sandwich)              # Robust covariance matrix estimators
+library(nortest)               # Anderson-Darling Test for normality
+library(dunn.test)             # Dunn's test for multiple comparisons
 ```
-
-Exercício 2
-
-**Nível de Governança Corporativa e estrutura de capital**
-
-Um tema central na economia financeira é que os conflitos de interesse dentro da empresa levam a
-distorções nas escolhas de políticas corporativas e, como resultado, na redução das avaliações das
-empresas. Por causa da flexibilidade gerencial em estabelecer limites de endividamento (Jensen,
-1986), um foco particular da pesquisa teórica tem sido sobre a importância dos objetivos gerenciais no funcionamento das decisões de financiamento.
-
-Uma visão predominante em a literatura é que os gerentes nem sempre tomam decisões de estrutura
-de capital que maximizam riqueza dos acionistas. A estrutura de capital diz respeito a escolha da
-proporção de dívidas em relação ao capital próprio da empresa utilizada para financiar suas atividades.
-O endividamento de uma empresa acaba sendo determinado não apenas por fricções de mercado,
-tais como impostos, custos de falência ou custos de refinanciamento, como no trabalho Fisher, Heinkel e Zechner (1989), mas também pela gravidade dos conflitos de interesse entre gestores e acionistas.
-Uma variedade de evidências empíricas dá suporte a essa visão. 
-
-Contudo, quanto sabemos sobre seus efeitos na dinâmica e na visão “cross sectional” da estrutura de capital?
-
-Para este exercício, queremos que você examine a relação entre o Nível de Governança Corporativa e
-o endividamento das empresas (ou seja, alavancagem). 
-
-Nós estamos fornecendo um arquivo,“Base.xlsx" e “base.dta”, com Nível de Governança Corporativa e Variáveis Financeiras para um painel
-de dados de empresas de 1990-2014, extraído da ECONOMATICA. (Note que estes dados são
-puramente destinados a este exercício. 
-
-Nós não os usaríamos como base para um estudo real).
-
-Queremos que você use medidas de:
-- Alavancagem (divida/PL),
-- Tamanho da empresa (representado pelo total de ativos),
-- Imobilização dos ativos (Imobilizado / ativos totais ou também pode ser visto como ativos não
-circulantes / ativos totais)
-- Retorno sobre ativos (definido como EBIT / total de ativos),
-- Q de Tobin (aproximado pelo valor de mercado dos ativos / valor contábil dos ativos, que pode
-ser computado como (valor contábil dívida + valor de mercado das ações ordinárias e
-preferenciais) / (valor contábil dos ativos)).
-- ROA (lucro líquido / total de ativos)
-- Você precisará de identificadores para trimestre e setor.
-
-Queremos que você execute várias regressões de alavancagem no Nível de Governança Corporativa e
-variáveis de controle (ROA, logaritmo do tamanho, Imobilização). 
-
-Use os vários métodos de dados em cross sectional e em painel que você viu em aula:
-
-
-# Parte 1
-
-## - Faça uma análise com regressões usando os dados em cross sectional
-
-## - Faça essa análise considerando o período total de tempo e repartindo sua amostra em períodos de tempos menores. Que diferenças encontrou? 
-
-# Parte 2
-
-## - Pooled OLS com os erros padrão robustos de White com e sem dummies;
-
-## - Pooled OLS com erros padrão robustos agrupados no nível do setor com dummies de trimestre;
-
-## - Pooled OLS com erros padrão robustos agrupados no nível do setor com trimestre e dummies de setor (use o comando areg);
-
-Sinta-se à vontade para adicionar qualquer análise adicional que desejar.
-Para o (s) método (s) que você considerar melhor, comece a brincar com a variável nível de governança
-corporativa. Por exemplo, alterar forma funcional (adicionar termo quadrático?). 
-
-Tente medidas alternativas de alavancagem, utilize variáveis de controle adicionais que você acha que estão faltando.
-Faça uma breve descrição dos seus resultados, incluindo tabelas fáceis de ler, de todas as estimativas e outros testes. 
-O que você conclui? 
-
-Envie seu arquivo de resultados em word para o professor conforme orientado em aula na plataforma MsTeams. 
-Nomeie seu arquivo como “exer2_Fulano&Beltrano.doc” 
-
 
 
 ```{r 1 get data}
@@ -132,54 +67,110 @@ df.raw <- read_xlsx(here("econometria/data/base_2024.xlsx"))
 ```
 
 ```{r clean data, options}
-df <- df.raw %>%
-  mutate(
-    alavancagem = passivo_pl,
-    imobilizacao = permanent_asset / total_asset,  # Corrigido para dividir pelo total_asset em vez de permanent_asset
-    roa = net_profit / total_asset,
-    qtobin = (short_term_debt + long_term_debt + firm_market_value) / total_asset,
-    bep = ebit / total_asset,
-    log_total_asset = log(total_asset)
-  )
-
-# Converter a variável quarter em um fator
-df <- df %>%
-  mutate(quarter = factor(quarter, levels = c(1, 2, 3, 4), labels = c("Q1", "Q2", "Q3", "Q4")))
-
-
-df <- df |> 
-  select(sic_code, 
+df <- df.raw |> 
+  select(companyname, 
+         setor_economia,
          corporate_governance_level,
          total_asset,
          permanent_asset,
-         net_profit,
          short_term_debt,
          long_term_debt,
-         firm_market_value,
+         patrimonio_liquido,
          ebit,
-         setor_economia,
+         net_profit,
+         firm_market_value,
          quarter,
-         alavancagem,
-         imobilizacao,
-         roa,
-         qtobin,
-         bep,
-         log_total_asset
+         year)
+
+## Cleaning ----
+
+## Se o YEAR is NA, excluir
+df <- df %>%
+  filter(!is.na(year))
+
+## Excluir o ano de 2014 pois só tem o 1º trimestre
+df <- df %>%
+  filter(year != 2014)
+
+## Excluir os trimestres intermediarios 1 a 3
+df <- df |> 
+  filter(quarter == 4) |> 
+  select(-quarter)
+
+
+# Excluir dados ausentes da variavel governanca
+df <- df |> 
+  filter(corporate_governance_level != "NDISPO")
+
+# Excluir dados sem valor de `equity`
+df <- df |> 
+  filter(patrimonio_liquido != 0)
+
+# Excluir empresas financeiras
+df <- df |> 
+  filter(setor_economia != "Finanças e Seguros")
+
+
+# Trimming ----
+# Função para identificar observações com valores extremos e excluir estas observações
+exclude_extreme_values <- function(data, variables, probs = c(0.05, 0.95)) {
+  extreme_indices <- sapply(variables, function(var) {
+    x <- data[[var]]
+    lower_bound <- quantile(x, probs[1], na.rm = TRUE)
+    upper_bound <- quantile(x, probs[2], na.rm = TRUE)
+    (x < lower_bound | x > upper_bound) & !is.na(x)
+  })
+  # Combina as condições de todas as variáveis para identificar linhas extremas
+  extreme_rows <- apply(extreme_indices, 1, any)
+  return(data[!extreme_rows, ])
+}
+
+# Lista de variáveis para verificar valores extremos
+variables_to_check <- c(
+  "total_asset",
+  "permanent_asset",
+  "short_term_debt",
+  "long_term_debt",
+  "patrimonio_liquido",
+  "ebit",
+  "net_profit",
+  "firm_market_value"
+)
+# Aplicar a função para excluir observações com valores extremos
+df_trimmed <- exclude_extreme_values(df, variables_to_check)
+# Comparação de tamanho do dataframe original e do dataframe limpo
+cat("Tamanho do dataframe original:", nrow(df), "\n")
+cat("Tamanho do dataframe após exclusão de valores extremos:", nrow(df_trimmed), "\n")
+
+## Create new variables ----
+df <- df_trimmed  |> 
+  mutate(
+    alavancagem = (short_term_debt + long_term_debt) / patrimonio_liquido,
+    imobilizacao = (permanent_asset / total_asset),  
+    roa = (net_profit / total_asset),
+    qtobin = (firm_market_value / total_asset),
+    bep = (ebit / total_asset),
+    log_size = log(total_asset)
   )
+
+# Transformar em factor
+df <- df |> 
+  mutate(across(c(setor_economia, corporate_governance_level, year), as.factor))
+
 ```
 
 ```{r modelo}
 modelo <-lm(alavancagem ~ corporate_governance_level + 
      roa + 
-     log_total_asset + 
+     log_size + 
      imobilizacao +
      qtobin + 
-     bep + 
-     quarter,data = df, na.action = na.omit)
+     bep
+     ,data = df, na.action = na.omit)
 ```
 
 ```{r stargazer, results='asis'}
-stargazer(modelo, type = "text", report="vcstp*", out = "modelo.txt")
+stargazer(modelo, type = "html", report="vcstp*")
 ```
 
 ```{r checks, options}
@@ -187,3 +178,163 @@ check_autocorrelation(modelo)
 check_normality(modelo)
 check_heteroscedasticity(modelo)
 ```
+
+
+
+# 1. Introdução
+
+
+Usamos dados em painel de empresas não financeiras do Brasil para testar, empiricamente, em qual medida a alavancagem media a relação entre governança corporativa e performance das firmas.
+Nos dados, aplicamos uma técnica de regressão OLS para estimação e usamos medidas alternativas de performance para testar a robustez dos resultados.
+
+
+
+# 2. Revisão de literatura e desenvolvimento de hipóteses
+
+Nesta seção, fornecemos uma breve revisão dos estudos relacionados a finanças corporativas, governança corporativa e estrutura de capital. Em seguida, desenvolvemos argumentos teóricos para as relações entre governança corporativa e alavancagem financeira, governança corporativa e desempenho da empresa, e alavancagem financeira e desempenho da empresa. Posteriormente, propomos hipóteses testáveis.
+
+## 2.1. o Efeito da governança corporativa na alavancagem financeira
+
+A governança corporativa é um framework para construir um ambiente de responsabilidade, confiança e transparência. A governança corporativa lida com o problema de agência, devido à separação entre agentes (por exemplo, gestores) e acionistas. A governança corporativa é uma ferramenta importante para reduzir conflitos entre agentes e que pode influenciar a estrutura de capital da empresa. Chang et al. (2014) argumentam que o nível de endividamento da empresa é afetado tanto pelas características únicas da empresa quanto pelos conflitos de interesse entre seus gestores e acionistas. Vários pesquisadores (por exemplo, Berger et al., 1997; Wen et al., 2002) concentraram sua atenção na relação entre governança corporativa e estrutura de capital. Por exemplo, empresas com governança fraca são mais significativamente alavancadas e apresentam um desempenho empresarial pior do que empresas com governança forte (Jiraporn et al., 2012). Mecanismos fortes de governança corporativa são capazes de reduzir os custos de agência. Gestores tendem a buscar menor alavancagem financeira quando enfrentam uma boa governança corporativa do conselho de administração (Wen et al., 2002). A governança corporativa fornece um guia para resolver disputas entre agentes para garantir aos investidores ou outras partes interessadas que os agentes são capazes de gerenciar fundos de modo a maximizar o valor da empresa. As subseções a seguir discutem os atributos da governança corporativa e sua influência na estrutura de capital da empresa.
+
+
+*Hipotese* : O nivel de governança é positivamente associado à alavancagem
+
+
+
+# 3. Dados e metodologia
+
+## 3.1. Metodologia
+
+Nesta seção, são discutidos métodos de análise de dados para abordar questões de pesquisa sobre se a alavancagem financeira medeia a influência da governança corporativa no desempenho da empresa. A análise se concentra na empresa, considerando o nível de governança corporativa.
+Escolhemos a metodologia quantitativa por ser mais adequada para abordar empiricamente a questão de pesquisa do que a metodologia qualitativa. As hipóteses são testadas utilizando regressões OLS, defasando variáveis para verificar causalidade e abordar endogeneidade.
+Para avaliar o impacto da governança corporativa na estrutura de capital, utilizamos regressões OLS em painel, controlando por efeitos fixos de empresa e tempo. Isso nos permite lidar com problemas de endogeneidade, regredindo a estrutura de capital contemporânea sobre a governança corporativa defasada e variáveis de controle defasadas. A hipótese é testada usando esta regressão:
+
+$$
+LEV_{i,t} = 
+\alpha +
+\beta GC_{i,t} + 
+\theta Z_{i,t} +
+n_i +
+\nu_t +
+\epsilon_{i,t}
+$$
+
+
+Onde LEV_{i,t} é a razão entre a dívida total e os ativos totais para a empresa i no tempo t. 
+Usamos LEV para medir a alavancagem financeira da empresa. 
+CG é uma dummy de governança corporativa da empresa em níveis NN, N1, etc.. 
+Z é um vetor de variáveis de controle ao nível da empresa; η_i é o efeito fixo da empresa, que é incluído na especificação do modelo para controlar a heterogeneidade específica da empresa e invariável no tempo não observável; ν_t é o efeito fixo de tempo, que é incluído na especificação do modelo para controlar efeitos não observados variantes no tempo para todas as empresas da amostra.
+
+
+## 3.2. Amostra
+
+Para testar nossa hipótese, construímos uma amostra que inicialmente contém todas as empresas não financeiras listadas na B3 ao longo de um período de 14 anos, de 2000 a 2013. Após excluir observações com dados-chave ausentes, temos uma amostra em painel desbalanceada de [x] observações anuais de empresas não financeiras. 
+Obtemos todos os dados financeiros, dados de governança corporativa ao nível da empresa e variáveis de controle ao nível da empresa do app da B3. 
+Para minimizar outliers e possíveis erros de registro de dados, winsorizamos todas as variáveis nos percentis 5 e 95.
+
+
+## 3.3. Variável dependente
+
+Para testar a Hipótese, medimos a alavancagem financeira de uma empresa como a razão entre a dívida total e o patrimonio líquido. Vários estudiosos [x] utilizaram esta variável como uma medida de alavancagem financeira
+
+Para testar a Hipótese, medimos a alavancagem financeira de uma empresa como a razão entre a dívida total e os ativos totais. Vários estudiosos (Margaritis e Psillaki, 2010; Vithessonthi e Tongurai, 2015) utilizaram esta variável como uma medida de alavancagem financeira
+
+### Variáveis independentes
+
+Para testar o efeito da governança corporativa sobre a alavancagem financeira e o desempenho da empresa, utilizamos como medida de governança corporativa o nível de mercado que é uma variável dummy, que assume o valor um se [descrever]. 
+.
+
+
+## 3.4. Variáveis de controle
+
+
+Dado que nossa abordagem para testar nossa hipótese se baseia em um conjunto de suposições subjacentes, tentamos mitigar nossa preocupação de que mudanças ocorrendo tanto dentro quanto fora da empresa possam afetar nossos resultados de duas maneiras: (1) incluímos um grande conjunto de variáveis de controle ao nível da empresa para controlar as características específicas da empresa que possam influenciar a alavancagem financeira.
+
+Para controlar as características específicas da empresa que possam influenciar a alavancagem financeira, bem como para abordar preocupações decorrentes de variáveis omitidas que possam influenciar a alavancagem financeira, incluímos um grande conjunto de variáveis de controle ao nível da empresa. Mais especificamente, incluímos o tamanho da empresa (LNTA), [x] e lucratividade (ROA) como variáveis de controle ao nível da empresa.
+
+Consistente com estudos anteriores (Chen et al., 2005; García-Meca et al., 2015), o tamanho da empresa (LNTA) é medido como o logaritmo natural dos ativos totais (em milhões de reais).
+
+Para controlar a influência do investimento corporativo na alavancagem e no desempenho da empresa, usamos o investimento de capital (CAPEXTA), que é a relação entre o capital de despesas e os ativos totais defasados em um período. 
+Usamos a relação mercado/valor contábil (MBV), calculada como a relação entre o valor de mercado do patrimônio líquido e o valor contábil do patrimônio líquido, para capturar as oportunidades de investimento da empresa. 
+O índice de liquidez corrente (CACL) é calculado como a relação entre os ativos correntes e os passivos correntes. O índice de liquidez corrente mede a extensão em que uma empresa possui ativos líquidos suficientes para pagar suas obrigações de dívida de curto prazo. Empresas com caixa suficiente estão melhor preparadas para absorver choques de liquidez. Portanto, controlamos as reservas de caixa usando o índice de liquidez (NCFOTA), que é medido como a relação entre os fluxos de caixa operacional líquido e os ativos totais. Keefe e Yaghoubi (2016) encontram que flutuações nos fluxos de caixa têm um impacto negativo na alavancagem financeira. Similarmente a Margaritis e Psillaki (2010), o índice de tangibilidade (PPETA) é medido como a relação entre os ativos fixos e os ativos totais. 
+
+Usamos a lucratividade (ROA), medida como a relação entre o lucro antes de juros e impostos (EBIT) e os ativos totais, para controlar a influência da lucratividade na alavancagem.
+
+
+
+
+## 3.5. Estatísticas descritivas
+
+A Tabela 2 apresenta as estatísticas descritivas das variáveis utilizadas neste artigo para a amostra final de 3.854 observações anuais de empresas no período de 2001 a 2014. O valor médio (mediana) de BD_SIZE é 10,45 (10,00), enquanto o valor médio (mediana) de BD_AUDIT é 3,06 (3,00). O valor médio (mediana) de ROE é 0,15 (0,15), enquanto o valor médio (mediana) de ROA é 0,08 (0,08). O valor médio (mediana) de alavancagem é 0,25 (0,23), sugerindo que a empresa média na Tailândia não está excessivamente alavancada.
+
+A Tabela 3 apresenta os coeficientes de correlação das principais variáveis para a amostra final de 3.854 observações. Como os coeficientes de correlação entre as variáveis explicativas são geralmente abaixo de 0,50, a questão da multicolinearidade não é de grande preocupação. Conforme esperado, ROE e ROA são altamente correlacionados (r = 0,79), indicando que podem ser usados quase de forma intercambiável como uma proxy para o desempenho da empresa.
+
+
+# 4. Resultados empíricos
+
+## 4.1. O efeito da governança corporativa na alavancagem
+
+Nesta seção, apresentamos nossos resultados empíricos sobre os efeitos das características da governança corporativa na alavancagem financeira. A Tabela 4 apresenta regressões OLS em painel, onde a variável dependente é a alavancagem financeira (LEV). Efeitos fixos de empresa e efeitos fixos de ano são incluídos em todos os modelos.
+
+No modelo (1), que é a regressão básica, incluímos apenas as variáveis de controle ao nível da indústria e da empresa. Os resultados sugerem que o tamanho da empresa (LNTA), a idade da empresa (LNFAGE), o investimento de capital (CAPEXTA) e a relação mercado/valor contábil (MBV) estão positivamente relacionados à alavancagem financeira. O índice de liquidez corrente (CACL), a relação entre fluxo de caixa e ativos totais (NCFOTA) e a lucratividade (ROA) estão negativamente associados à alavancagem financeira. Curiosamente, o retorno da indústria (RETIND) e o índice de tangibilidade (PPETA) não estão associados à alavancagem financeira.
+
+Para testar o efeito direto da governança corporativa na alavancagem financeira, adicionamos as principais variáveis de interesse (ou seja, tamanho do conselho (BD_SIZE), independência do conselho (BD_IND), tamanho do comitê de auditoria (BD_AUDIT), presença feminina no conselho (BD_WOMEN), dualidade do CEO (CEO_DUAL), concentração de propriedade (OWN_TOP3) e reputação da auditoria (BIG4)) no Modelo (2). Os coeficientes sobre o tamanho da empresa (LNTA), a idade da empresa (LNFAGE), o investimento de capital (CAPEXTA) e a relação mercado/valor contábil (MBV) permanecem positivos e estatisticamente significativos, enquanto os coeficientes sobre o índice de liquidez corrente (CACL), a relação entre fluxo de caixa e ativos totais (NCFOTA) e a lucratividade (ROA) são negativos e estatisticamente significativos. 
+
+Os resultados mostram que todas as variáveis de governança corporativa não estão associadas à alavancagem financeira, uma vez que os coeficientes das variáveis de governança corporativa não são estatisticamente significativos. Esses achados não fornecem suporte para as Hipóteses 1.1 a 1.7, que preveem a relação entre a governança corporativa e o grau de alavancagem financeira. No entanto, esses achados são consistentes com alguns estudos que examinam empresas em países em desenvolvimento. Por exemplo, Wen et al. (2002) não encontram relação entre o tamanho do conselho e a alavancagem financeira para empresas listadas na China.
+
+
+
+## 4.2. Teste de robustez
+
+### 4.2.1. empresas grandes e pequenas
+
+Para testar se o efeito da governança corporativa na alavancagem financeira é assimétrico em relação ao tamanho da empresa, dividimos a amostra em duas subamostras com base no valor médio seccional dos ativos totais. Uma variável dummy de tamanho da empresa (HTA) assume o valor de um para uma observação com LNTA maior que a média seccional de LNTA, e zero caso contrário. Estimamos separadamente a Eq. (1) onde a variável dependente é a alavancagem financeira para ambas as subamostras de empresas pequenas (ou seja, HTA = 0) e grandes (ou seja, HTA = 1). As estatísticas descritivas para as subamostras são apresentadas no Apêndice A. 
+
+A Tabela 6 apresenta regressões OLS em painel da alavancagem financeira para ambas as subamostras. Os resultados das regressões OLS em painel indicam que, para a subamostra de empresas grandes (HTA = 1), o efeito da independência do conselho no grau de alavancagem financeira é positivo e estatisticamente significativo (βBD_IND = 0,144, p-valor < 0,05) e que o efeito do tamanho do comitê de auditoria no grau de alavancagem financeira é negativo e estatisticamente significativo (βBD_AUDIT = −0,029, p-valor < 0,05). Outras variáveis de governança corporativa não estão associadas à alavancagem financeira para a subamostra de empresas grandes.
+
+Para a subamostra de empresas pequenas (HTA = 0), a presença feminina no conselho tem um efeito positivo no grau de alavancagem financeira (βBD_WOMEN = 0,164, p-valor < 0,05), enquanto a dualidade do CEO tem um efeito negativo no grau de alavancagem financeira (βCEO_DUAL = −0,045, p-valor < 0,05).
+
+Para testar se os efeitos da governança corporativa e da alavancagem financeira no desempenho da empresa são assimétricos em relação ao tamanho da empresa, dividimos a amostra em duas subamostras com base no valor médio seccional dos ativos totais. Estimamos separadamente as Eqs. (2)–(4), onde a variável dependente é ROE para ambas as subamostras de empresas pequenas (ou seja, HTA = 0) e grandes (ou seja, HTA = 1). 
+
+A Tabela 7 apresenta regressões OLS em painel do desempenho da empresa. Os Modelos (1) e (5) são regressões OLS básicas, incluindo apenas variáveis de controle. O padrão dos resultados para ambas as subamostras é semelhante ao da amostra completa. Os resultados dos Modelos (2) e (6), que são regressões OLS em painel da Eq. (2), indicam que o efeito do tamanho do comitê de auditoria no desempenho da empresa é insignificante para a subamostra de empresas pequenas (HTA = 0) e é negativo e estatisticamente significativo (βBD_AUDIT = −0,033, p-valor < 0,01) para a subamostra de empresas grandes (HTA = 1), respectivamente.
+
+Os resultados dos Modelos (3) e (7), que são regressões OLS em painel da Eq. (3), indicam que o efeito da alavancagem financeira no desempenho da empresa é positivo e estatisticamente significativo tanto para empresas grandes (βLEV = 0,183, p-valor < 0,05) quanto para empresas pequenas (βLEV = 0,124, p-valor < 0,01).
+
+
+
+# 5. Discussão
+
+As principais conclusões podem ser resumidas da seguinte forma:
+
+Primeiro, a governança corporativa não está associada à alavancagem financeira. Esta conclusão é diferente de estudos anteriores (Berger et al., 1997; Wen et al., 2002) que relatam a existência de uma relação entre governança corporativa e alavancagem financeira.
+
+[Sexto, a governança corporativa não está associada ao desempenho da empresa. Esta conclusão é diferente de estudos anteriores (Chen et al., 2005; Jackling e Johl, 2009; Nguyen, 2011) que relatam a existência de uma relação entre governança corporativa e desempenho da empresa.
+
+[Nono, a alavancagem financeira está positivamente relacionada ao desempenho da empresa, medido como ROE, para a amostra completa e as subamostras de empresas pequenas e grandes. Este achado está em linha com estudos anteriores. Uma razão plausível para a relação positiva é que os credores podem monitorar a empresa melhor do que os acionistas externos. Melhor monitoramento (pelos credores) pode mitigar problemas de superinvestimento (por exemplo, investimentos em projetos que destroem valor), aumentando assim o desempenho da empresa (Berger e Bonaccorsi di Patti, 2006; Harvey et al., 2004). No entanto, é importante notar que alguns estudos (Antoniou et al., 2008; Vithessonthi e Tongurai, 2015) mostram que o efeito da alavancagem financeira no desempenho da empresa é negativo.
+
+Finalmente, os resultados indicam que a alavancagem financeira medeia parcialmente a relação entre governança corporativa e desempenho da empresa para a subamostra de empresas grandes. Este achado é inovador porque estudos anteriores não examinaram o papel mediador da alavancagem financeira.
+
+
+
+# 6. Conclusão
+
+A governança corporativa é um dos tópicos mais discutidos, especialmente após falências de empresas e/ou crises bancárias/financeiras. Duas perguntas importantes são frequentemente feitas: Primeiro, a governança corporativa forte pode reduzir o risco da empresa (por exemplo, risco de investimento e risco de financiamento)? Segundo, as empresas com governança corporativa forte têm um desempenho melhor do que aquelas com governança corporativa fraca? Embora os resultados empíricos pareçam ser mistos, muitos reguladores ao redor do mundo acreditam firmemente que uma governança corporativa forte reduziria a probabilidade de a empresa assumir riscos excessivos (por exemplo, sobre-alavancagem) e melhoraria o desempenho da empresa.
+
+Neste artigo, utilizamos uma grande amostra que abrange empresas não financeiras listadas no Brasil durante o período de 2000 a 2013 para esclarecer as relações entre governança corporativa, alavancagem financeira e desempenho da empresa. 
+
+Descobrimos que, [para uma empresa média, a governança corporativa (ou seja, tamanho do conselho, independência do conselho, tamanho do comitê de auditoria, presença feminina no conselho, dualidade do CEO, concentração de propriedade e reputação da auditoria) não tem efeito sobre a alavancagem e o desempenho. 
+
+No entanto, descobrimos que a alavancagem medeia parcialmente o efeito do tamanho do comitê de auditoria no desempenho da empresa apenas para grandes empresas. Pelo que sabemos, somos um dos primeiros a mostrar que a governança corporativa exerce um efeito indireto no desempenho da empresa por meio da alavancagem financeira para empresas em uma economia de mercado emergente.
+
+
+## Apendice
+
+
+## Referencias
+
+
+
+
+
+

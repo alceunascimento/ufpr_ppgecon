@@ -1,0 +1,298 @@
+---
+title: "UFPR PPGEcon 2024"
+subtitle: "Econometria (Prof. Adalto Acir Althaus Jr.): exercício 03 (Determinantes da estrutura de capital)"
+author: "Alceu Nascimento, Renan Perozin"
+date: "2024-04-21"
+output:
+  html_document: 
+    toc: yes
+    toc_float: yes
+    toc_depth: 5
+    keep_md: yes
+header-includes:
+- \usepackage{fontspec}
+- \setmainfont{Arial}
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# definir notação cientifica off em numeros menores que 1.000.000.000.000 ----
+# definir qual o tipo do separador (ponto ou virgula) ----
+options(scipen = 10, digits = 10, OutDec = ".")
+# basic ----
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)
+library(kableExtra)
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+library(grid)  # Para configurações adicionais de grid
+library(here)
+library(xtable)
+library(magrittr)
+# data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+library(janitor)
+# statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
+library(nortest)               # Anderson-Darling Test for normality
+library(car)                   # Companion to Applied Regression
+library(DescTools)             # Windsorizar vetores
+library(lmtest)                # Tests for linear regression models
+library(sandwich)              # Robust covariance matrix estimators
+library(nortest)               # Anderson-Darling Test for normality
+library(dunn.test)             # Dunn's test for multiple comparisons
+library(plm)
+```
+
+
+```{r 1 get data}
+df.raw <- read_xlsx(here("econometria/data/base_2024.xlsx"))
+```
+
+
+```{r clean data pooled ols, options}
+df <- df.raw %>%
+  select(year,
+         quarter,
+         companyname, 
+         setor_economia,
+         total_asset,
+         permanent_asset,
+         short_term_debt,
+         long_term_debt,
+         patrimonio_liquido,
+         ebit,
+         net_profit,
+         firm_market_value,
+         net_revenue
+)
+
+## Cleaning ----
+## Se o YEAR is NA, excluir
+df <- df %>%
+  filter(!is.na(year))
+## Excluir o ano de 2014 pois só tem o 1º trimestre
+df <- df %>%
+  filter(year != 2014)
+# Excluir dados sem valor de `patrimonio_liquido`
+df <- df |> 
+  filter(patrimonio_liquido != 0)
+# Excluir dados sem valor de `net_revenue`
+df <- df |> 
+  filter(net_revenue != 0)
+# Excluir dados sem valor de `firm_market_value`
+df <- df |> 
+  filter(firm_market_value != 0)
+# Excluir empresas financeiras
+df <- df |> 
+  filter(setor_economia != "Finanças e Seguros")
+# Excluir observações onde tanto `short_term_debt` quanto `long_term_debt` são NA
+df <- df[!(is.na(df$short_term_debt) & is.na(df$long_term_debt)), ]
+## Trimming ----
+# Função para identificar observações com valores extremos e excluir estas observações
+exclude_extreme_values <- function(data, variables, probs = c(0.05, 0.95)) {
+  extreme_indices <- sapply(variables, function(var) {
+    x <- data[[var]]
+    lower_bound <- quantile(x, probs[1], na.rm = TRUE)
+    upper_bound <- quantile(x, probs[2], na.rm = TRUE)
+    (x < lower_bound | x > upper_bound) & !is.na(x)
+  })
+  # Combina as condições de todas as variáveis para identificar linhas extremas
+  extreme_rows <- apply(extreme_indices, 1, any)
+  return(data[!extreme_rows, ])
+}
+# Lista de variáveis para verificar valores extremos
+variables_to_check <- c(
+  "total_asset",
+  "permanent_asset",
+  "short_term_debt",
+  "long_term_debt",
+  "patrimonio_liquido",
+  "ebit",
+  "net_profit",
+  "firm_market_value"
+)
+# Aplicar a função para excluir observações com valores extremos
+df <- exclude_extreme_values(df, variables_to_check)
+## Create new variables ----
+df <- df  |> 
+  group_by(companyname) |>  # Agrupa os dados por empresa
+  arrange(companyname, year) |>  # Ordena os dados por ano
+  mutate(
+    alavancagem = (short_term_debt + long_term_debt) / patrimonio_liquido,
+    imobilizacao = (permanent_asset / total_asset),  
+    roa = (net_profit / total_asset),
+    qtobin = (firm_market_value / total_asset),
+    bep = (ebit / total_asset),
+    log_size = log(total_asset)
+  ) |> 
+  ungroup()  # Desagrupa os dados
+## Transformar em factor ----
+df <- df |> 
+  mutate(across(c(setor_economia, year, quarter), as.factor))
+## Organize variables ----
+df <- df |> 
+  select(year,
+         quarter,
+         companyname, 
+         setor_economia,
+         alavancagem,
+         imobilizacao,
+         roa,
+         qtobin,
+         bep,
+         log_size,
+         total_asset
+  )
+# 4. CREATE pdata.frame ----
+pdata <- pdata.frame(df, index = c("companyname", "year", "quarter"))
+```
+
+# 1. Verifique as variáveis e apresente estatísticas descritivas
+
+
+```{r stat descritiva pooled ols, results='asis'}
+stargazer(pdata, type = "html")
+```
+
+
+# Construindo os modelos
+
+```{r modelos}
+## model 2a ----
+alavancagem <- alavancagem ~ 
+  imobilizacao +
+  roa + 
+  qtobin + 
+  bep +
+  roa +
+  log_size
+
+
+## Pooled OLS ----
+mod2a <- plm(alavancagem, data = pdata, model = "pooling")
+mod2b <- plm(update(alavancagem, . ~ . + factor(quarter)), data = pdata, model = "pooling")  # pooled OLS dummies for `quarter`
+mod2c <- plm(update(alavancagem, . ~ . + factor(quarter) + factor(companyname)), data = pdata, model = "pooling")  # pooled OLS dummies for `quarter` and `companyname`
+
+## Random Effects ----
+mod3a <- plm(alavancagem, data = pdata, model = "random")
+mod3b <- plm(update(alavancagem, . ~ . + factor(quarter)), data = pdata, model = "random")  # random effects dummies for `quarter`
+
+## Fixed Effects ----
+mod4a <- plm(alavancagem, data = pdata, model = "within")  # fixed effects 
+mod4b <- plm(update(alavancagem, . ~ . + factor(quarter)), data = pdata, model = "within")  # fixed effects dummies for `quarter`
+mod4c <- plm(update(alavancagem, . ~ . + factor(quarter) + factor(companyname)), data = pdata, model = "within")  # fixed effects dummies for `quarter` and `companyname`
+mod4d <- plm(update(alavancagem, . ~ . + factor(quarter) + factor(companyname)), data = pdata, model = "within", index = "companyname")  # fixed effect dummies for `quarter` and `companyname` and cluster for `companyname`
+
+
+
+
+# Generate robust standard errors
+robust_mod2a <- coeftest(mod2a, vcov = vcovHC(mod2a, type = "HC1"))
+robust_mod2b <- coeftest(mod2b, vcov = vcovHC(mod2b, type = "HC1"))
+robust_mod2c <- coeftest(mod2c, vcov = vcovHC(mod2c, type = "HC1"))
+robust_mod3a <- coeftest(mod3a, vcov = vcovHC(mod3a, type = "HC1"))
+robust_mod3b <- coeftest(mod3b, vcov = vcovHC(mod3b, type = "HC1"))
+robust_mod4a <- coeftest(mod4a, vcov = vcovHC(mod4a, type = "HC1"))
+robust_mod4b <- coeftest(mod4b, vcov = vcovHC(mod4b, type = "HC1"))
+robust_mod4c <- coeftest(mod4c, vcov = vcovHC(mod4c, type = "HC1"))
+robust_mod4d <- coeftest(mod4d, vcov = vcovHC(mod4d, type = "HC1"))
+
+
+```
+
+
+```{r analisys output stargazer robuts, results='asis'}
+# Function to extract robust standard errors
+robust_se <- function(model) {
+  sqrt(diag(vcovHC(model, type = "HC1")))
+}
+
+# Extract coefficients and robust standard errors
+coefs_robust <- list(
+  mod2a = coeftest(mod2a, vcov = vcovHC(mod2a, type = "HC1")),
+  mod2b = coeftest(mod2b, vcov = vcovHC(mod2b, type = "HC1")),
+  mod2c = coeftest(mod2c, vcov = vcovHC(mod2c, type = "HC1")),
+  mod3a = coeftest(mod3a, vcov = vcovHC(mod3a, type = "HC1")),
+  mod3b = coeftest(mod3b, vcov = vcovHC(mod3b, type = "HC1")),
+  mod4a = coeftest(mod4a, vcov = vcovHC(mod4a, type = "HC1")),
+  mod4b = coeftest(mod4b, vcov = vcovHC(mod4b, type = "HC1")),
+  mod4c = coeftest(mod4c, vcov = vcovHC(mod4c, type = "HC1")),
+  mod4d = coeftest(mod4d, vcov = vcovHC(mod4d, type = "HC1"))
+)
+
+# Extract robust standard errors from coeftest results
+se_robust <- lapply(coefs_robust, function(x) x[, 2])
+
+# Stargazer output with robust standard errors
+stargazer(
+  mod2a, mod2b, mod2c, mod3a, mod3b, mod4a, mod4b, mod4c,
+  type = "html", 
+  report = "vcs*", 
+  omit = c("factor\\(quarter\\)", "factor\\(companyname\\)"),
+  column.labels = c("2.a Poooled OLS", "2.b Pooled OLS dummies quarter", "2.c Pooled OLS dummies quarter/firms ", "3.a RE", "3.b RE dummies quarter", "4.a FE", "4.b FE dummies quarter", "4.c FE dummies quarter/firms", "4.d"),
+  se = se_robust
+)
+```
+
+# Questões
+
+2. Faça uma regressão Pooled OLS usando erros robustos  
+a. Usando apenas as variáveis principais.  
+b. Usando apenas as variáveis principais e os dummies de trimestre  
+c. Usando apenas as variáveis principais, dummies de trimestre e dummies de firma  
+
+
+3) Faça uma regressão usando efeitos aleatórios e erros robustos:  
+a. Usando apenas as variáveis principais.  
+b. Usando apenas as variáveis principais e os dummies de trimestre  
+c. Usando apenas as variáveis principais, dummies de trimestre e dummies de firma.  
+d. Usando apenas as variáveis principais, dummies de trimestre, dummies de firma e cluster por firma.  
+
+
+4) Faça regressões usando efeitos fixos e erros robustos:  
+a. Usando apenas as variáveis principais.  
+b. Usando apenas as variáveis principais e os dummies de trimestre.     
+c. Usando apenas as variáveis principais, dummies de trimestre e dummies de firma.  
+d. Usando apenas as variáveis principais, dummies de trimestre, dummies de firma e cluster por firma.  
+
+
+# 5) Execute um teste de Hausman para os modelos RE e FE usando o modelo da letra (a) e conclua qual seria a técnica indicada neste caso
+
+```{r hausman test}
+hausman_test <- phtest(mod3a, mod4a)
+hausman_test
+# Interpretar os resultados do teste de Hausman
+if (hausman_test$p.value < 0.05) {
+  print("O modelo de Efeitos Fixos (FE) é preferível.")
+} else {
+  print("O modelo de Efeitos Aleatórios (RE) é preferível.")
+}
+
+```
+
+6) Sinta-se à vontade para adicionar qualquer análise extra que desejar. 
+
+# 7) Faça breves comentários comparando as regressões. O que você conclui?
+
+Observa-se que todos os testes tem poder pretiditivo (R2) muito baixo. 
+Além disto, apenas a variável ROA apresenta algum efeito estatisticamente significante.
+

@@ -1,0 +1,160 @@
+---
+title: Impacto dos Investimentos em Educação sobre o Crescimento Econômico dos Estados
+  Brasileiros
+author: "Alceu Nascimento"
+date: "2024-07-16"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(writexl)               # Salva as tabelas elaboradas em formato .xls
+library(readxl)                # Reads Microsoft Excel spreadsheets.
+library(knitr)
+library(kableExtra)
+library(readr)                 # A fast and friendly way to read tabular data into R.
+library(MASS)                  # visualiza decimal em fracoes
+library(xtable)                # transforma tabela Excel para Latex
+library(ggplot2)               # graficos
+library(gridExtra)
+library(grid)                  # Para configurações adicionais de grid
+library(here)
+library(xtable)
+## data manipulation ----
+library(tidyverse)             # Inclui dplyr, forcats, ggplto2, lubridate, purrr, stringr, tibble, tidyr
+library(broom)                 # Converte saídas de modelos estatísticos em tibbles
+library(dbplyr)                # Interface dplyr para bancos de dados
+library(lubridate)             # Simplifica trabalho com datas e horas
+library(janitor)
+## statistics ----
+library(stargazer)             # analise estatistica
+library(skimr)                 # Compact and flexible summaries of data, a frictionless, pipeable approach to dealing with summary statistic
+library(broom)                 # Convert statistical analysis objects into tidy data frames.
+library(lmtest)                # Hypothesis testing for linear regression models.
+library(modelsummary)          # faz um grafico de intervalo bom
+library(strucchange)           # analisar quebras estruturais (Chow Test)
+library(mctest)                # teste para multicolinearidad
+library(performance)           # Analisa regressão 
+library(broom)                 # takes the messy output of built-in functions in R, such as lm, nls, or t.test, and turns them into tidy tibbles.
+library(Hmisc)
+library(pastecs)
+library(nortest)               # Anderson-Darling Test for normality
+library(dunn.test)
+library(car)
+library(reshape2)
+library(plm)
+```
+
+
+# Introdução
+
+Este estudo investiga o impacto dos investimentos em educação sobre o crescimento econômico dos estados brasileiros no período de 2000 a 2023.
+
+# Revisão da Literatura
+
+A literatura existente sugere uma relação positiva entre investimentos em educação e crescimento econômico.
+
+# Dados
+
+Os dados utilizados neste estudo foram obtidos do IBGE, IPEA e Ministério da Educação. O período analisado é de 2000 a 2023.
+
+```{r get data}
+renda <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/econometria/data/renda.csv")
+renda_long <- melt(renda, id.vars = c("Estado"), 
+                   variable.name = "Ano", value.name = "Renda")
+renda_long$Ano <- as.numeric(as.character(renda_long$Ano))
+print(renda_long)
+```
+
+
+```{r get data 2}
+estudo <- read_csv("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/econometria/data/estudo_2022_2023.csv")
+estudo <- estudo %>% select(-Sigla, -Código,-last_col())
+estudo_long <- melt(estudo, id.vars = "Estado", variable.name = "Ano", value.name = "estudo")
+estudo_long$Ano <- as.numeric(as.character(estudo_long$Ano))
+print(estudo_long)
+```
+
+
+```{r get data 3}
+despesas_educacao <- read_csv2("C:/Users/DELL/OneDrive/R/Rprojetos/ufpr_ppgecon/econometria/data/despesas_educacao.csv")
+despesas_educacao_long <- melt(despesas_educacao, id.vars = "Estado", variable.name = "Ano", value.name = "despesas")
+despesas_educacao_long$Ano <- as.numeric(as.character(despesas_educacao_long$Ano))
+print(despesas_educacao_long)
+```
+
+
+```{r create panel data}
+# Realizar a junção dos dataframes com base nas colunas "Estado" e "Ano"
+painel_dados <- merge(renda_long, estudo_long, by = c("Estado", "Ano"), all = TRUE)
+painel_dados <- merge(painel_dados, despesas_educacao_long, by = c("Estado", "Ano"), all = TRUE)
+print(painel_dados)
+painel_dados <- painel_dados %>%
+  filter(!is.na(Renda), !is.na(estudo), !is.na(despesas))
+print(painel_dados)
+# Configurar o dataframe como dados de painel usando plm
+p.painel_dados <- pdata.frame(painel_dados, index = c("Estado", "Ano"))
+# Verificar a estrutura do painel
+print(p.painel_dados)
+```
+
+
+# Metodologia
+
+Utilizamos um modelo para analisar o impacto dos gastos em educação sobre a renda per capita.
+
+$$
+Renda per capita_{it} =β_0 + β_1GastosEducação_{it} + β_2 AnosEstudo_{it} + \epsilon_{it}
+$$
+
+```{r modelo}
+# Modelagem Econométrica
+vif_result <- vif(lm(Renda ~ estudo + despesas, data = painel_dados))
+print(vif_result)
+# Aqui, vamos usar um exemplo com a renda como variável dependente e estudo e despesas como variáveis independentes
+
+modelo_lm <- lm(Renda ~ estudo + despesas, data = p.painel_dados)
+stargazer(modelo_lm, type = 'text')
+
+# Modelo de Efeitos Fixos
+modelo_ef <- plm(Renda ~ estudo + despesas, data = p.painel_dados, model = "within")
+# Modelo de Efeitos Aleatórios
+modelo_ea <- plm(Renda ~ estudo + despesas, data = p.painel_dados, model = "random")
+# Estimar os modelos e exibir os resultados
+summary(modelo_ef)
+summary(modelo_ea)
+
+# Diagnóstico e Validação
+# Teste de Hausman para comparar efeitos fixos e aleatórios
+teste_hausman <- phtest(modelo_ef, modelo_ea)
+print(teste_hausman)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fim.
