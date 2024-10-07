@@ -354,10 +354,10 @@ Assim, uma das implicações do oportunismo é que modos "ideais" de
 arranjos econômicos cooperativos são muito frágeis, pois tais
 organizações são facilmente invadidas e exploradas por determinados
 agentes. Leia-se "ideais" aqueles onde a confiança e boas intenções são
-generosamente imputadas aos membros. Consequentemente, aqueles que desejam o sucesso dos arranjos
-cooperativos devem, por necessidade, fazer concessões organizacionais
-aos efeitos debilitantes do oportunismo, de forma a recondicionar
-socialmente e penalizar de outra forma invasores oportunistas.
+generosamente imputadas aos membros. Consequentemente, aqueles que desejam o 
+sucesso dos arranjos cooperativos devem, por necessidade, fazer concessões 
+organizacionais aos efeitos debilitantes do oportunismo, de forma a 
+recondicionar socialmente e penalizar de outra forma invasores oportunistas.
 [@williamson_economic_1985, p. 67]
 
 Ademais, os custos de transação, que incluem os custos de pesquisa,
@@ -541,13 +541,13 @@ criação de incentivos que alinham os interesses do principal e do agente
 é fundamental para reduzir os conflitos de agência.
 
 Posner [-@posnerAgencyModelsLaw2000] destaca a importância de mecanismos
-de fiscalização externa para mitigar o risco moral​. Sob esse ponto de
+de fiscalização externa para mitigar o risco moral. Sob esse ponto de
 vista, a introdução da figura do agente fiduciário, que atua como um
 terceiro responsável pela fiscalização dos recursos, garantiu que o
 incorporador cumpra com suas obrigações e que o dinheiro dos adquirentes
 seja utilizado de maneira transparente e eficiente.
 
-## 4.3 Capital Requirements
+## 4.3 Requisitos de capital
 
 Os requisitos de capital são um componente fundamental da regulação
 financeira, especialmente no contexto de instituições financeiras, como
@@ -607,12 +607,34 @@ estabilidade e resiliência do sistema financeiro como um todo.
 
 # 5 Conclusão
 
-Em conclusão, a incorporação imobiliária tem se mostrado fundamental para o desenvolvimento urbano e econômico do Brasil, ao viabilizar a produção habitacional e canalizar a poupança popular para investimentos no setor. A evolução do marco regulatório, iniciada com a Lei 4.591/64 e aprimorada pela Lei 10.931/04, foi crucial para enfrentar os desafios históricos, como a informalidade inicial e as crises decorrentes de falências de grandes incorporadoras nos anos 1990.
+Em conclusão, a incorporação imobiliária tem se mostrado fundamental para o 
+desenvolvimento urbano e econômico do Brasil, ao viabilizar a produção 
+habitacional e canalizar a poupança popular para investimentos no setor. 
+A evolução do marco regulatório, iniciada com a Lei 4.591/64 e aprimorada pela 
+Lei 10.931/04, foi crucial para enfrentar os desafios históricos, como a 
+informalidade inicial e as crises decorrentes de falências de grandes 
+incorporadoras nos anos 1990.
 
-A introdução de mecanismos como o patrimônio de afetação e a figura do agente fiduciário fortaleceu a proteção aos adquirentes e financiadores, aumentando a transparência e a segurança jurídica no mercado. Além disso, a diversificação das fontes de financiamento, por meio de instrumentos como os Certificados de Recebíveis Imobiliários (CRIs), atraiu investimentos e promoveu a estabilidade do setor.
+A introdução de mecanismos como o patrimônio de afetação e a figura do agente 
+fiduciário fortaleceu a proteção aos adquirentes e financiadores, aumentando a 
+transparência e a segurança jurídica no mercado. Além disso, a diversificação 
+das fontes de financiamento, por meio de instrumentos como os Certificados de 
+Recebíveis Imobiliários (CRIs), atraiu investimentos e promoveu a estabilidade 
+do setor.
 
-Do ponto de vista teórico, a aplicação de conceitos como custos de transação, conflitos de agência e requisitos de capital mostrou-se essencial para compreender e resolver os problemas inerentes à incorporação imobiliária. A regulação eficiente reduziu a assimetria de informações e alinhou os interesses entre incorporadores, adquirentes e financiadores, mitigando comportamentos oportunistas e riscos sistêmicos.
+Do ponto de vista teórico, a aplicação de conceitos como custos de transação, 
+conflitos de agência e requisitos de capital mostrou-se essencial para 
+compreender e resolver os problemas inerentes à incorporação imobiliária. 
+A regulação eficiente reduziu a assimetria de informações e alinhou os 
+interesses entre incorporadores, adquirentes e financiadores, mitigando 
+comportamentos oportunistas e riscos sistêmicos.
 
-Portanto, a análise histórica e teórica evidencia a importância de um marco regulatório robusto e adaptável, que não apenas protege os diversos agentes envolvidos, mas também incentiva práticas empresariais responsáveis e sustentáveis. O contínuo aprimoramento dessas políticas é vital para promover um mercado imobiliário mais seguro, transparente e eficiente, contribuindo significativamente para o crescimento econômico e a redução das desigualdades sociais no país
+Portanto, a análise histórica e teórica evidencia a importância de um marco 
+regulatório robusto e adaptável, que não apenas protege os diversos agentes 
+envolvidos, mas também incentiva práticas empresariais responsáveis e 
+sustentáveis. O contínuo aprimoramento dessas políticas é vital para promover 
+um mercado imobiliário mais seguro, transparente e eficiente, contribuindo 
+significativamente para o crescimento econômico e a redução das desigualdades 
+sociais no país.
 
 # Referências bibliográficas
