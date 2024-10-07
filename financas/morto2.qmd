@@ -16,15 +16,7 @@ csl: "abnt_alceu.csl"
 
 # 1 Introdução
 
-A incorporação imobiliária é fundamental para o desenvolvimento urbano e econômico do Brasil, facilitando a produção de habitações e a mobilização da poupança popular. Este artigo examina sua natureza jurídica e econômica, destacando seu funcionamento, evolução regulatória e os desafios enfrentados. Inicialmente, os incorporadores planejam e executam empreendimentos financiados antecipadamente pelos adquirentes, criando uma interdependência complexa entre diversos agentes e evidenciando a necessidade de uma regulação sólida.
-
-Antes da Lei 4.591/64, a falta de regulamentação específica resultava em informalidade e insegurança jurídica no mercado imobiliário brasileiro. A promulgação desta lei introduziu transparência ao exigir o registro detalhado dos projetos. No entanto, crises como a falência da Encol nos anos 1990 expuseram fragilidades, especialmente na proteção insuficiente dos adquirentes diante da insolvência dos incorporadores.
-
-Em resposta, a Lei 10.931/04 trouxe inovações significativas, como o patrimônio de afetação e a figura do agente fiduciário, que segregam os recursos destinados a um empreendimento específico e fortalecem a fiscalização. Além disso, instrumentos financeiros como os Certificados de Recebíveis Imobiliários (CRIs) diversificaram as fontes de financiamento e atraíram investimentos ao setor.
-
-No campo teórico, o artigo aborda conceitos de custos de transação, conflitos de agência e requisitos de capital. A teoria dos custos de transação explica como a regulação reduz a assimetria de informações e mitiga comportamentos oportunistas dos incorporadores. Os conflitos de agência são analisados nas relações entre incorporadores e adquirentes, mostrando como mecanismos regulatórios alinham os interesses das partes. A discussão sobre requisitos de capital enfatiza a importância de "skin in the game" para promover comportamentos mais prudentes, reduzindo riscos sistêmicos e fortalecendo a confiança no mercado.
-
-Este artigo oferece, portanto, uma visão abrangente da evolução da incorporação imobiliária no Brasil, ressaltando a importância da regulação na promoção de um mercado mais seguro, transparente e eficiente. Ao combinar análises históricas e perspectivas teóricas, busca contribuir para o entendimento dos desafios e oportunidades do setor, bem como para o desenvolvimento de políticas públicas e práticas empresariais que promovam crescimento sustentável e redução das desigualdades sociais
+\[intro\]
 
 # 2 A Natureza da Incorporação Imobiliária e o Racional Regulatório
 
@@ -323,12 +315,23 @@ ambiente mais seguro e sustentável para todos os agentes envolvidos.
 ## 4.1 Custos de transação
 
 A questão dos custos de transação foi melhor sistematizada e amplicada
-por Williamson, introduzindo o conceito de governança para minimizar
+por Williamson[^1], introduzindo o conceito de governança para minimizar
 esses custos e analisando o oportunismo como um fator crítico que afeta
 a eficiência dos arranjos contratuais firmados desde pequenos grupos de
 agentes até corporações. Desta forma, hoje, as reflexões de Coase são
 como uma mera fonte ou uma versão primitiva da economia dos custos de
 transação.
+
+[^1]: Coase contends that the firm serves to economize on transaction
+    costs ... The underlying factors that explain how and why these
+    economies are realized are not worked out, however, and Coase's
+    discussion of why internal organization does not fully displace the
+    market is even less complete. ... I submit that a more complete
+    theory of firms and markets than Coase was able to forge in this
+    seminal study awaits more self-conscious attention to the
+    ramifications of the elementary attributes of human decision
+    makers - of which opportunism is one, and bounded rationality is
+    another [@williamsonMarketsHierarchiesAnalysis1975, p. 4]
 
 O oportunismo, definido por Williamson como "comportamento
 auto-interessado com astúcia", inclui a disseminação de informações
@@ -337,6 +340,19 @@ problemas que contratos e instituições buscam mitigar. A análise de
 Williamson destaca que a presença de oportunismo exige a criação de
 salvaguardas ex ante e ex post nos contratos para proteger os arranjos
 econômicos cooperativos.
+
+Nesta perspectiva, o direito exerce um papel crucial no desenvolvimento
+econômico, fornecendo a estrutura e as regras que permitem a formação e
+a operação dos mercados. A segurança jurídica e a previsibilidade são
+essenciais para que os agentes econômicos se sintam confiantes para
+investir, empreender e realizar transações. Instituições jurídicas
+sólidas garantem o cumprimento dos contratos, a proteção dos direitos de
+propriedade e a resolução eficaz de disputas. De acordo com North
+[-@north_transaction_1992 ,p. 5] , as instituições são as "regras do
+jogo" em uma sociedade, e seu desenvolvimento influencia diretamente o
+desempenho econômico. Um ambiente jurídico robusto facilita a redução
+dos custos de transação e promove a eficiência econômica, estimulando o
+crescimento e a inovação.
 
 Williamson [-@williamson_economic_1985. p. 66] reconhece que a suposição
 comportamental de que agentes humanos são propensos ao oportunismo
@@ -351,10 +367,26 @@ e, principalmente, salvaguardas *ex post* que são criadas no âmbito dos
 contratos.
 
 Assim, uma das implicações do oportunismo é que modos "ideais" de
-arranjos econômicos cooperativos são muito frágeis, pois tais
+arranjos econômicos cooperativos[^2]são muito frágeis, pois tais
 organizações são facilmente invadidas e exploradas por determinados
 agentes. Leia-se "ideais" aqueles onde a confiança e boas intenções são
-generosamente imputadas aos membros. Consequentemente, aqueles que desejam o sucesso dos arranjos
+generosamente imputadas aos membros.
+
+[^2]: O termo "cooperativos" no contexto deste texto refere-se a
+    estruturas ou modelos econômicos onde a colaboração e a confiança
+    mútua entre os participantes são elementos centrais. Diferentemente
+    de modelos competitivos, onde o foco está na maximização individual
+    do benefício, arranjos cooperativos priorizam a cooperação para
+    alcançar objetivos comuns ou compartilhados. Esses arranjos podem
+    incluir, por exemplo, cooperativas de trabalhadores, organizações de
+    produção colaborativa ou parcerias econômicas baseadas em princípios
+    de confiança e reciprocidade. No texto, o termo é utilizado para
+    destacar a fragilidade desses arranjos frente ao oportunismo, onde
+    ações auto-interessadas e potencialmente enganosas de alguns
+    indivíduos podem prejudicar a eficácia e a sustentabilidade do
+    modelo cooperativo. Ver @ostromGoverningCommonsEvolution2011
+
+Consequentemente, aqueles que desejam o sucesso dos arranjos
 cooperativos devem, por necessidade, fazer concessões organizacionais
 aos efeitos debilitantes do oportunismo, de forma a recondicionar
 socialmente e penalizar de outra forma invasores oportunistas.
@@ -454,6 +486,17 @@ patrimônio de afetação, que aumenta a transparência e separa os recursos
 dos projetos, reduzindo riscos e incentivando financiadores e
 adquirentes.
 
+Akerlof [-@akerlofMarketLemonsQuality1970a] usa o exemplo do mercado de
+carros usados para discutir o conceito de seleção adversa ao discutir a
+incerteza da qualidade e o mercado de "lemons" (mercadorias de qualidade
+inferior). Embora ele não trate de incorporações imobiliárias, o
+conceito de seleção adversa pode ser aplicado ao setor. No contexto da
+incorporação imobiliária, antes da promulgação da Lei 4.591/64, os
+incorporadores detinham mais informações sobre o projeto do que os
+adquirentes, o que criava um ambiente onde os compradores podiam tomar
+decisões baseadas em informações incompletas, muitas vezes levando a
+riscos maiores do que o esperado.
+
 A Lei 4.591/64 endereçou isso ao exigir o registro dos imóveis e de
 todas as características do projeto no cartório, proporcionando
 publicidade ostensiva e maior clareza aos adquirentes, o que reduz a
@@ -467,6 +510,15 @@ dos recursos e reduzindo o risco de inadimplência. Esse tipo de
 regulação, ao criar maior segurança jurídica, alivia os custos de
 transação ao simplificar e clarificar os termos de contratação e
 financiamento.
+
+Por fim, o patrimônio de afetação, conforme discutido por Chalhub
+[-@chalhub2003] e Chwartzmann
+[-@chwartzmannModelagemProcessoIncorporacao2005], alinham os incentivos
+e limitam comportamentos oportunistas, diminuindo os custos de
+supervisão e execução de contratos. Em suma, a regulação não apenas
+promoveu a transparência, mas reduziu significativamente os custos de
+transação, permitindo um ambiente mais seguro e atrativo para
+investimentos.
 
 ## 4.2 Conflitos de Agencia
 
@@ -487,7 +539,7 @@ em detrimento da conclusão ou qualidade do projeto imobiliário.
 Conforme discutido por Fama e Jensen
 [-@famaAgencyProblemsResidual1983a], os conflitos de agência são
 exacerbados quando há assimetria de informação, isto é, quando o agente
-detém mais informações sobre o projeto do que o principal. No caso das
+detém mais informações sobre o projeto do que o principal​. No caso das
 incorporações imobiliárias, antes da promulgação da Lei 4.591/64, esse
 cenário era evidente: os incorporadores podiam ocultar informações
 cruciais sobre a viabilidade financeira dos empreendimentos e sobre a
@@ -607,12 +659,11 @@ estabilidade e resiliência do sistema financeiro como um todo.
 
 # 5 Conclusão
 
-Em conclusão, a incorporação imobiliária tem se mostrado fundamental para o desenvolvimento urbano e econômico do Brasil, ao viabilizar a produção habitacional e canalizar a poupança popular para investimentos no setor. A evolução do marco regulatório, iniciada com a Lei 4.591/64 e aprimorada pela Lei 10.931/04, foi crucial para enfrentar os desafios históricos, como a informalidade inicial e as crises decorrentes de falências de grandes incorporadoras nos anos 1990.
-
-A introdução de mecanismos como o patrimônio de afetação e a figura do agente fiduciário fortaleceu a proteção aos adquirentes e financiadores, aumentando a transparência e a segurança jurídica no mercado. Além disso, a diversificação das fontes de financiamento, por meio de instrumentos como os Certificados de Recebíveis Imobiliários (CRIs), atraiu investimentos e promoveu a estabilidade do setor.
-
-Do ponto de vista teórico, a aplicação de conceitos como custos de transação, conflitos de agência e requisitos de capital mostrou-se essencial para compreender e resolver os problemas inerentes à incorporação imobiliária. A regulação eficiente reduziu a assimetria de informações e alinhou os interesses entre incorporadores, adquirentes e financiadores, mitigando comportamentos oportunistas e riscos sistêmicos.
-
-Portanto, a análise histórica e teórica evidencia a importância de um marco regulatório robusto e adaptável, que não apenas protege os diversos agentes envolvidos, mas também incentiva práticas empresariais responsáveis e sustentáveis. O contínuo aprimoramento dessas políticas é vital para promover um mercado imobiliário mais seguro, transparente e eficiente, contribuindo significativamente para o crescimento econômico e a redução das desigualdades sociais no país
+Este arco narrativo permite ao leitor entender como a incorporação
+imobiliária no Brasil evoluiu em resposta às mudanças regulatórias,
+econômicas e de mercado. Ao adotar essa estrutura, você pode contar uma
+história que não apenas informa, mas também envolve o leitor ao conectar
+eventos históricos a contextos atuais e futuros, utilizando dados e
+análises para dar suporte a cada ponto discutido.
 
 # Referências bibliográficas
