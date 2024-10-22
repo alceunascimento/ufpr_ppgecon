@@ -14,7 +14,7 @@ format:
     scrollable: true
     theme: simple
     reference-location: document
-    footer: "UFPR PPGEcon : Direito & Economia (Setembro/2024)"
+    footer: "UFPR PPGEcon : Direito & Economia (Outubro/2024)"
     self-contained: true
 lang: pt-BR   # define o idioma para portugues
 bibliography: references.bib
