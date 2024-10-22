@@ -21,7 +21,7 @@ bibliography: references.bib
 csl: ipea.csl
 ---
 
-## Debate:
+# Debate:
 
 -   Efficient Capital Markets: A Review of Theory and Empirical Work
     (Eugene F. Fama, 1970)
@@ -78,17 +78,16 @@ superiores ao mercado de forma consistente.
 3.  Passeio aleatório (Random Walk)
 4.  Condições de mercado Consistentes com a eficiência
 
-```{=html}
 <!-- -->
-```
+
 a.  Investidores Racionais
 b.  Livre acesso as informações
 c.  Concorrência entre Investidores
 d.  Baixos Custos de Transação
 
-# Revisão empírica
+## Revisão empírica
 
-## Forma: **FRACA**
+### Forma: **FRACA**
 
 **Estudos de Passeio Aleatório (Random Walk Studies)**
 
@@ -107,7 +106,7 @@ retornos passados e futuros das ações
 
 ------------------------------------------------------------------------
 
-## Forma: **FRACA**
+### Forma: **FRACA**
 
 **Testes com Análise Técnica**
 
@@ -122,7 +121,7 @@ movimentos de preços futuro
 
 ------------------------------------------------------------------------
 
-## Forma: **SEMI-FORTE**
+### Forma: **SEMI-FORTE**
 
 **Estudos de eventos**
 
@@ -151,7 +150,94 @@ superiores ao mercado
 -   **Implicação**: Sugere que as informações publicamente disponíveis
     são rapidamente incorporadas aos preços
 
-## How Algorithmic Trading Undermines Efficiency in Capital Markets (Yesha Yadav, 2015)
+# A Digitalização do Mercado de Capitais no Brasil: Tendências Recentes (Edemilson Paraná, 2018)
+
+## Finança digitalizada
+
+> *"...a configuração da finança digitalizada é resultado do encontro de
+> processos macroestruturais, nomeadamente a revolução informacional
+> (Lojkine, 2002), vinculada ao desenvolvimento das tecnologias a
+> informação e comunicação (TICs), e da constituição de um regime global
+> de acumulação com dominância da valorização financeira nas últimas
+> quatro décadas."*.
+
+## Panorama
+
+-   Automação de processos, desde a negociação de ações até a coleta e
+    análise de informações de mercado.
+-   Implementação de robôs de investimento, algoritmos de negociações e
+    negociações de alta frequência (HFT). Utilizados como instrumento de
+    especulação e arbitragem, criando de novos padrões de liquidez e
+    volatilidade.
+
+## Panorama
+
+![](Imagem1.png){fig-align="center"}
+
+## Panorama
+
+![](Imagem2.png){fig-align="center"}
+
+## Panorama
+
+-   Mudanças nas estruturas de poder dentro dos mercados de capitais,
+    uma vez que a digitalização tende a concentrar ainda mais o controle
+    em mãos de grandes players com acesso a tecnologias avançadas e
+    dados sofisticados.
+
+-   Menor participação de pequenos investidores do mercado local, com
+    aumento da prominência de investidores e corretoras estrangeiras na
+    bolsa brasileira. *demais praças globais seguem mesmo caminho*.
+
+## Panorama
+
+![](Imagem3.png){fig-align="center"}
+
+## Panorama
+
+![](Imagem4.png){fig-align="center"}
+
+## Panorama
+
+-   Financeirização das economias nas últimas décadas figura como um
+    importante e preocupante desdobramento da mundialização financeira,
+    ativada pelo processo de desregulamentação, liberalização e
+    integração dos mercados de capitais.
+
+-   Ampliação das dificuldades para a regulação e a regulamentação dos
+    mercados, acompanhada da ocorrência de fraudes, desequilíbrios,
+    entre outros eventos perturbadores (*flash cards*).
+
+## Panorama
+
+![](Imagem5.png){fig-align="center"}
+
+## Tendências
+
+-   Forte investimento na construção de sistemas de produção e
+    circulação de informações em tempo real
+-   Produção de meios capazes de viabilizar a realização de negociações
+    simultâneas em diferentes mercados na maior velocidade possível \##
+    Reflexões críticas
+-   Perda da teórica função social de viabilizar investimentos voltados
+    a produção.
+-   Assimetria de informação, gerando desigualdade informacional.
+
+## Tendências
+
+-   Problemas de transparência geradas para opacidade das negociações
+-   Problemas de possíveis manipulações do mercado por algoritmos e
+    negociações de alta frequência.
+-   Ampliação do risco sistêmico
+-   Problemas de regulação e regulamentação
+-   Papel da B3, CVM e demais entidades. Capacidade de ajustar práticas
+    regulatórias. Descompasso entre a inovação e a criação de normativos
+    e a capacidade de fiscalização. Novas regras são necessárias para
+    lidar com as externalidades negativas.\
+-   Equilíbrio entre incentivar inovações e proteger a integridade e
+    equidade do mercado.
+
+# How Algorithmic Trading Undermines Efficiency in Capital Markets (Yesha Yadav, 2015)
 
 -   **Tese Principal**: O trading algorítmico prejudica a eficiência da
     alocação de capital nos mercados de valores mobiliários.
