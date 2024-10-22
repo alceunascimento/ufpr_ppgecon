@@ -1,0 +1,131 @@
+---
+title: "Incorporação Imobiliária"
+subtitle: "Uma análise sob a ótica da regulação e dos incentivos econômicos"
+author: "Alceu Eilert Nascimento"
+date: "2024-10-19"
+format: 
+  revealjs:
+    slide-number: true
+    theme: simple
+    transition: fade
+bibliography: bibliografia.bib
+link-citations: TRUE
+csl: "abnt_alceu.csl"
+---
+
+# Introdução
+
+- A estrutura regulatória da incorporação imobiliária no Brasil apresenta lacunas.
+- O modelo brasileiro <span style="color:blue">incentiva a alavancagem</span> dos incorporadores.
+- Conclusão das obras depende do volume de vendas.
+- Exposição a riscos econômicos sem mitigação adequada.
+- Hipótese: o modelo deveria ser tratado como atividade financeira com supervisão rígida.
+
+# Hipótese
+
+- O modelo regulatório brasileiro é baseado na captação de <span style="color:blue">poupança popular</span>.
+- Não existem mecanismos robustos que garantam a entrega dos empreendimentos.
+- Diferença entre o modelo brasileiro e modelos internacionais (exigência de capital mínimo).
+- Proposta: tratar a incorporação como atividade financeira, com regras semelhantes às de <span style="color:blue">instituições financeiras</span>.
+
+<span style="color:blue"></span>
+
+# Estrutura de Análise
+
+## 1. Análise do Modelo Brasileiro
+
+- Captação de recursos diretamente das famílias por meio de vendas na planta.
+- Financiamento dependente das condições de mercado e vendas.
+- Desembolsos do financiamento à produção vinculados ao volume de vendas.
+
+---
+
+### Patrimônio de Afetação
+
+- Lei 10.931/2004 protege adquirentes separando ativos.
+- Não garante a entrega das obras se as vendas forem insuficientes.
+- Falta de restrição na aplicação do caixa gerado.
+- Controle nas mãos dos adquirentes, sem capacidade técnica adequada.
+
+---
+
+### Ausência de Exigências Financeiras
+
+- Incorporadores não cumprem requisitos de <span style="color:blue">capital mínimo</span> ou reservas financeiras.
+- Exposição a riscos de financiamento em cenários de crise econômica.
+
+# Comparação com Modelos Estrangeiros
+
+## Modelos de Incorporação: Alemanha e França
+
+- Incorporador oferece garantias financeiras <span style="color:blue">independentes</span> do volume de vendas.
+- Inclui seguro-garantia, capital próprio ou crédito pré-aprovado.
+
+---
+
+### Diferenças Estruturais
+
+- Incorporadores tratados como agentes financeiros, mitigando risco de insolvência.
+- Garantias firmes de entrega das obras.
+- Presença de <span style="color:blue">notário</span> como agente de verificação.
+
+---
+
+### Supervisão Regulatória
+
+- Avaliação de solvência e controle de riscos semelhante a instituições bancárias.
+- Supervisão rigorosa para garantir conclusão das obras.
+
+# Impacto Econômico e Riscos Sistêmicos
+
+## Ciclo Econômico e Mercado Imobiliário
+
+- Forte correlação entre ciclo econômico e o mercado imobiliário no Brasil.
+- Alta de juros e restrição de crédito reduzem o volume de vendas.
+- Dificuldade de financiamento impacta a conclusão dos empreendimentos.
+
+---
+
+### Riscos de Insolvência
+
+- Sem exigências financeiras rígidas, incorporadores ficam expostos a crises.
+- Aumenta o risco de falência e abandono de obras.
+
+---
+
+### Exposição ao Risco Econômico
+
+- No modelo atual, o risco de não entrega está diretamente ligado à conjuntura econômica.
+- A regulação deve ser revisada para mitigar esses riscos.
+
+# Proposta de Nova Estrutura Regulatória
+
+## Incorporação como Atividade Financeira
+
+- Exigência de capital mínimo.
+- Supervisão mais intensa, semelhante a bancos.
+- Garantias financeiras robustas para assegurar a conclusão das obras.
+
+## Regulação Inspirada em Práticas Internacionais
+
+- Adoção de garantias de conclusão de obras.
+- Proteção ao adquirente e aumento da confiança no setor imobiliário.
+
+# Contribuição Esperada
+
+- O modelo atual é insuficiente para proteger os adquirentes.
+- A proposta sugere supervisão semelhante à de instituições financeiras.
+- Adoção de mecanismos de proteção inspirados em modelos internacionais.
+
+# Metodologia Sugerida
+
+- **Pesquisa Comparativa**: Análise das normas brasileiras e estrangeiras.
+- **Estudo de Caso**: Análise de incorporadoras que enfrentaram dificuldades em crises.
+- **Análise Econométrica**: Relação entre condições econômicas e distratos/falências no Brasil.
+
+
+# Referências
+
+- Barth, J. R., Caprio, G., Levine, R. (2006). *Rethinking Bank Regulation: Till Angels Govern*. Cambridge University Press. https://doi.org/10.1017/CBO9780511753817
+- Beck, T., Demirguc-Kunt, A., Levine, R. (2009). Financial Institutions and Markets Across Countries and Over Time. *World Bank Economic Review*, 24(1), 77-92. https://doi.org/10.1093/wber/lhp016
+- La Porta, R., Lopez-de-Silanes, F., Shleifer, A., Vishny, R. W. (1997). Legal determinants of external finance. *Journal of Finance*, 52(3), 1131-1150. https://doi.org/10.1111/j.1540-6261.1997.tb02727.x
