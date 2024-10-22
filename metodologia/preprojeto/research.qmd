@@ -1,0 +1,87 @@
+---
+title: "Research Methods"
+format: 
+  html:
+    mermaid:
+      theme: forest
+---
+
+## Research Methods Diagram
+
+```{mermaid}
+mindmap
+  root((Research Methods))
+    Quantitative Methods
+      Experimental Research
+        Field Experiments
+        Laboratory Experiments
+        Randomized Controlled Trials
+      Surveys and Questionnaires
+        Cross-Sectional Surveys
+        Longitudinal Surveys
+          Descriptive Surveys
+          Analytical Surveys
+      Longitudinal Studies
+        Panel Studies
+        Time-Series Analysis
+        Trend Analysis
+      Cross-Sectional Studies
+        Descriptive Cross-Sectional Studies
+        Analytical Cross-Sectional Studies
+        Prevalence Studies
+        Snapshot Studies
+        Positive Correlation
+        Zero Correlation
+      Correlational Research
+        Predictive Correlation
+        Retrospective Causal Research
+      Causal-Comparative Research
+        Prospective Causal Research
+      Meta-Analysis
+        Effect Size Calculation
+        Systematic Review
+        Publication Bias Analysis
+      Quasi-Experimental Design
+        Nonequivalent Control Group Design
+        Time-Series Design
+        Matching Subjects Design
+        Regression Discontinuity Design
+    Qualitative Methods
+      Case Study
+        Intrinsic Case Study
+        Instrumental Case Study
+        Collective Case Study
+        Single Case Study
+      Ethnography
+        Participant Observation
+        Cultural Immersion
+        Field Notes Documentation
+        Reflexivity
+      Phenomenology
+        Descriptive Phenomenology
+        Interpretive Phenomenology
+        Bracketing
+      Historical Research
+        Primary Source Analysis
+        Secondary Source Synthesis
+        Oral Histories
+        Thematic Content Analysis
+      Content Analysis
+        Quantitative Content Analysis
+        Sentiment Analysis
+        Narrative Analysis
+        Open Coding
+        Axial Coding
+      Grounded Theory
+        Selective Coding
+        Constant Comparison
+      Action Research
+        Participatory Action Research
+        Cyclical Process
+        Reflective Practice
+      Observational Research
+        Naturalistic Observation
+        Structured Observation
+        Covert Observation
+        Overt Observation
+```

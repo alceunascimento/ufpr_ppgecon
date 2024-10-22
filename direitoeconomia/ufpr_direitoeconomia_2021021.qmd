@@ -1,0 +1,315 @@
+---
+title: "A Eficiência nos Mercados de Capitais"
+subtitle: "Teoria, Impacto das Tecnologias, Práticas Irregulares e Regulação"
+author: 
+- name: Alceu Eilert Nascimento
+- name: Luiz Felipe Pereira
+format:
+  revealjs:
+    slide-number: c/t
+    width: 1600
+    height: 900
+    transition: fade
+    incremental: true
+    scrollable: true
+    theme: simple
+    reference-location: document
+    footer: "UFPR PPGEcon : Direito & Economia (Setembro/2024)"
+    self-contained: true
+lang: pt-BR   # define o idioma para portugues
+bibliography: references.bib
+csl: ipea.csl
+---
+
+## Debate:
+
+-   Efficient Capital Markets: A Review of Theory and Empirical Work
+    (Eugene F. Fama, 1970)
+-   A Digitalização do Mercado de Capitais no Brasil: Tendências
+    Recentes (Edemilson Paraná, 2018)
+-   How Algorithmic Trading Undermines Efficiency in Capital Markets
+    (Yesha Yadav, 2015)
+-   As Condenações do Insider Trading Primário e Secundário na Comissão
+    de Valores Mobiliários entre 2017 e 2021 (Ives Nahama e Mariana
+    Dionísio, 2022)
+
+## Efficient Capital Markets: A Review of Theory and Empirical Work (Eugene F. Fama, 1970)
+
+Hipótese dos mercados eficientes: A rigor, essa hipótese afirma que em
+um mercado eficiente os preços dos ativos financeiros refletem
+**INTEGRALMENTE** todas as informações disponíveis. Isso significa que,
+em qualquer ponto no tempo, o preço de um ativo reflete tanto
+informações passadas quanto novas, sendo impossível para os investidores
+obterem retornos superiores ao mercado de forma sistemática com base em
+qualquer conjunto de informações disponível.
+
+## Efficient Capital Markets: A Review of Theory and Empirical Work (Eugene F. Fama, 1970)
+
+Forma: **FRACA**
+
+os preços das ações refletem todas as informações históricas de preços.
+Isso implica que os investidores não podem prever movimentos futuros dos
+preços com base em dados passados, como padrões de preço ou volume,
+portanto, a análise técnica seria ineficaz.
+
+## Efficient Capital Markets: A Review of Theory and Empirical Work (Eugene F. Fama, 1970)
+
+Forma: **SEMI-FORTE**
+
+Estende a forma fraca, afirmando que os preços refletem todas as
+informações públicas disponíveis, como relatórios financeiros, notícias,
+anúncios de dividendos, etc. Nesse contexto, nem a análise
+fundamentalista, que se baseia em informações públicas para selecionar
+ações subvalorizadas, seria capaz de gerar retornos anormais
+
+## Efficient Capital Markets: A Review of Theory and Empirical Work (Eugene F. Fama, 1970)
+
+Forma: **FORTE**
+
+Postula que os preços refletem todas as informações, públicas e privadas
+(informações privilegiadas ou "insider information"). Mesmo investidores
+com acesso a informações exclusivas não seriam capazes de obter retornos
+superiores ao mercado de forma consistente.
+
+## Revisão Teórica
+
+1.  Modelo de jogo justo (Fair Game model)
+2.  Submartingale Model
+3.  Passeio aleatório (Random Walk)
+4.  Condições de mercado Consistentes com a eficiência
+
+```{=html}
+<!-- -->
+```
+a.  Investidores Racionais
+b.  Livre acesso as informações
+c.  Concorrência entre Investidores
+d.  Baixos Custos de Transação
+
+# Revisão empírica
+
+## Forma: **FRACA**
+
+**Estudos de Passeio Aleatório (Random Walk Studies)**
+
+Fama revisa uma série de trabalhos que utilizam estatísticas de
+correlação e autocorrelação para testar se há dependência entre os
+retornos passados e futuros das ações
+
+-   **Resultados**: A maioria dos estudos encontrou pouca ou nenhuma
+    autocorrelação significativa nos retornos das ações, sugerindo que
+    os preços realmente seguem um padrão próximo de um passeio
+    aleatório, o que sustenta a forma fraca da EMH.
+
+-   **Implicação**: Os investidores não podem usar análise técnica,
+    baseada em dados históricos de preços e volumes, para prever
+    consistentemente os preços futuros e obter retornos anormais.
+
+------------------------------------------------------------------------
+
+## Forma: **FRACA**
+
+**Testes com Análise Técnica**
+
+Estudos mostraram que padrões como "cabeça e ombros" ou "linhas de
+suporte e resistência" não ofereciam previsibilidade significativa dos
+movimentos de preços futuro
+
+-   **Resultados**: A análise técnica foi amplamente ineficaz em
+    mercados eficientes. Estratégias de negociação baseadas em preços
+    históricos não mostraram capacidade de prever consistentemente
+    retornos acima da média.
+
+------------------------------------------------------------------------
+
+## Forma: **SEMI-FORTE**
+
+**Estudos de eventos**
+
+Analisam como os preços das ações respondem a eventos específicos, como
+anúncios de lucros, fusões e aquisições, ou mudanças de política
+econômica
+
+-   **Resultados**: Sugere que o mercado incorpora rapidamente as
+    informações nos preços, como previsto pela eficiência semiforte.
+
+-   **Implicação**: Os preços das ações ajustam-se rapidamente para
+    refletir essa nova informação, deixando pouca ou nenhuma
+    oportunidade para os investidores obterem retornos anormais.
+
+------------------------------------------------------------------------
+
+## Testes com informação pública
+
+Testam a capacidade da análise fundamentalista de gerar retornos
+superiores ao mercado
+
+-   **Resultados**: Em mercados eficientes, a análise fundamentalista
+    também tem pouca eficácia em prever consistentemente retornos
+    anormais
+
+-   **Implicação**: Sugere que as informações publicamente disponíveis
+    são rapidamente incorporadas aos preços
+
+## How Algorithmic Trading Undermines Efficiency in Capital Markets (Yesha Yadav, 2015)
+
+-   **Tese Principal**: O trading algorítmico prejudica a eficiência da
+    alocação de capital nos mercados de valores mobiliários.
+-   **Objetivo**: Analisar como a negociação algorítmica afeta a
+    eficiência informacional e alocativa.
+
+## Trading Algorítmico e Risco de Modelo
+
+-   **Definição**: Trading algorítmico usa algoritmos pré-programados
+    para transacionar ativos financeiros.
+-   **Risco de Modelo**: Risco associado ao fato de que os modelos
+    financeiros falham em capturar a complexidade do mundo real.
+-   **Implicação**: Gera incentivos para focar em mercados de curto
+    prazo, onde a previsão é mais fácil.
+
+## Impacto na Eficiência Informacional
+
+-   **Eficiência Informacional**: Refere-se à capacidade dos preços dos
+    ativos refletirem toda a informação disponível.
+-   **Efeito dos Algoritmos**: Embora o trading algorítmico aumente a
+    eficiência informacional em mercados de curto prazo, ele falha em
+    promover a eficiência de longo prazo.
+-   **Perda de Incentivo**: Traders informados têm menos incentivo para
+    participar e fornecer insights que corrigem falhas de informação.
+
+## Problemas de Alocação de Capital
+
+-   **Eficiência Alocativa**: A eficiência de alocação de capital está
+    comprometida porque os preços refletem cada vez menos o valor
+    fundamental das empresas.
+-   **Curto Prazo**: Algoritmos são desenvolvidos para serem
+    bem-sucedidos em horizontes de curto prazo, o que prejudica a
+    capacidade dos mercados de alocar capital de forma eficiente para o
+    longo prazo.
+
+## Desafios para os Traders Informados
+
+-   **Dificuldades**: Traders informados enfrentam desafios para
+    competir com algoritmos de alta velocidade.
+-   **Risco de Perda de Retornos**: Traders tradicionais perdem retornos
+    potenciais, reduzindo o incentivo para investir em análises de longo
+    prazo.
+-   **Efeito no Mercado**: Menor participação de traders informados leva
+    a preços que não capturam adequadamente as perspectivas de longo
+    prazo.
+
+## Implicações Regulatórias
+
+-   **Dependência dos Preços**: A regulação atual depende fortemente dos
+    preços como indicador da eficiência alocativa.
+-   **Problemas da Regulamentação**: Se os preços não refletem a saúde
+    fundamental das empresas, o uso de preços para regular e monitorar a
+    governança corporativa se torna questionável.
+
+## Caminhos para Reforma
+
+-   **Propostas de Reforma**:
+    -   **Incentivos para Eficiência**: Melhorar os incentivos para que
+        os traders ajudem a corrigir falhas de informação no mercado.
+    -   **Transparência de Modelos**: Exigir mais transparência nos
+        modelos usados nos algoritmos de negociação.
+-   **Objetivo**: Reforçar a capacidade dos mercados financeiros de
+    alocar capital eficientemente para a economia real.
+
+## Conclusão
+
+-   **Resumo**: O trading algorítmico gera uma desconexão entre a
+    eficiência informacional e a eficiência alocativa.
+-   **Reflexão Crítica**: É necessário reavaliar a dependência da
+    regulação sobre os preços como uma medida de eficiência de mercado.
+-   **Próximos Passos**: Implementar reformas para assegurar que os
+    mercados cumpram seu papel fundamental na alocação eficiente de
+    capital.
+
+------------------------------------------------------------------------
+
+## As Condenações do Insider Trading Primário e Secundário na Comissão de Valores Mobiliário entre 2017 e 2021: uma análise de conteúdo a partir do Iramuteq (Ives Nahama Gomes dos Santos e Mariana Dionísio de Andrade, 2022)
+
+-   **Tese Principal**: A principal diferença entre processos
+    administrativos sancionadores (PAS) da Comissão de Valores
+    Mobiliários (CVM) para insiders primários e secundários está na
+    presunção da relevância da informação privilegiada.
+-   **Objetivo**: Analisar diferenças nas condenações de insiders
+    primários e secundários por uso de informações privilegiadas, usando
+    uma metodologia de análise de conteúdo com o auxílio do software
+    Iramuteq.
+
+## Insider Trading: Definições e Contexto Regulatório
+
+-   **Definição**: O insider trading refere-se ao uso de informações não
+    públicas para negociação de valores mobiliários. Existem dois tipos
+    de insiders: primários, que possuem acesso direto à informação em
+    razão do cargo, e secundários, que recebem informações de forma
+    indireta.
+-   **Marco Regulatório**: A regulação do insider trading no Brasil é
+    feita pela CVM, com base na Lei 6.385/76 e instruções normativas,
+    como a ICVM nº 358/2002. A CVM é responsável por fiscalizar e
+    aplicar sanções administrativas.
+
+## Metodologia Utilizada
+
+-   **Metodologia de Análise de Conteúdo (AC)**: Utilizada para
+    identificar padrões nas decisões da CVM entre 2017 e 2021, com o
+    auxílio do software Iramuteq. A AC foi escolhida por sua capacidade
+    de descrever e interpretar conteúdos de maneira sistemática.
+-   **MAD - Metodologia de Análise de Decisões**: Aplicada para entender
+    a fundamentação dos votos e suas possíveis diferenças entre insiders
+    primários e secundários.
+
+## Diferenças entre Insiders Primários e Secundários
+
+-   **Insiders Primários**: Estes possuem acesso direto à informação
+    privilegiada em razão de sua posição na empresa. A maior diferença
+    identificada é a presunção de que a informação é relevante para
+    esses insiders, sendo este um fator decisivo para justificar
+    condenações.
+-   **Insiders Secundários**: Insiders que obtêm informação privilegiada
+    sem ocuparem cargos internos da empresa. Para eles, não há presunção
+    de que a informação seja relevante, e cabe à CVM provar que houve
+    acesso e uso da informação.
+
+## Principais Resultados
+
+-   **Condenações e Absolvições**: Dos 25 insiders primários analisados,
+    14 foram absolvidos, enquanto todos os 14 insiders secundários foram
+    condenados. Para os primários, a absolvição foi justificada em casos
+    onde não havia evidência de que a informação era relevante ou que
+    ela foi efetivamente utilizada.
+-   **Montante das Multas**: As multas aplicadas a insiders primários
+    foram muito superiores, totalizando mais de 500 milhões de reais,
+    enquanto as multas para secundários somaram cerca de 7,5 milhões de
+    reais. Essa discrepância reflete a obrigação maior dos insiders
+    primários em relação à confidencialidade.
+
+## Analise de Similitude
+
+![](similitude.png){fig-align="center"}
+
+## Impactos na Eficiência dos Mercados
+
+-   **Transparência e Eficiência de Mercado**: A regulação visa garantir
+    um mercado eficiente, promovendo a simetria da informação entre
+    investidores. No entanto, a distinção entre primários e secundários
+    demonstra que ainda há dificuldades na aplicação uniforme da
+    regulação.
+-   **Risco de Distorções**: A dificuldade em punir insiders primários
+    com a mesma frequência que os secundários pode gerar distorções no
+    mercado, favorecendo aqueles com acesso direto à informação.
+
+## Conclusão
+
+-   **Resumo**: A principal diferença nas decisões da CVM reside na
+    presunção de relevância da informação privilegiada para insiders
+    primários, o que não ocorre para os secundários. O uso do software
+    Iramuteq permitiu identificar que a fundamentação dos votos varia
+    significativamente entre os dois tipos de insiders.
+-   **Implicações para o Mercado**: As sanções desiguais entre primários
+    e secundários podem impactar a confiança dos investidores e a
+    percepção de justiça no mercado. É necessário considerar possíveis
+    ajustes regulatórios para garantir que todos os agentes sejam
+    responsabilizados de forma justa e eficiente.
