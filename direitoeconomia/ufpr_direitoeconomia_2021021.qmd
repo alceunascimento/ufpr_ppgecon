@@ -33,7 +33,7 @@ csl: ipea.csl
     de Valores Mobiliários entre 2017 e 2021 (Ives Nahama e Mariana
     Dionísio, 2022)
 
-## Efficient Capital Markets: A Review of Theory and Empirical Work (Eugene F. Fama, 1970)
+# Efficient Capital Markets: A Review of Theory and Empirical Work (Eugene F. Fama, 1970)
 
 Hipótese dos mercados eficientes: A rigor, essa hipótese afirma que em
 um mercado eficiente os preços dos ativos financeiros refletem
