@@ -1,0 +1,135 @@
+---
+title: "Inteligência Artificial: Do Sonho à Realidade"
+author: "Seu Nome"
+format: 
+  revealjs:
+    auto-slide: 15000
+    loop: false
+    width: 1280
+    height: 720
+---
+
+## O Sonho da IA {background-color="#4B0082"}
+
+Desde os primórdios da civilização, o ser humano sonha em criar máquinas que possam pensar.
+Da mitologia grega aos autômatos medievais, essa busca nos acompanha.
+
+## Os Pioneiros {background-color="#0000CD"}
+
+1950: Alan Turing propõe o "Teste de Turing"
+1956: Conferência de Dartmouth marca o nascimento oficial da IA
+Grandes mentes unidas por um objetivo comum.
+
+## O Que é IA? {background-color="#4169E1"}
+
+Inteligência Artificial é a capacidade de máquinas:
+- Aprenderem com experiências
+- Adaptarem-se a novas situações
+- Tomarem decisões baseadas em dados
+
+## Tipos de IA {background-color="#1E90FF"}
+
+- IA Fraca (Narrow AI): Especialista em tarefas específicas
+- IA Forte (AGI): Hipotética, com capacidades humanas gerais
+- Super IA: Além das capacidades humanas
+
+## Machine Learning {background-color="#00BFFF"}
+
+Subconjunto da IA que permite:
+- Aprendizado automático
+- Reconhecimento de padrões
+- Melhoria contínua
+
+## Deep Learning {background-color="#87CEEB"}
+
+Redes neurais profundas inspiradas no cérebro humano
+Possibilitam avanços em:
+- Visão computacional
+- Processamento de linguagem natural
+
+## Marcos Históricos {background-color="#00CED1"}
+
+1997: Deep Blue vence Kasparov no xadrez
+2011: Watson vence Jeopardy!
+2016: AlphaGo derrota Lee Sedol
+
+## Curiosidade: Teste de Turing {background-color="#48D1CC"}
+
+Uma máquina passa no teste se:
+Conseguir se passar por humano em uma conversa
+Por 5 minutos
+Com 30% de sucesso
+
+## Curiosidade: Paradoxo da IA {background-color="#40E0D0"}
+
+Tarefas difíceis para humanos são fáceis para IAs
+Tarefas fáceis para humanos são difíceis para IAs
+(Ex: matemática vs. reconhecimento de objetos)
+
+## ChatGPT e GPT-4 {background-color="#20B2AA"}
+
+Revolução na interação humano-máquina
+Compreensão e geração de texto em nível próximo ao humano
+Impacto em diversos setores
+
+## Aplicações: Saúde {background-color="#66CDAA"}
+
+- Diagnóstico por imagem
+- Descoberta de medicamentos
+- Previsão de surtos
+- Medicina personalizada
+
+## Aplicações: Educação {background-color="#3CB371"}
+
+- Tutores virtuais personalizados
+- Avaliação automática
+- Conteúdo adaptativo
+- Suporte 24/7
+
+## Aplicações: Indústria {background-color="#2E8B57"}
+
+- Manutenção preditiva
+- Otimização de processos
+- Controle de qualidade
+- Robótica avançada
+
+## Desafios Éticos {background-color="#228B22"}
+
+- Privacidade
+- Viés algorítmico
+- Transparência
+- Responsabilidade
+
+## O Futuro da IA {background-color="#006400"}
+
+- Avanços em AGI
+- Integração com IoT
+- Computação quântica
+- Novos paradigmas
+
+## Impacto no Trabalho {background-color="#004D00"}
+
+- Automação de tarefas
+- Novas profissões
+- Necessidade de adaptação
+- Habilidades do futuro
+
+## Brasil e IA {background-color="#003300"}
+
+- Centros de pesquisa
+- Startups inovadoras
+- Aplicações únicas
+- Oportunidades
+
+## IA no Seu Dia {background-color="#002200"}
+
+- Assistentes virtuais
+- Recomendações
+- Filtros de spam
+- Tradução automática
+
+## O Próximo Capítulo {background-color="#001100"}
+
+A IA continuará transformando nossa sociedade
+O futuro está em nossas mãos
+Como você fará parte dessa revolução?
