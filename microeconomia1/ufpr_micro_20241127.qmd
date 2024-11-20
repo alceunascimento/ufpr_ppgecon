@@ -1,0 +1,205 @@
+---
+title: "Risk Sharing and Transaction Costs"
+subtitle: "Evidence from Kenya's Mobile Money Revolution"
+author: 
+- name: Alceu Eilert Nascimento
+- name: [...]
+format:
+  revealjs:
+    slide-number: c/t
+    width: 1600
+    height: 900
+    transition: fade
+    incremental: true
+    scrollable: true
+    theme: simple
+    reference-location: document
+    footer: "UFPR PPGEcon : Microeconomia (Dezembro/2024)"
+    self-contained: true
+lang: pt-BR  
+bibliography: bibliografia.bib
+csl: ipea.csl
+---
+
+
+# Introdução {background-color="#2C3E50"}
+
+## Contextualização
+
+::: {.panel-tabset}
+
+### Contexto
+- Estudo seminal sobre impacto de sistemas de dinheiro móvel
+- Publicado no American Economic Review (2014)
+- Foco em mecanismos de compartilhamento de risco
+- Análise do M-PESA no Quênia
+
+### Relevância
+- Primeira análise empírica rigorosa dos efeitos do dinheiro móvel
+- Abordagem inovadora para custos de transação no desenvolvimento
+- Contribuição fundamental para literatura de finanças digitais
+- Implicações para políticas em economias em desenvolvimento
+
+:::
+
+## Estrutura da Pesquisa
+
+$$
+\begin{align*}
+\text{Questão Principal:} & \text{ Como custos reduzidos de transação afetam o compartilhamento de risco?} \\
+\text{Mecanismo Chave:} & \text{ Remessas pessoa-a-pessoa} \\
+\text{Hipótese Principal:} & \text{ Usuários de dinheiro móvel suavizam melhor o consumo}
+\end{align*}
+$$
+
+# Arcabouço Teórico {background-color="#2C3E50"}
+
+## Estrutura do Modelo
+
+Considere um modelo com:
+
+1. Três indivíduos ex-ante idênticos $(i = 1,2,3)$
+2. Estados $s \in \{1,2,...,S\}$
+3. Realizações de renda $x_i^s$
+4. Custo de transação $k$ por transferência
+
+## Problema de Otimização
+
+$$
+\max_{c_1^s, c_2^s, c_3^s} \sum_i \mu_i u(c_i^s) \text{ s.a. } \sum_i c_i^s = 1 \text{ para cada } s
+$$
+
+Onde:
+- $\mu_i$ são pesos de Pareto
+- $u(\cdot)$ é função utilidade
+- $c_i^s$ é consumo
+
+# Estratégia Empírica {background-color="#2C3E50"}
+
+## Especificação Principal
+
+$$
+c_{ijt} = \alpha_i + \gamma\text{Choque}_{ijt} + \mu\text{Usuário}_{ijt} + \beta\text{Usuário}_{ijt} \times \text{Choque}_{ijt} + \theta X_{ijt} + \eta_{jt} + \pi_{rt} + \varepsilon_{ijt}
+$$
+
+Onde:
+
+- $c_{ijt}$: consumo per capita
+- $\alpha_i$: efeitos fixos domiciliares
+- $\eta_{jt}$: dummies localização-tempo
+- $\pi_{rt}$: dummies rural-tempo
+
+## Estratégia de Identificação {.smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+**Abordagens Principais:**
+
+1. Efeitos fixos domiciliares
+2. Variação na expansão de agentes
+3. Testes de falsificação
+4. Estimação por VI
+:::
+
+::: {.column width="50%"}
+**Pressupostos Fundamentais:**
+
+1. Exogeneidade dos choques
+2. Alocação aleatória de agentes
+3. Ausência de efeitos antecipação
+4. Restrição de exclusão
+:::
+
+:::
+
+# Análise dos Resultados {background-color="#2C3E50"}
+
+## Principais Descobertas
+
+::: {.callout-note}
+## Resultados Centrais
+
+1. Não-usuários enfrentam redução de 7% no consumo sob choques
+2. Usuários mantêm níveis de consumo
+3. Efeitos concentrados nos três quintis inferiores de riqueza
+:::
+
+```{r}
+#| echo: false
+#| fig-cap: "Resposta do Consumo a Choques"
+
+# Código de visualização aqui
+```
+
+## Evidência dos Mecanismos
+
+| Resultado | Efeito | EP | p-valor |
+|---------|---------|-----|---------|
+| Probabilidade de Remessa | +13pp | (0,02) | <0,01 |
+| Montante (% consumo) | 6-10% | (0,015) | <0,01 |
+| Tamanho da Rede | +25% | (0,05) | <0,01 |
+
+# Extensões Técnicas {background-color="#2C3E50"}
+
+## Considerações Econométricas
+
+::: {.panel-tabset}
+
+### Seleção
+- Métodos de painel
+- Efeitos fixos
+- Abordagem VI
+
+### Clusterização
+- Clusters geográficos
+- Clusters de rede
+- Clusterização bidimensional
+
+### Robustez
+- Especificações alternativas
+- Testes placebo
+- Erro de medida
+:::
+
+## Implementação VI
+
+Primeiro Estágio:
+$$
+\text{Usuário}_{ijt} = \pi_0 + \pi_1\text{DensidadeAgentes}_{jt} + \pi_2X_{ijt} + \nu_{ijt}
+$$
+
+Segundo Estágio:
+$$
+c_{ijt} = \beta_0 + \beta_1\widehat{\text{Usuário}}_{ijt} + \beta_2X_{ijt} + \epsilon_{ijt}
+$$
+
+# Implicações de Política {background-color="#2C3E50"}
+
+## Análise de Bem-Estar
+
+1. Benefícios Diretos:
+   - Suavização do consumo
+   - Redução de custos de transação
+   - Expansão da rede
+
+2. Benefícios Indiretos:
+   - Inclusão financeira
+   - Integração de mercado
+   - Compartilhamento de risco
+
+## Pesquisas Futuras
+
+::: {.incremental}
+- Efeitos de bem-estar de longo prazo
+- Impactos de equilíbrio geral
+- Dinâmicas de formação de rede
+- Desenho regulatório ótimo
+:::
+
+# Referências {background-color="#2C3E50"}
+
+## Citações Principais
+
+::: {#refs}
+:::
