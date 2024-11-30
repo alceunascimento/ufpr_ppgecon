@@ -1,5 +1,6 @@
 ---
-title: "Inteligência Artificial: Do Sonho à Realidade"
+title: "Inteligência Artificial"
+subtitle: "Do Sonho à Realidade"
 author: "Seu Nome"
 format: 
   revealjs:
