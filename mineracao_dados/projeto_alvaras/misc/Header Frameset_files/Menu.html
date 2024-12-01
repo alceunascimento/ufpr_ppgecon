@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0080)http://www2.curitiba.pr.gov.br/gtm/pmat_consultardadosalvaraconstrucao/Menu.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <script language="javascript" src="./javascripts.js.download"></script>
+<meta id="dcngeagmmhegagicpcmpinaoklddcgon"></head>
+<body ms_positioning="GridLayout" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+    <form name="frmForm" method="post" action="http://www2.curitiba.pr.gov.br/gtm/pmat_consultardadosalvaraconstrucao/Menu.aspx" id="frmForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMzA0NTc3MDA1ZGSNCskNj/5XEgclJKWIr5ZmNQssCQ==">
+</div>
+
+    &nbsp;
+    
+
+
+	
+		<title></title>
+	
+	
+		<script language="javascript" src="./javascripts.js.download"></script>
+		<script language="javascript" src="./coolmenus3.js.download">
+/*****************************************************************************
+Copyright (c) 2001 Thomas Brattli (www.bratta.com)
+eXperience DHTML coolMenus - Get it at www.bratta.com
+Version 3.02
+This script can be used freely as long as all copyright messages are intact.
+Este script pode ser usado livremente se as mensagens de copyright forem mantidas. 
+******************************************************************************/
+			</script>
+			<script>
+/*****************************************************************************
+Default browsercheck - Leave this one - Mantenha esta seção
+******************************************************************************/
+function lib_bwcheck(){ //Browsercheck (needed)
+	this.ver=navigator.appVersion; this.agent=navigator.userAgent
+	this.dom=document.getElementById?1:0
+	this.ie5=(this.ver.indexOf("MSIE 5")>-1 && this.dom)?1:0;
+	this.ie6=(this.ver.indexOf("MSIE 6")>-1 && this.dom)?1:0;
+	this.ie4=(document.all && !this.dom)?1:0;
+	this.ie=this.ie4||this.ie5||this.ie6
+	this.mac=this.agent.indexOf("Mac")>-1
+	this.opera5=this.agent.indexOf("Opera 5")>-1
+	this.ns6=(this.dom && parseInt(this.ver) >= 5) ?1:0; 
+	this.ns4=(document.layers && !this.dom)?1:0;
+	this.bw=(this.ie6 || this.ie5 || this.ie4 || this.ns4 || this.ns6 || this.opera5 || this.dom)
+	return this
+}
+var bw=new lib_bwcheck() 
+
+var mDebugging=2 
+
+oCMenu=new makeCoolMenu("oCMenu") 
+oCMenu.useframes=1 
+oCMenu.frame="fraMain" 
+oCMenu.useclick=0 
+oCMenu.useNS4links=1  
+oCMenu.NS4padding=2 
+oCMenu.checkselect=1
+
+/*If you choose to have this code inside a linked js, or if your using frames it's important to set these variables. 
+This will help you get your links to link to the right place even if your files are in different folders.
+The offlineUrl variable is the actual path to the directory where you js file are locally. 
+This is just so you can test it without uploading. Remember to start it with file:/// and only use slashes, no backward slashes!
+Also remember to end with a slash                                                                                                 */
+oCMenu.offlineUrl=""//"file:///C|/Inetpub/wwwroot/dhtmlcentral/" //Value: "path_to_menu_file_offline/"
+//The onlineUrl variable is the online path to your script. Place in the full path to where your js file is. Remember to end with a slash.
+oCMenu.onlineUrl= ""//"http://www.dhtmlcentral.com/coolmenus/examples/withframes/" //Value: "path_to_menu_file_online/"
+
+oCMenu.pagecheck=1 
+oCMenu.checkscroll=1 
+oCMenu.resizecheck=1 
+oCMenu.wait=1000
+oCMenu.usebar=1
+oCMenu.barcolor="#333333" 
+oCMenu.barwidth="100%" 
+oCMenu.barheight="100%" 
+oCMenu.barx=0 
+oCMenu.bary=0
+oCMenu.barinheritborder=0 
+oCMenu.rows=1
+oCMenu.fromleft=20 
+oCMenu.fromtop=0 
+oCMenu.pxbetween=5 
+oCMenu.menuplacement="left"
+
+oCMenu.level[0]=new Array() 
+oCMenu.level[0].width=130
+oCMenu.level[0].height=25
+oCMenu.level[0].bgcoloroff="#333333" 
+oCMenu.level[0].bgcoloron="silver" 
+oCMenu.level[0].textcolor="White" 
+oCMenu.level[0].hovercolor="#333333" 
+oCMenu.level[0].style="padding:2px; font-family:verdana,arial,sans-serif; font-size:12px; font-weight:bold"
+oCMenu.level[0].border=0 
+oCMenu.level[0].bordercolor="gray" 
+oCMenu.level[0].offsetX=0 
+oCMenu.level[0].offsetY=0 
+oCMenu.level[0].NS4font="verdana,arial,sans-serif"
+oCMenu.level[0].NS4fontSize="2"
+oCMenu.level[0].clip=0 
+oCMenu.level[0].clippx=0 
+oCMenu.level[0].cliptim=0 
+oCMenu.level[0].filter=0 
+oCMenu.level[0].align="bottom" 
+
+oCMenu.level[1]=new Array() 
+oCMenu.level[1].width=oCMenu.level[0].width+5
+oCMenu.level[1].height=22
+oCMenu.level[1].style="padding:2px; font-family:tahoma, arial,helvetica; font-size:11px; font-weight:bold"
+oCMenu.level[1].align="bottom" 
+oCMenu.level[1].offsetX=-(oCMenu.level[0].width-2)/2+40
+oCMenu.level[1].offsetY=5
+oCMenu.level[1].border=1 
+oCMenu.level[1].bordercolor="gray"
+
+
+/*Variables for each menu item: (** means that they have to be spesified!)
+ ***** Variáveis para cada item de menu *******
+name: The name of the item. This must be unique for each item. Do not use spaces or strange charachters in this one! **
+parent: The name of the menuitem you want this to "connect" to. This will be a submenu of the item that have the name you place in here. ** for all other then the topitems
+text: The text you want in the item. ** (except if you use images) 
+link: The page you want this item to link to.
+target: The target window or frame you want the link to go to (Default is same window if you're not using frames, and the mainframe if you're using frames)
+width: The width of the element. If not spesified it will get the default width spesified above.
+height: The height of the element. If not spesified it will get the default height spesified above.
+img1: The "off" image for element if you want to use images.
+img2: The image that appears onmouseover if using images.
+bgcoloroff: The background color for this item. If not spesified it will get the default background color spesified above.
+bgcoloron: The "on" background color for this item. If not spesified it will get the default "on" background color spesified above.
+textcolor: The text color for this item. If not spesified it will get the default text color spesified above.
+hovercolor: The "on" text color for this item. If not spesified it will get the default "on" text color spesified above. Netscape4 ignores this
+onclick: If you want something to happen when the element is clicked (different from going to a link) spesifiy it here.
+onmouseover: This will happen when you mouseover the element. Could be status text, another imageswap or whatever.
+onmouseout: This will happen when you mouseout the element.
+
+Remember you can have as many levels/sublevels as you want. Just make sure you spesify the correct "parent" for each item.
+To set styles for each level see above.
+*/
+
+oCMenu.makeMenu('top0','','Arquivo','','frmMain')
+	oCMenu.makeMenu('sub01','top0','Fechar','Fechar.aspx')
+	oCMenu.makeMenu('sub02','top0','Trocar Senha','TrocarSenha.aspx')
+
+oCMenu.makeMenu('top1','','Alvara Construção','','frmMain')
+	oCMenu.makeMenu('sub10','top1','Verificar Autenticidade','VerificarAutenticidade.aspx');
+	oCMenu.makeMenu('sub11','top1','Teste','','_blank','149','','','','','','','','Ajuda();','','');
+		
+//Leave these two lines! Making the styles and then constructing the menu
+oCMenu.makeStyle(); oCMenu.construct()			
+			</script><style>
+.cloCMenu0{position:absolute;  background-color:transparent; color:White;padding:2px; font-family:verdana,arial,sans-serif; font-size:12px; font-weight:bold; cursor:pointer; cursor:hand; visibility:inherit; z-index:150}
+
+</style>
+
+	
+
+    </form><div style="position: absolute; clip: rect(0px, 130px, 25px, 0px); visibility: visible; overflow: hidden; z-index: 100; left: 20px; top: 0px; width: 130px; height: 25px;"><div id="divoCMenu0_0" class="cloCMenu0" style="clip: rect(0px, 130px, 25px, 0px); width: 130px; height: 25px; left: 0px; top: 0px; background-color: rgb(51, 51, 51); color: white; visibility: visible;">Arquivo</div></div><div style="position: absolute; clip: rect(0px, 130px, 25px, 0px); visibility: visible; overflow: hidden; z-index: 100; left: 155px; top: 0px; width: 130px; height: 25px;"><div id="divoCMenu0_1" class="cloCMenu0" style="clip: rect(0px, 130px, 25px, 0px); width: 130px; height: 25px; left: 0px; top: 0px; background-color: rgb(51, 51, 51); color: white; visibility: visible;">Alvara Construção</div></div><div style="z-index: 80; position: absolute; background-color: rgb(51, 51, 51); left: 0px; top: 0px; clip: rect(0px, 1918px, 23px, 0px); width: 1918px; height: 23px;"></div>
+
+
+<iframe id="PE9yeLAD" frameborder="0" src="./translateSandbox(1).html" style="width: 0px; height: 0px; display: none;"></iframe></body></html>

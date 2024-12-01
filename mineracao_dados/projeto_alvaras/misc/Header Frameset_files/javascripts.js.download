@@ -1,0 +1,158 @@
+<!--
+
+// Verifica a resolução do monitor e a folha de estilo adequada.
+
+if ((screen.width == 800) && (screen.height == 600))
+	document.writeln("<LINK rel=\"stylesheet\" type=\"text/css\" href=\"style/padrao_ici.css\">");
+else  
+	document.writeln("<LINK rel=\"stylesheet\" type=\"text/css\" href=\"style/padrao_ici_1024.css\">");
+
+
+
+//********************************************************************
+//           ***  Função criada pelo Dreamweaver  ***
+// Função    		: MM_preloadImages()
+// Objetivo  		: Carrega no cache do navegador as imagens que não 
+//					  aparecem na página imediatamente (como aquelas que 
+//					  serão permutadas com as linhas de tempo, comportamentos 
+//					  ou JavaScript, por exemplo). Este processo evita os atrasos 
+//					  causados pelo download quando as imagens tiverem que ser exibidas. 
+// Parâmetro		: 
+// Retorno 			: 
+// Pré-Requisito 	: 
+//********************************************************************
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+
+//********************************************************************
+//           ***  Função criada pelo Dreamweaver  ***
+// Função    		: MM_swapImgRestore
+// Objetivo  		: Restura a imagem inicial de um botão após o onMouseOver
+// Parâmetro		: 
+// Retorno 			: 
+// Pré-Requisito 	: 
+//********************************************************************
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+
+//********************************************************************
+//           ***  Função criada pelo Dreamweaver  ***
+// Função    		: MM_findObj(n, d) 
+// Objetivo  		: 
+// Parâmetro		: 
+// Retorno 			: 
+// Pré-Requisito 	: 
+//********************************************************************
+
+function MM_findObj(n, d) { //v4.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+
+
+//********************************************************************
+//           ***  Função criada pelo Dreamweaver  ***
+// Função    		: MM_swapImage() 
+// Objetivo  		: Troca a imagem do botão durante o onMouseOver
+// Parâmetro		: 
+// Retorno 			: 
+// Pré-Requisito 	: 
+//********************************************************************
+
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+
+
+// Sempre colocar este comentário nas funções
+
+//********************************************************************
+// Função    		: 
+// Objetivo  		: 
+// Parâmetro		: 
+// Retorno 			:
+// Pré-Requisito 	: 
+//********************************************************************
+
+
+// --> Exemplos  - Devem ser substituídos pelas funções usadas no seu sistema
+
+function Novo(){
+alert("Botão Novo clicado!")
+}
+function Salvar(){
+alert("Botão Salvar clicado!")
+}
+function Excluir(){
+alert("Botão Excluir clicado!")
+}
+
+function Pesquisar(pagina,WIDTH,HEIGHT){
+x = (screen.width - WIDTH)/2;
+y = (screen.height - HEIGHT)/2;
+windowprops = "alwaysRaised,toolbar=no, menubar=no, status=no, scrollbars=no, resizable=no, titlebar=0 ,width=" + WIDTH + ",height=" + HEIGHT +",top=" + x + ",left=" + y +"";
+janela = window.open(pagina,"popuppage",windowprops)
+
+}
+
+function Imprimir(){
+alert("Botão Imprimir clicado!")
+}
+function Fechar(){
+alert("Botão Fechar clicado!")
+}
+function Voltar(){
+alert("Botão Voltar clicado!")
+}
+
+
+
+
+//********************************************************************
+// Função    		: Sobre
+// Objetivo  		: Mostrar a página sobre.asp em uma janela popup 
+//					  centralizada no monitor.
+// Parâmetro		: 
+// Retorno 			: 
+// Pré-Requisito 	: 
+//********************************************************************
+
+function Sobre(){
+var WIDTH = 420;
+var HEIGHT = 210;
+var x = (screen.width - WIDTH) / 2;
+var y = (screen.height - HEIGHT) / 2;
+windowprops = "alwaysRaised,toolbar=no, menubar=no, status=no, scrollbars=no, resizable=no, titlebar=0 ,width=" + WIDTH + ",height=" + HEIGHT +",top=" + x + ",left=" + y +"";
+janela = window.open("sobre.asp","popuppage",windowprops)
+}
+//-->
+
+
+//---------------------------------------------------------------------------------
+// Google Analytics!
+//---------------------------------------------------------------------------------
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65347162-17', 'auto');
+  ga('send', 'pageview');
+
+</script>
+//---------------------------------------------------------------------------------

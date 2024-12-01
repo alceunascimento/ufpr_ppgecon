@@ -1,0 +1,217 @@
+var labels = new Array();
+var destinos = new Array();
+var indLabel = 0;
+var intAbaAtual = 0;
+
+var path = "images/";
+
+var alinhamento = "right";
+var largura = "";
+
+var imgAtivadoLeft = path + "botao_ativado_left.gif";
+var imgAtivadoCenter = path + "botao_ativado_center.gif";
+var imgAtivadoRight = path + "botao_ativado_right.gif";
+var imgAtivadoRight2 = path + "botao_ativado_right2.gif";
+
+var imgDesativadoLeft = path + "botao_desativado_left.gif";
+var imgDesativadoCenter = path + "botao_desativado_center.gif";
+var imgDesativadoRight = path + "botao_desativado_right.gif";
+var imgDesativadoRight2 = path + "botao_desativado_right2.gif";
+
+var fontColorAtivado = "#000000";
+var fontColorDesativado = "#919191";
+
+// Seta o caminho da imagens
+function setaCaminho(){
+	if (arguments[0] == null){
+		return;
+	}
+	path = arguments[0];
+}
+
+// Seta imagens para mostrar em formulário da internet
+function habilitaNet(){
+	imgAtivadoLeft = path + "botao_net_ativado_left.gif";
+	imgAtivadoCenter = path + "botao_net_ativado_center.gif";
+	imgAtivadoRight = path + "botao_net_ativado_right.gif";
+	imgAtivadoRight2 = path + "botao_net_ativado_right2.gif";
+}
+
+// Seta labels das abas. Usado principalmente no modo DHTML.
+function setaLabels(){
+	for (i=0; i<arguments.length; i++){
+		labels[i] = arguments[i];
+	}
+}
+
+
+// Seta labels e endereços da páginas a serem acessadas. Usado para abas em diferentes arquivos.
+// Para não efetuar submit, basta passar o endereço como "".
+function addLabels(){
+	if (arguments[0] == null){
+		return;
+	}
+	
+	labels[indLabel] = arguments[0];
+	
+	if (arguments[1] == null){
+		indLabel++;
+		return;
+	}
+	
+	destinos[indLabel] = arguments[1];
+	indLabel++;
+}
+
+// Seta alinhamento e largura da tabela de abas.
+function setaLayout(strAlinhamento, strLargura){
+	alinhamento = strAlinhamento;
+	largura = strLargura;
+}
+
+function mostraAbas(){
+	var imgLeft;
+	var imgCenter;
+	var imgRight;
+	var fontColor;
+	
+	// Habilita Div default
+	Habilita(0);
+		
+	document.writeln("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">");
+	document.writeln("<TR>");
+	document.writeln("<TD align=\"" + alinhamento + "\">");
+	document.writeln("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"" + largura + "\">");
+	document.writeln("<tr>");
+
+	for (i=0; i<labels.length; i++){
+		if (arguments[0] == labels[i] || arguments[0] == i){
+			imgLeft = imgAtivadoLeft;
+			imgCenter = imgAtivadoCenter;
+			fontColor = fontColorAtivado;
+			
+			if (i == labels.length - 1){
+				imgRight = imgAtivadoRight2;
+			}
+			else{
+				imgRight = imgAtivadoRight;
+			}
+		}
+		else{
+			imgLeft = imgDesativadoLeft;
+			imgCenter = imgDesativadoCenter;
+			imgRight = imgDesativadoRight;
+			fontColor = fontColorDesativado;
+			
+			if (i == labels.length - 1){
+				imgRight = imgDesativadoRight2;
+			}
+			else{
+				imgRight = imgDesativadoRight;
+			}
+		}
+	
+		document.writeln("<td width=\"4\" style=\"cursor:hand;\"><img src=\"" + imgLeft + "\" onClick=\"AbaClick(" + i + ")\"></td>");
+		document.writeln("<td onClick=\"javascript:AbaClick(" + i + ")\" valign=\"middle\" align=\"center\" style=\"cursor:hand;\" background=\"" + imgCenter + "\" >&nbsp;<font color=\"" + fontColor + "\"><b>" + labels[i] + "</b></td>");
+		document.writeln("<td width=\"20\" style=\"cursor:hand;\"><img src=\"" + imgRight + "\" onClick=\"AbaClick(" + i + ")\"></td>");
+		document.writeln("");
+	}
+
+	document.writeln("</tr>");
+	document.writeln("</table>");
+	document.writeln("</TD>");
+	document.writeln("</TR>");
+	document.writeln("</table>");
+}
+
+function Habilita(intDiv) {
+	intAbaAtual = intDiv;
+	intDiv++;
+	var objDiv = eval(document.all['DIV_' + intDiv]);
+	var objDivDes = null;
+
+	if (objDiv == null){
+		return false;
+	}
+
+	for (i=0;i<labels.length; i++){
+		objDivDes = eval(document.all['DIV_' + (i+1)]);
+	
+		if (objDivDes == null){
+			return false;
+		}
+	
+		objDivDes.style.display = 'none';
+	}
+	
+	objDiv.style.display = '';
+	return true;
+}
+
+function AbaSubmit(){
+	var objForm = document.forms[0];
+	
+	if (objForm == null){
+		return;
+	}
+	
+	if (destinos[arguments[0]] == "" || !validaForm()){
+		return;
+	}
+	
+	objForm.action = destinos[arguments[0]];
+	objForm.submit();
+}
+
+// Usado para submeter a página no 
+function AbaRedirect(){
+	var objDestino = null;
+	var objAcao = null;
+	
+	if (getForm() == null){
+		return;
+	}
+	
+	objDestino = getForm().hidDestino
+	objAcao = getForm().Acao;
+	
+	if (objDestino == null || objAcao == null){
+		return;
+	}
+	
+	if (destinos[arguments[0]] == "" || !validaForm()){
+		return;
+	}
+	
+	if (objAcao.value == "NOVO"){
+		getForm().Acao.value = "INCLUIR";
+	}
+	else if (objAcao.value == "SELECIONAR"){
+		getForm().Acao.value = "ATUALIZAR";
+	}
+	
+	objDestino.value = destinos[arguments[0]];
+	getForm().submit();
+}
+
+// Evento chamado ao clicar nas abas
+function AbaClick(){
+	Habilita(arguments[0]);
+}
+
+// Função dependente de "validaCampo()" em "validator.js"
+function validaCampoAba(nome, descr, tipo, aba) {
+	try {
+		if (! validaCampo(nome, descr, tipo)) {
+			return false;
+		}
+	} catch (err) {
+		if (Habilita(aba)) {
+			var obj = eval("getForm()." + nome);
+			obj.focus();
+		}
+		return false;
+	}
+	return true;
+}
+

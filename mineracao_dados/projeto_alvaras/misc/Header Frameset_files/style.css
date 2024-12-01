@@ -1,0 +1,326 @@
+BODY
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: white;
+}
+.BodyMap
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #ffe7ce;
+}
+
+span
+{
+   font-weight: bold;
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   text-decoration: none;
+}
+
+#BodyMap
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #ffe7ce;
+}
+TABLE
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+}
+TD
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+}
+LEGEND
+{
+   font-weight: bold;
+   font-size: 10px;
+   color: #737373;
+   font-family: Verdana, Arial, sans-serif;
+}
+.TinLegend
+{
+   font-weight: normal;
+   font-size: 10px;
+   color: #737373;
+   font-family: Verdana, Arial, sans-serif;
+}
+#TinLegend
+{
+   font-weight: normal;
+   font-size: 10px;
+   color: #737373;
+   font-family: Verdana, Arial, sans-serif;
+}
+.Label1
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #dddddd;
+}
+#Label1
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #dddddd;
+}
+.Label2
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #ffffff;
+}
+#Label2
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #ffffff;
+}
+.Title1
+{
+   font-weight: bold;
+   font-size: 13px;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: wheat;
+}
+#Title1
+{
+   font-weight: bold;
+   font-size: 13px;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: wheat;
+}
+.Title2
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: wheat;
+}
+#Title2
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: wheat;
+}
+.Title3
+{
+   font-weight: bold;
+   font-size: 13px;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #dddddd;
+}
+#Title3
+{
+   font-weight: bold;
+   font-size: 13px;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #dddddd;
+}
+.Information
+{
+   font-size: 10px;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #ffffff;
+}
+#Information
+{
+   font-size: 10px;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #ffffff;
+}
+.Erro
+{
+   font-weight: bold;
+   font-size: 11px;
+   color: red;
+   font-family: Verdana, Arial, sans-serif;
+   text-align: center;
+}
+#Erro
+{
+   font-weight: bold;
+   font-size: 11px;
+   color: red;
+   font-family: Verdana, Arial, sans-serif;
+   text-align: center;
+}
+.Aviso
+{
+   font-weight: bold;
+   font-size: 11px;
+   color: blue;
+   font-family: Verdana, Arial, sans-serif;
+   text-align: center;
+}
+#Aviso
+{
+   font-weight: bold;
+   font-size: 11px;
+   color: blue;
+   font-family: Verdana, Arial, sans-serif;
+   text-align: center;
+}
+A
+{
+   font-weight: bold;
+   font-size: 11px;
+   color: #003163;
+   font-family: Verdana, Arial, sans-serif;
+   text-decoration: none;
+}
+A:hover
+{
+   font-weight: bold;
+   font-size: 11px;
+   cursor: hand;
+   color: #990000;
+   font-family: Verdana, Arial, sans-serif;
+   text-decoration: none;
+}
+INPUT
+{
+   font-family: Verdana, Arial, sans-serif;
+}
+TEXTAREA
+{
+   font-family: Verdana, Arial, sans-serif;
+}
+H1
+{
+   font-weight: bold;
+   font-size: 18px;
+   background: none transparent scroll repeat 0% 0%;
+   color: #ff9933;
+   text-indent: 20px;
+   font-family: Verdana, Arial, sans-serif;
+}
+H2
+{
+   font-weight: bold;
+   font-size: 12px;
+   background: none transparent scroll repeat 0% 0%;
+   color: black;
+}
+#Layer1
+{
+   left: 0px;
+   overflow: auto;
+   width: 790px;
+   top: 40px;
+   height: 440px;
+}
+#Botao
+{
+   font-weight: bolder;
+   width: 120px;
+   height: 25px;
+}
+#CursorNormal
+{
+   cursor: default;
+}
+.InputLabel
+{
+   border-top-width: 0px;
+   font-weight: bold;
+   border-left-width: 0px;
+   font-size: 11px;
+   border-bottom-width: 0px;
+   font-family: Verdana, Arial, sans-serif;
+   border-right-width: 0px;
+}
+#InputLabel
+{
+   border-top-width: 0px;
+   font-weight: bold;
+   border-left-width: 0px;
+   font-size: 11px;
+   border-bottom-width: 0px;
+   font-family: Verdana, Arial, sans-serif;
+   border-right-width: 0px;
+}
+.Faixa1
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #84fb84;
+}
+#Faixa1
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #84fb84;
+}
+.Faixa2
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #84fb00;
+}
+#Faixa2
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #84fb00;
+}
+.Faixa3
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #4a9200;
+}
+#Faixa3
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #4a9200;
+}
+.Faixa4
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #316100;
+}
+#Faixa4
+{
+   font-size: 11px;
+   color: black;
+   font-family: Verdana, Arial, sans-serif;
+   background-color: #316100;
+}
+.CampoObrigatorio
+{
+   background-position: left top;
+   list-style-position: inside;
+   font-size: 11px;
+   background-image: url(/Diario/Images/Campo_Obrigatorio.bmp);
+   vertical-align: super;
+   color: black;
+   background-repeat: no-repeat;
+   font-family: Verdana, Arial, sans-serif;
+   list-style-type: lower-roman;
+   background-color: #dddddd;
+}
