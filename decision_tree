@@ -1,0 +1,29 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label=<País &le; 0.5<br/>samples = 13<br/>value = [7, 6]<br/>class = Não>, fillcolor="#fbede3"] ;
+1 [label=<Alimento Preferido &le; 0.5<br/>samples = 6<br/>value = [5, 1]<br/>class = Não>, fillcolor="#ea9a61"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<Esporte Preferido &le; 1.0<br/>samples = 3<br/>value = [2, 1]<br/>class = Não>, fillcolor="#f2c09c"] ;
+1 -> 2 ;
+3 [label=<samples = 2<br/>value = [1, 1]<br/>class = Não>, fillcolor="#ffffff"] ;
+2 -> 3 ;
+4 [label=<samples = 1<br/>value = [1, 0]<br/>class = Não>, fillcolor="#e58139"] ;
+2 -> 4 ;
+5 [label=<samples = 3<br/>value = [3, 0]<br/>class = Não>, fillcolor="#e58139"] ;
+1 -> 5 ;
+6 [label=<País &le; 1.5<br/>samples = 7<br/>value = [2, 5]<br/>class = Sim>, fillcolor="#88c4ef"] ;
+0 -> 6 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+7 [label=<samples = 3<br/>value = [0, 3]<br/>class = Sim>, fillcolor="#399de5"] ;
+6 -> 7 ;
+8 [label=<Alimento Preferido &le; 0.5<br/>samples = 4<br/>value = [2, 2]<br/>class = Não>, fillcolor="#ffffff"] ;
+6 -> 8 ;
+9 [label=<samples = 1<br/>value = [0, 1]<br/>class = Sim>, fillcolor="#399de5"] ;
+8 -> 9 ;
+10 [label=<Alimento Preferido &le; 1.5<br/>samples = 3<br/>value = [2, 1]<br/>class = Não>, fillcolor="#f2c09c"] ;
+8 -> 10 ;
+11 [label=<samples = 2<br/>value = [2, 0]<br/>class = Não>, fillcolor="#e58139"] ;
+10 -> 11 ;
+12 [label=<samples = 1<br/>value = [0, 1]<br/>class = Sim>, fillcolor="#399de5"] ;
+10 -> 12 ;
+}

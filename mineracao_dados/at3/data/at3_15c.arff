@@ -1,0 +1,24 @@
+@relation clima_jogar
+
+@attribute id numeric
+@attribute tempo {Ensolarado, Nublado, Chuvoso}
+@attribute temperatura numeric
+@attribute umidade numeric
+@attribute vento {Sim, Não}
+@attribute joga {Sim, Não}
+
+@data
+1, Ensolarado, 85, 85, Não, Não
+2, Ensolarado, 80, 90, Sim, Não
+3, Nublado, 83, 86, Não, Sim
+4, Chuvoso, 70, 96, Não, Sim
+5, Chuvoso, 68, 80, Não, Sim
+6, Chuvoso, 65, 70, Sim, Não
+7, Nublado, 64, 65, Sim, Sim
+8, Ensolarado, 72, 95, Não, Não
+9, Ensolarado, 69, 70, Não, Sim
+10, Chuvoso, 75, 80, Não, Sim
+11, Ensolarado, 75, 70, Sim, Sim
+12, Nublado, 72, 90, Sim, Sim
+13, Nublado, 81, 75, Não, Sim
+14, Chuvoso, 71, 91, Sim, Não

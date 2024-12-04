@@ -1,0 +1,32 @@
+@relation perfil_viagem
+
+@attribute id numeric
+@attribute sexo {F, M}
+@attribute idade numeric
+@attribute salario numeric
+@attribute esporte {Mergulho, Ciclismo, Corrida}
+@attribute lazer {Leitura, Cinema, Viagem}
+@attribute estacao {Verão, Inverno, Outono}
+@attribute viagem {Fazenda, Praia, Montanha}
+
+@data
+1, F, 36, 5, Mergulho, Leitura, Verão, Fazenda
+2, M, 21, 6, Ciclismo, Cinema, Verão, Praia
+3, F, 28, 3, Corrida, Viagem, Inverno, Montanha
+4, M, 27, 2, Mergulho, Cinema, Inverno, Fazenda
+5, F, 18, 9, Mergulho, Viagem, Verão, Praia
+6, M, 49, 7, Ciclismo, Cinema, Inverno, Montanha
+7, F, 42, 3, Mergulho, Viagem, Inverno, Montanha
+8, M, 40, 11, Ciclismo, Leitura, Inverno, Praia
+9, F, 39, 21, Mergulho, Leitura, Verão, Montanha
+10, M, 43, 12, Ciclismo, Viagem, Outono, Montanha
+11, F, 44, 18, Mergulho, Cinema, Inverno, Praia
+12, M, 59, 6, Ciclismo, Viagem, Verão, Montanha
+13, M, 69, 22, Corrida, Leitura, Verão, Fazenda
+14, F, 36, 28, Corrida, Leitura, Verão, Fazenda
+15, M, 21, 29, Ciclismo, Cinema, Outono, Praia
+16, F, 28, 12, Corrida, Viagem, Inverno, Montanha
+17, M, 27, 4, Mergulho, Cinema, Inverno, Fazenda
+18, F, 18, 8, Mergulho, Viagem, Verão, Praia
+19, M, 49, 7, Ciclismo, Cinema, Inverno, Montanha
+20, F, 42, 5, Mergulho, Viagem, Inverno, Montanha
