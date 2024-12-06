@@ -1,0 +1,48 @@
+UNIVERSIDADE FEDERAL DO PARANÁ
+PPGECON – Disciplina: MICROECONOMIA APLICADA I 
+
+
+Risk Sharing and Transactions Costs: Evidence from Kenya’s Mobile Money Revolution. (Jack, William; Suri, Tavneet). American Economic Review 2014, 104(1): 183–223.
+
+
+## Introdução e Questão de Pesquisa
+
+No artigo "Compartilhamento de Riscos e Custos de Transação: Evidências da Revolução do Mobile Money no Quênia", publicado na American Economic Review em 2014, William Jack e Tavneet Suri investigam o impacto do mobile money, especificamente do sistema M-PESA do Quênia, na capacidade das famílias de compartilhar riscos e suavizar o consumo diante de choques econômicos. A rápida adoção do mobile money no Quênia oferece uma oportunidade única para estudar como a redução dos custos de transação afeta o comportamento de compartilhamento de riscos e o bem-estar.
+
+A questão central da pesquisa é se o acesso ao M-PESA melhora a capacidade das famílias de suavizar o consumo em resposta a choques negativos na renda. Os autores levantam a hipótese de que, ao reduzir drasticamente o custo de transferência de dinheiro a longas distâncias, o M-PESA deve permitir que as famílias acessem redes de compartilhamento de riscos maiores e mais dispersas geograficamente, melhorando assim sua capacidade de se proteger contra choques.
+
+## Arcabouço Teórico
+
+Para motivar sua análise empírica, os autores apresentam um modelo simples de compartilhamento informal de riscos com custos de transação. O modelo considera três indivíduos que podem se assegurar mutuamente contra choques de renda, mas enfrentam um custo fixo por transferência. O modelo gera várias previsões testáveis:
+1. O consumo dos usuários do M-PESA deve responder menos a choques negativos em comparação com os não usuários, pois eles são mais capazes de suavizar os riscos.
+2. As remessas devem responder mais fortemente a choques para usuários do M-PESA, pois a redução dos custos de transação facilita o compartilhamento de riscos.
+3. A rede de participantes ativos no compartilhamento de riscos deve ser maior para os usuários do M-PESA, pois custos mais baixos permitem que as famílias transacionem com um conjunto mais amplo de contrapartes.
+
+## Dados e Metodologia
+
+Os autores utilizam um rico conjunto de dados em painel cobrindo 2.282 domicílios quenianos pesquisados ao longo de duas rodadas entre 2008 e 2010, um período de rápida expansão na adoção do M-PESA. Os dados incluem informações detalhadas sobre consumo domiciliar, choques de renda, remessas (enviadas e recebidas) e uso do M-PESA e outros serviços financeiros.
+
+Para estimar o efeito do M-PESA na suavização do consumo, os autores empregam uma abordagem de diferenças em diferenças, comparando a mudança na resposta do consumo a choques para usuários versus não usuários do M-PESA. A especificação inclui efeitos fixos domiciliares para controlar características não observáveis invariantes no tempo e uma gama de controles variantes no tempo, como demografia, riqueza e acesso a outros instrumentos financeiros.
+
+Os autores também aproveitam a rápida implantação de agentes do M-PESA no Quênia durante o período do estudo como uma fonte adicional de variação no acesso à rede de mobile money. Eles comparam mudanças na suavização do consumo e remessas para domicílios que experimentaram grandes aumentos na densidade de agentes com aqueles para domicílios com crescimento de agentes mais limitado. Essa abordagem ajuda a abordar possíveis preocupações de endogeneidade relacionadas à seleção de domicílios no uso do M-PESA.
+
+## Resultados e Discussão
+
+Os resultados empíricos apoiam fortemente as previsões do modelo e fornecem evidências para os benefícios de compartilhamento de riscos do M-PESA:
+1. Suavização do consumo: domicílios não usuários experimentam uma queda de 7% no consumo per capita quando atingidos por um choque negativo, enquanto os domicílios usuários do M-PESA conseguem assegurar totalmente seu consumo.
+2. Respostas das remessas: os usuários do M-PESA são mais propensos a receber remessas diante de choques negativos em comparação com os não usuários. Eles também recebem um maior número de transações de remessas e um valor total maior de remessas.
+3. Expansão da rede: as remessas recebidas pelos usuários do M-PESA vêm de uma área geográfica mais ampla e de um maior número de remetentes, consistente com os domicílios acessando uma rede de compartilhamento de riscos mais ampla.
+
+A análise usando a densidade de agentes como um instrumento para o acesso ao M-PESA confirma esses achados. Domicílios com maior proximidade aos agentes (e, portanto, menores custos de transação) são mais capazes de suavizar o consumo em resposta a choques.
+
+Os autores exploram vários mecanismos possíveis por trás desses efeitos. Eles encontram evidências consistentes com o M-PESA melhorando o compartilhamento de riscos por meio de remessas, em vez de por meio do aumento da auto-segurança via poupança. Os resultados são mais fortes para domicílios abaixo do nível mediano de riqueza, sugerindo que o M-PESA beneficia os segmentos mais vulneráveis da população que de outra forma podem ter acesso limitado a seguros formais.
+
+## Conclusão e Implicações
+
+Este estudo fornece evidências convincentes sobre os benefícios do compartilhamento de riscos do mobile money no contexto de um país em desenvolvimento. Ao reduzir os custos de transação à distância, o M-PESA permite que as famílias suavizem o consumo de forma mais eficaz, acessem redes de compartilhamento de riscos geograficamente mais amplas e aumentem a resiliência a choques econômicos.
+
+Os resultados têm implicações importantes para o bem-estar e as políticas. Melhorar a suavização do consumo pode trazer benefícios imediatos em termos de redução das dificuldades e efeitos de longo prazo nos resultados econômicos, evitando que as famílias caiam em armadilhas de pobreza. Os autores estimam ganhos significativos de bem-estar com o M-PESA, que são maiores para famílias de menor riqueza.
+
+De forma mais ampla, a pesquisa destaca o papel crucial dos custos de transação no impedimento do compartilhamento eficiente de riscos e o potencial das inovações financeiras digitais para romper restrições tradicionais. Embora o compartilhamento informal de riscos seja frequentemente dificultado por assimetrias de informação e comprometimento limitado, os autores argumentam que, neste contexto, os benefícios dos custos de transação mais baixos parecem dominar essas outras fricções.
+
+Os resultados do estudo motivam trabalhos adicionais sobre o impacto do mobile money e tecnologias relacionadas em uma variedade de resultados econômicos e sociais. Pesquisas subsequentes exploraram os efeitos sobre a resiliência financeira, poupança, escolhas do mercado de trabalho e investimentos domésticos. À medida que o mobile money continua a se expandir globalmente, compreender seus impactos econômicos permanecerá uma importante área de investigação.
