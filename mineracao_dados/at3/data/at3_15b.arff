@@ -1,0 +1,22 @@
+@relation compras
+
+@attribute ID numeric
+@attribute PAIS {Argentina, Brasil, EUA, Suica}
+@attribute DOCE {Bala, Chocolate, Sorvete}
+@attribute FRUTA {Banana, Laranja}
+@attribute IDADE {A, B, C}
+@attribute COMPRA {Sim, Nao}
+
+@data
+1,Argentina,Bala,Banana,A,Sim
+2,Brasil,Chocolate,Banana,A,Sim
+3,Brasil,Bala,Laranja,C,Nao
+4,Brasil,Sorvete,Banana,C,Nao
+5,Brasil,Sorvete,Laranja,B,Nao
+6,Brasil,Chocolate,Banana,A,Nao
+7,EUA,Chocolate,Laranja,A,Sim
+8,EUA,Sorvete,Laranja,B,Sim
+9,EUA,Sorvete,Laranja,B,Sim
+10,Suica,Chocolate,Laranja,A,Sim
+11,Suica,Chocolate,Banana,A,Nao
+12,Suica,Bala,Banana,C,Sim

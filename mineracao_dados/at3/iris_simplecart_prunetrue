@@ -1,0 +1,59 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.SimpleCart -M 2.0 -N 5 -C 1.0 -S 1
+Relation:     iris
+Instances:    150
+Attributes:   5
+              sepallength
+              sepalwidth
+              petallength
+              petalwidth
+              class
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+CART Decision Tree
+
+petallength < 2.45: Iris-setosa(50.0/0.0)
+petallength >= 2.45
+|  petalwidth < 1.75
+|  |  petallength < 4.95: Iris-versicolor(47.0/1.0)
+|  |  petallength >= 4.95
+|  |  |  petalwidth < 1.55: Iris-virginica(3.0/0.0)
+|  |  |  petalwidth >= 1.55: Iris-versicolor(2.0/1.0)
+|  petalwidth >= 1.75: Iris-virginica(45.0/1.0)
+
+Number of Leaf Nodes: 5
+
+Size of the Tree: 9
+
+Time taken to build model: 0.13 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         143               95.3333 %
+Incorrectly Classified Instances         7                4.6667 %
+Kappa statistic                          0.93  
+Mean absolute error                      0.0437
+Root mean squared error                  0.1752
+Relative absolute error                  9.8273 %
+Root relative squared error             37.1656 %
+Total Number of Instances              150     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 1.000    0.000    1.000      1.000    1.000      1.000    1.000     1.000     Iris-setosa
+                 0.940    0.040    0.922      0.940    0.931      0.896    0.944     0.887     Iris-versicolor
+                 0.920    0.030    0.939      0.920    0.929      0.895    0.949     0.865     Iris-virginica
+Weighted Avg.    0.953    0.023    0.953      0.953    0.953      0.930    0.964     0.917     
+
+=== Confusion Matrix ===
+
+  a  b  c   <-- classified as
+ 50  0  0 |  a = Iris-setosa
+  0 47  3 |  b = Iris-versicolor
+  0  4 46 |  c = Iris-virginica
+

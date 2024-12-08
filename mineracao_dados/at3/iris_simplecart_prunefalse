@@ -1,0 +1,61 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.SimpleCart -M 2.0 -N 5 -U -C 1.0 -S 1
+Relation:     iris
+Instances:    150
+Attributes:   5
+              sepallength
+              sepalwidth
+              petallength
+              petalwidth
+              class
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+CART Decision Tree
+
+petallength < 2.45: Iris-setosa(50.0/0.0)
+petallength >= 2.45
+|  petalwidth < 1.75
+|  |  petallength < 4.95: Iris-versicolor(47.0/1.0)
+|  |  petallength >= 4.95
+|  |  |  petalwidth < 1.55: Iris-virginica(3.0/0.0)
+|  |  |  petalwidth >= 1.55: Iris-versicolor(2.0/1.0)
+|  petalwidth >= 1.75
+|  |  petallength < 4.85: Iris-virginica(2.0/1.0)
+|  |  petallength >= 4.85: Iris-virginica(43.0/0.0)
+
+Number of Leaf Nodes: 6
+
+Size of the Tree: 11
+
+Time taken to build model: 0 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         142               94.6667 %
+Incorrectly Classified Instances         8                5.3333 %
+Kappa statistic                          0.92  
+Mean absolute error                      0.0347
+Root mean squared error                  0.1643
+Relative absolute error                  7.7991 %
+Root relative squared error             34.848  %
+Total Number of Instances              150     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 1.000    0.000    1.000      1.000    1.000      1.000    1.000     1.000     Iris-setosa
+                 0.940    0.050    0.904      0.940    0.922      0.882    0.953     0.898     Iris-versicolor
+                 0.900    0.030    0.938      0.900    0.918      0.879    0.958     0.911     Iris-virginica
+Weighted Avg.    0.947    0.027    0.947      0.947    0.947      0.920    0.970     0.936     
+
+=== Confusion Matrix ===
+
+  a  b  c   <-- classified as
+ 50  0  0 |  a = Iris-setosa
+  0 47  3 |  b = Iris-versicolor
+  0  5 45 |  c = Iris-virginica
+
