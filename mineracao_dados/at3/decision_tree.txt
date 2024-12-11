@@ -1,0 +1,15 @@
+[PAÍS]
+|   [Brasil]
+|   |   [ALIMENTO PREFERIDO]
+|   |   |   [Feijoada]
+|   |   |   |   [ESPORTE PREFERIDO]
+|   |   |   |   |   [Futebol] -> Sim
+|   |   |   |   |   [Triatlo] -> Não
+|   |   |   [Salada] -> Não
+|   |   |   [Macarronada] -> Não
+|   [EUA] -> Sim
+|   [França]
+|   |   [ALIMENTO PREFERIDO]
+|   |   |   [Macarronada] -> Não
+|   |   |   [Feijoada] -> Sim
+|   |   |   [Salada] -> Sim

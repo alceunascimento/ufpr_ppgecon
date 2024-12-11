@@ -80,7 +80,7 @@ dot_data = tree.export_graphviz(
 )
 
 graph = graphviz.Source(dot_data)
-output_path = "/mineracao_dados/at3/decision_tree"
+output_path = "./mineracao_dados/at3/decision_tree"
 graph.render(output_path)
 print(f"Decision tree visualization saved at: {output_path}.pdf")
 

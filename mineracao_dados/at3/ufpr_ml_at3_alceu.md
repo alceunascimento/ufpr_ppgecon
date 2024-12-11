@@ -4,17 +4,16 @@ Aluno: Alceu Eilert Nascimento
 
 ATIVIDADE 03 - Classificação
 
-# EXERCÍCIOS 
+# EXERCÍCIOS
 
 ## 1. Abra o arquivo Iris no WordPad ou Bloco de Notas e:
 
-### a.	Explique esta base de dados conforme descrição no arquivo .arff. 
-* Quantos registros? 
-150 registros (instâncias)
+### a.	Explique esta base de dados conforme descrição no arquivo .arff.
+* Quantos registros?
+Resposta: 150 registros (instâncias)
 
-* Quantos atributos? 
-5 atributos no total, sendo 4 numéricos e 1 nominal (classe)
-
+* Quantos atributos?
+Resposta: 5 atributos no total, sendo 4 numéricos e 1 nominal (classe)
 
 * Qual o significado dos atributos?
 Os atributos são:
@@ -24,7 +23,7 @@ Os atributos são:
 4. petalwidth - Largura da pétala (em cm)
 5. class - A espécie da flor Iris, que pode ser:
    - Iris-setosa
-   - Iris-versicolor  
+   - Iris-versicolor
    - Iris-virginica
 
 ### b.	O arquito .arff possui palavras reservadas? Quantas e quais são e quais suas funções?
@@ -69,13 +68,13 @@ No caso do Iris.arff, há vários comentários no início do arquivo que fornece
 Abrindo a funcao "Explorer", a aba "Preprocess" contem os dados.
 
 * Quantos registros? 
-150 instantes
+Resposta: 150 instantes
 
 * Quantos atributos? 
-5 attibutes
+Resposta: 5 attibutes
 
 * Qual o significado dos atributos? 
-Os mesmos do item anterior
+Resposta: Os mesmos do item anterior
 
 * Na sequência utilize o método de rede neural MultilayerPerceptron sem alterar qualquer parâmetro. Explique o que você entendeu do resultado.
 
@@ -141,10 +140,10 @@ Com o UsePrune desligado, o tamanho da arvore aumentou para 11 e o modelo perdeu
 
 ## 5.	Abra o arquivo contact-lenses.arff e relate: 
 * quantos atributos
-5 atributos.
+Resposta: 5 atributos.
 
 * quantos registros e 
-24 registros.
+Resposta: 24 registros.
 
 * qual a distribuição de cada atributo. 
 A distribuição dos atributos no arquivo contact-lenses.arff, podemos observar uma distribuição bastante equilibrada. O atributo `age` possui 8 instâncias para cada uma de suas categorias: young, pre-presbyopic e presbyopic. O atributo `spectacle-prescrip` está igualmente distribuído entre myope e hypermetrope, com 12 instâncias cada. Da mesma forma, `astigmatism` apresenta 12 instâncias tanto para "yes" quanto para "no", e tear-prod-rate tem 12 instâncias para cada valor (reduced e normal). A classe `contact-lenses` apresenta um desbalanceamento, com 15 instâncias para "none", 5 para "soft" e 4 para "hard"
@@ -156,6 +155,7 @@ Na sequência utilize o método C4.5 (J48) com a opção de teste: Use training 
 
 ### a.	Faça um print-screen da árvore resultante.
 
+```
 === Run information ===
 
 Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
@@ -217,7 +217,7 @@ Weighted Avg.    0.917    0.080    0.924      0.917    0.916      0.840    0.972
   5  0  0 |  a = soft
   0  3  1 |  b = hard
   1  0 14 |  c = none
-
+```
 
 ### b.	Explique o parâmetro: minNumObj.  Compare a opção default (2) com 3. Quais as suas considerações?
 
@@ -237,6 +237,7 @@ A quantidade de registros (8) foi muito reduzida, impedindo que fosse prossivel 
 
 Resultados com divisao da base em "cross-validarion Folds 10"
 
+```
 === Run information ===
 
 Scheme:       weka.classifiers.rules.Prism 
@@ -311,7 +312,7 @@ Weighted Avg.    0.650    0.321    0.650      0.650    0.650      0.329    0.649
   2  1  1 |  a = soft
   0  1  2 |  b = hard
   2  1 10 |  c = none
-
+```
 
 ANALISE
 O modelo apresenta baixa acuracia, com 13 acertos em 24 registros.
@@ -554,6 +555,7 @@ Utilizar o método J48 (WEKA) no exemplo acima com validação cruzada de 10 par
 * taxas de acertos e 
 * erros e matriz de confusão. 
 
+```
 === Run information ===
 
 Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
@@ -600,7 +602,7 @@ Mean absolute error                      0.2278
 Root mean squared error                  0.3932
 Relative absolute error                 51.6187 %
 Root relative squared error             82.9384 %
-Total Number of Instances               20     
+Total Number of Instances               20
 
 === Detailed Accuracy By Class ===
 
@@ -608,7 +610,7 @@ Total Number of Instances               20
                  0.800    0.133    0.667      0.800    0.727      0.630    0.787     0.517     Fazenda
                  0.667    0.214    0.571      0.667    0.615      0.435    0.750     0.767     Praia
                  0.667    0.091    0.857      0.667    0.750      0.601    0.859     0.799     Montanha
-Weighted Avg.    0.700    0.139    0.724      0.700    0.704      0.558    0.808     0.719     
+Weighted Avg.    0.700    0.139    0.724      0.700    0.704      0.558    0.808     0.719
 
 === Confusion Matrix ===
 
@@ -616,7 +618,7 @@ Weighted Avg.    0.700    0.139    0.724      0.700    0.704      0.558    0.808
  4 1 0 | a = Fazenda
  1 4 1 | b = Praia
  1 2 6 | c = Montanha
-
+```
 
 
 Interprete os resultados.
@@ -728,6 +730,161 @@ a)	Resolver utilizando o ID3 com recursividade no Excel e apresentar as árvores
 | Futebol             | Brasil   | Feijoada            | Não                                          |
 
 
+```
+import math
+from collections import Counter
+
+def calculate_entropy(data, target_attribute):
+    target_values = [row[target_attribute] for row in data]
+    value_counts = Counter(target_values)
+    total_instances = len(data)
+
+    entropy = 0
+    for count in value_counts.values():
+        probability = count / total_instances
+        entropy -= probability * math.log2(probability)
+
+    return entropy
+
+def calculate_information_gain(data, split_attribute, target_attribute):
+    total_entropy = calculate_entropy(data, target_attribute)
+    
+    # Group data by the values of the split_attribute
+    grouped_data = {}
+    for row in data:
+        grouped_data.setdefault(row[split_attribute], []).append(row)
+
+    split_entropy = 0
+    total_instances = len(data)
+
+    for subset in grouped_data.values():
+        subset_probability = len(subset) / total_instances
+        split_entropy += subset_probability * calculate_entropy(subset, target_attribute)
+
+    information_gain = total_entropy - split_entropy
+    return information_gain
+
+def find_best_attribute(data, attributes, target_attribute):
+    best_attribute = None
+    best_gain = -float('inf')
+
+    for attribute in attributes:
+        gain = calculate_information_gain(data, attribute, target_attribute)
+        if gain > best_gain:
+            best_gain = gain
+            best_attribute = attribute
+
+    return best_attribute
+
+def id3(data, attributes, target_attribute):
+    # Base cases
+    target_values = [row[target_attribute] for row in data]
+    if len(set(target_values)) == 1:
+        return target_values[0]  # Pure node
+
+    if not attributes:
+        # Return the majority class if no attributes are left
+        return Counter(target_values).most_common(1)[0][0]
+
+    # Recursive case
+    best_attribute = find_best_attribute(data, attributes, target_attribute)
+    tree = {best_attribute: {}}
+
+    grouped_data = {}
+    for row in data:
+        grouped_data.setdefault(row[best_attribute], []).append(row)
+
+    for value, subset in grouped_data.items():
+        if not subset:
+            # If subset is empty, use majority class of current node
+            tree[best_attribute][value] = Counter(target_values).most_common(1)[0][0]
+        else:
+            remaining_attributes = [attr for attr in attributes if attr != best_attribute]
+            tree[best_attribute][value] = id3(subset, remaining_attributes, target_attribute)
+
+    return tree
+
+def print_tree(tree, depth=0):
+    if not isinstance(tree, dict):
+        print("|   " * depth + f"-> {tree}")
+        return
+    
+    for key, subtree in tree.items():
+        if isinstance(subtree, dict):
+            print("|   " * depth + f"[{key}]")
+            print_tree(subtree, depth + 1)
+        else:
+            print("|   " * depth + f"[{key}] -> {subtree}")
+
+# Dataset
+columns = ["ESPORTE PREFERIDO", "PAÍS", "ALIMENTO PREFERIDO", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA"]
+data = [
+    {"ESPORTE PREFERIDO": "Futebol", "PAÍS": "Brasil", "ALIMENTO PREFERIDO": "Feijoada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Sim"},
+    {"ESPORTE PREFERIDO": "Natação", "PAÍS": "EUA", "ALIMENTO PREFERIDO": "Salada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Sim"},
+    {"ESPORTE PREFERIDO": "Futebol", "PAÍS": "França", "ALIMENTO PREFERIDO": "Macarronada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"},
+    {"ESPORTE PREFERIDO": "Natação", "PAÍS": "Brasil", "ALIMENTO PREFERIDO": "Salada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"},
+    {"ESPORTE PREFERIDO": "Futebol", "PAÍS": "Brasil", "ALIMENTO PREFERIDO": "Macarronada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"},
+    {"ESPORTE PREFERIDO": "Triatlo", "PAÍS": "França", "ALIMENTO PREFERIDO": "Macarronada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"},
+    {"ESPORTE PREFERIDO": "Triatlo", "PAÍS": "EUA", "ALIMENTO PREFERIDO": "Salada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Sim"},
+    {"ESPORTE PREFERIDO": "Futebol", "PAÍS": "EUA", "ALIMENTO PREFERIDO": "Feijoada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Sim"},
+    {"ESPORTE PREFERIDO": "Triatlo", "PAÍS": "Brasil", "ALIMENTO PREFERIDO": "Feijoada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"},
+    {"ESPORTE PREFERIDO": "Triatlo", "PAÍS": "França", "ALIMENTO PREFERIDO": "Feijoada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Sim"},
+    {"ESPORTE PREFERIDO": "Futebol", "PAÍS": "Brasil", "ALIMENTO PREFERIDO": "Macarronada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"},
+    {"ESPORTE PREFERIDO": "Natação", "PAÍS": "França", "ALIMENTO PREFERIDO": "Salada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Sim"},
+    {"ESPORTE PREFERIDO": "Futebol", "PAÍS": "Brasil", "ALIMENTO PREFERIDO": "Feijoada", "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA": "Não"}
+]
+
+# Attributes and target attribute
+attributes = ["ESPORTE PREFERIDO", "PAÍS", "ALIMENTO PREFERIDO"]
+target_attribute = "COMPROU NOVO LIVRO DE CULINÁRIA VEGETARIANA"
+
+# Build the decision tree
+decision_tree = id3(data, attributes, target_attribute)
+
+# Print the decision tree
+print("Decision Tree:")
+print_tree(decision_tree)
+
+# Save the decision tree to a .txt file
+def save_tree_to_file(tree, file_path):
+    with open(file_path, "w") as file:
+        def write_tree(subtree, depth=0):
+            if not isinstance(subtree, dict):
+                file.write("|   " * depth + f"-> {subtree}\n")
+                return
+            
+            for key, branch in subtree.items():
+                if isinstance(branch, dict):
+                    file.write("|   " * depth + f"[{key}]\n")
+                    write_tree(branch, depth + 1)
+                else:
+                    file.write("|   " * depth + f"[{key}] -> {branch}\n")
+        
+        write_tree(tree)
+
+save_tree_to_file(decision_tree, "./mineracao_dados/at3/decision_tree.txt")
+```
+
+Solução:
+
+[PAÍS]
+|   [Brasil]
+|   |   [ALIMENTO PREFERIDO]
+|   |   |   [Feijoada]
+|   |   |   |   [ESPORTE PREFERIDO]
+|   |   |   |   |   [Futebol] -> Sim
+|   |   |   |   |   [Triatlo] -> Não
+|   |   |   [Salada] -> Não
+|   |   |   [Macarronada] -> Não
+|   [EUA] -> Sim
+|   [França]
+|   |   [ALIMENTO PREFERIDO]
+|   |   |   [Macarronada] -> Não
+|   |   |   [Feijoada] -> Sim
+|   |   |   [Salada] -> Sim
+
+
+
 b)	Resolver utilizando o ID3 com recursividade no Excel e apresentar as árvores finais:
 
 | ID  | PAÍS       | DOCE       | FRUTA     | IDADE | Compra? |
@@ -746,8 +903,169 @@ b)	Resolver utilizando o ID3 com recursividade no Excel e apresentar as árvores
 | 12  | Suíça      | Bala       | Banana    | C     | Sim     |
 
 
+```
+import math
+from collections import Counter
+
+def calculate_entropy(data, target_attribute):
+    target_values = [row[target_attribute] for row in data]
+    value_counts = Counter(target_values)
+    total_instances = len(data)
+
+    entropy = 0
+    for count in value_counts.values():
+        probability = count / total_instances
+        entropy -= probability * math.log2(probability)
+
+    return entropy
+
+def calculate_information_gain(data, split_attribute, target_attribute):
+    total_entropy = calculate_entropy(data, target_attribute)
+    
+    # Group data by the values of the split_attribute
+    grouped_data = {}
+    for row in data:
+        grouped_data.setdefault(row[split_attribute], []).append(row)
+
+    split_entropy = 0
+    total_instances = len(data)
+
+    for subset in grouped_data.values():
+        subset_probability = len(subset) / total_instances
+        split_entropy += subset_probability * calculate_entropy(subset, target_attribute)
+
+    information_gain = total_entropy - split_entropy
+    return information_gain
+
+def find_best_attribute(data, attributes, target_attribute):
+    best_attribute = None
+    best_gain = -float('inf')
+
+    for attribute in attributes:
+        gain = calculate_information_gain(data, attribute, target_attribute)
+        if gain > best_gain:
+            best_gain = gain
+            best_attribute = attribute
+
+    return best_attribute
+
+def id3(data, attributes, target_attribute):
+    # Base cases
+    target_values = [row[target_attribute] for row in data]
+    if len(set(target_values)) == 1:
+        return target_values[0]  # Pure node
+
+    if not attributes:
+        # Return the majority class if no attributes are left
+        return Counter(target_values).most_common(1)[0][0]
+
+    # Recursive case
+    best_attribute = find_best_attribute(data, attributes, target_attribute)
+    tree = {best_attribute: {}}
+
+    grouped_data = {}
+    for row in data:
+        grouped_data.setdefault(row[best_attribute], []).append(row)
+
+    for value, subset in grouped_data.items():
+        if not subset:
+            # If subset is empty, use majority class of current node
+            tree[best_attribute][value] = Counter(target_values).most_common(1)[0][0]
+        else:
+            remaining_attributes = [attr for attr in attributes if attr != best_attribute]
+            tree[best_attribute][value] = id3(subset, remaining_attributes, target_attribute)
+
+    return tree
+
+def print_tree(tree, depth=0):
+    if not isinstance(tree, dict):
+        print("|   " * depth + f"-> {tree}")
+        return
+    
+    for key, subtree in tree.items():
+        if isinstance(subtree, dict):
+            print("|   " * depth + f"[{key}]")
+            print_tree(subtree, depth + 1)
+        else:
+            print("|   " * depth + f"[{key}] -> {subtree}")
+
+# Dataset
+columns = ["PAÍS", "DOCE", "FRUTA", "IDADE", "Compra?"]
+data = [
+    {"PAÍS": "Argentina", "DOCE": "Bala", "FRUTA": "Banana", "IDADE": "A", "Compra?": "Sim"},
+    {"PAÍS": "Brasil", "DOCE": "Chocolate", "FRUTA": "Banana", "IDADE": "A", "Compra?": "Sim"},
+    {"PAÍS": "Brasil", "DOCE": "Bala", "FRUTA": "Laranja", "IDADE": "C", "Compra?": "Não"},
+    {"PAÍS": "Brasil", "DOCE": "Sorvete", "FRUTA": "Banana", "IDADE": "C", "Compra?": "Não"},
+    {"PAÍS": "Brasil", "DOCE": "Sorvete", "FRUTA": "Laranja", "IDADE": "B", "Compra?": "Não"},
+    {"PAÍS": "Brasil", "DOCE": "Chocolate", "FRUTA": "Banana", "IDADE": "A", "Compra?": "Não"},
+    {"PAÍS": "EUA", "DOCE": "Chocolate", "FRUTA": "Laranja", "IDADE": "A", "Compra?": "Sim"},
+    {"PAÍS": "EUA", "DOCE": "Sorvete", "FRUTA": "Laranja", "IDADE": "B", "Compra?": "Sim"},
+    {"PAÍS": "EUA", "DOCE": "Sorvete", "FRUTA": "Laranja", "IDADE": "B", "Compra?": "Sim"},
+    {"PAÍS": "Suíça", "DOCE": "Chocolate", "FRUTA": "Laranja", "IDADE": "A", "Compra?": "Sim"},
+    {"PAÍS": "Suíça", "DOCE": "Chocolate", "FRUTA": "Banana", "IDADE": "A", "Compra?": "Não"},
+    {"PAÍS": "Suíça", "DOCE": "Bala", "FRUTA": "Banana", "IDADE": "C", "Compra?": "Sim"}
+]
+
+# Attributes and target attribute
+attributes = ["PAÍS", "DOCE", "FRUTA", "IDADE"]
+target_attribute = "Compra?"
+
+# Build the decision tree
+decision_tree = id3(data, attributes, target_attribute)
+
+# Print the decision tree
+print("Decision Tree:")
+print_tree(decision_tree)
+
+# Save the decision tree to a .txt file
+def save_tree_to_file(tree, file_path):
+    with open(file_path, "w") as file:
+        def write_tree(subtree, depth=0):
+            if not isinstance(subtree, dict):
+                file.write("|   " * depth + f"-> {subtree}\n")
+                return
+            
+            for key, branch in subtree.items():
+                if isinstance(branch, dict):
+                    file.write("|   " * depth + f"[{key}]\n")
+                    write_tree(branch, depth + 1)
+                else:
+                    file.write("|   " * depth + f"[{key}] -> {branch}\n")
+        
+        write_tree(tree)
+
+save_tree_to_file(decision_tree, "./mineracao_dados/at3/decision_tree2.txt")
+
+```
+
+
+SOLUCAO
+
+[PAÍS]
+|   [Argentina] -> Sim
+|   [Brasil]
+|   |   [DOCE]
+|   |   |   [Chocolate]
+|   |   |   |   [FRUTA]
+|   |   |   |   |   [Banana]
+|   |   |   |   |   |   [IDADE]
+|   |   |   |   |   |   |   [A] -> Sim
+|   |   |   [Bala] -> Não
+|   |   |   [Sorvete] -> Não
+|   [EUA] -> Sim
+|   [Suíça]
+|   |   [DOCE]
+|   |   |   [Chocolate]
+|   |   |   |   [FRUTA]
+|   |   |   |   |   [Laranja] -> Sim
+|   |   |   |   |   [Banana] -> Não
+|   |   |   [Bala] -> Sim
+
+
+
 Agora utilize o Weka com a opção de teste Dados de Treinamento, método C4.5 (J48), execute, visualize a árvore, insira aqui e compare os resultados obtidos.
 
+```
 === Run information ===
 
 Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
@@ -803,7 +1121,7 @@ Weighted Avg.    0.500    0.643    0.318      0.500    0.389      -0.255   0.314
  a b   <-- classified as
  6 1 | a = Sim
  5 0 | b = Nao
-
+```
 
 
 
@@ -826,7 +1144,147 @@ c)	Resolver pelo C4.5 no Excel: Três faixas para temperatura e duas para umidad
 | 12  | Nublado     | 72          | 90      | Sim   | Sim   |
 | 13  | Nublado     | 81          | 75      | Não   | Sim   |
 | 14  | Chuvoso     | 71          | 91      | Sim   | Não   |
-			
+
+```
+import math
+from collections import Counter
+
+def calculate_entropy(data, target_attribute):
+    target_values = [row[target_attribute] for row in data]
+    value_counts = Counter(target_values)
+    total_instances = len(data)
+
+    entropy = 0
+    for count in value_counts.values():
+        probability = count / total_instances
+        entropy -= probability * math.log2(probability)
+
+    return entropy
+
+def calculate_information_gain(data, split_attribute, target_attribute):
+    total_entropy = calculate_entropy(data, target_attribute)
+
+    grouped_data = {}
+    for row in data:
+        grouped_data.setdefault(row[split_attribute], []).append(row)
+
+    split_entropy = 0
+    total_instances = len(data)
+
+    for subset in grouped_data.values():
+        subset_probability = len(subset) / total_instances
+        split_entropy += subset_probability * calculate_entropy(subset, target_attribute)
+
+    information_gain = total_entropy - split_entropy
+    return information_gain
+
+def find_best_attribute(data, attributes, target_attribute, thresholds):
+    best_attribute = None
+    best_gain = -float('inf')
+    best_threshold = None
+
+    for attribute in attributes:
+        if attribute in thresholds:
+            for threshold in thresholds[attribute]:
+                data_split = [{**row, attribute: f"<= {threshold}" if row[attribute] <= threshold else f"> {threshold}"} for row in data]
+                gain = calculate_information_gain(data_split, attribute, target_attribute)
+                if gain > best_gain:
+                    best_gain = gain
+                    best_attribute = attribute
+                    best_threshold = threshold
+
+    return best_attribute, best_threshold
+
+def c45(data, attributes, target_attribute, thresholds):
+    target_values = [row[target_attribute] for row in data]
+    if len(set(target_values)) == 1:
+        return target_values[0]  # Pure node
+
+    if not attributes:
+        return Counter(target_values).most_common(1)[0][0]  # Majority class
+
+    best_attribute, best_threshold = find_best_attribute(data, attributes, target_attribute, thresholds)
+
+    if best_attribute is None:
+        return Counter(target_values).most_common(1)[0][0]  # Fallback to majority class
+
+    if best_attribute in thresholds:
+        data = [{**row, best_attribute: f"<= {best_threshold}" if row[best_attribute] <= best_threshold else f"> {best_threshold}"} for row in data]
+
+    tree = {best_attribute: {}}
+
+    grouped_data = {}
+    for row in data:
+        grouped_data.setdefault(row[best_attribute], []).append(row)
+
+    for value, subset in grouped_data.items():
+        remaining_attributes = [attr for attr in attributes if attr != best_attribute]
+        tree[best_attribute][value] = c45(subset, remaining_attributes, target_attribute, thresholds)
+
+    return tree
+
+def print_tree(tree, depth=0):
+    if not isinstance(tree, dict):
+        print("|   " * depth + f"-> {tree}")
+        return
+
+    for key, subtree in tree.items():
+        if isinstance(subtree, dict):
+            print("|   " * depth + f"[{key}]")
+            print_tree(subtree, depth + 1)
+        else:
+            print("|   " * depth + f"[{key}] -> {subtree}")
+
+# Dataset
+columns = ["Tempo", "Temperatura", "Umidade", "Vento", "Joga?"]
+data = [
+    {"Tempo": "Ensolarado", "Temperatura": 85, "Umidade": 85, "Vento": "Não", "Joga?": "Não"},
+    {"Tempo": "Ensolarado", "Temperatura": 80, "Umidade": 90, "Vento": "Sim", "Joga?": "Não"},
+    {"Tempo": "Nublado", "Temperatura": 83, "Umidade": 86, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 70, "Umidade": 96, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 68, "Umidade": 80, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 65, "Umidade": 70, "Vento": "Sim", "Joga?": "Não"},
+    {"Tempo": "Nublado", "Temperatura": 64, "Umidade": 65, "Vento": "Sim", "Joga?": "Sim"},
+    {"Tempo": "Ensolarado", "Temperatura": 72, "Umidade": 95, "Vento": "Não", "Joga?": "Não"},
+    {"Tempo": "Ensolarado", "Temperatura": 69, "Umidade": 70, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 75, "Umidade": 80, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Ensolarado", "Temperatura": 75, "Umidade": 70, "Vento": "Sim", "Joga?": "Sim"},
+    {"Tempo": "Nublado", "Temperatura": 72, "Umidade": 90, "Vento": "Sim", "Joga?": "Sim"},
+    {"Tempo": "Nublado", "Temperatura": 81, "Umidade": 75, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 71, "Umidade": 91, "Vento": "Sim", "Joga?": "Não"}
+]
+
+# Attributes and target attribute
+attributes = ["Tempo", "Temperatura", "Umidade", "Vento"]
+target_attribute = "Joga?"
+thresholds = {
+    "Temperatura": [65, 75, 85],
+    "Umidade": [70, 80, 90]
+}
+
+# Build the decision tree
+decision_tree = c45(data, attributes, target_attribute, thresholds)
+
+# Print the decision tree
+print("Decision Tree:")
+print_tree(decision_tree)
+
+
+```
+
+SOLUCAO
+
+Decision Tree:
+[Umidade]
+|   [> 80]
+|   |   [Temperatura]
+|   |   |   [> 75] -> Não
+|   |   |   [<= 75] -> Sim
+|   [<= 80]
+|   |   [Temperatura]
+|   |   |   [> 65] -> Sim
+|   |   |   [<= 65] -> Nã
+
 									
 Classificar, utilizando a árvore de decisão após a poda e os seguintes exemplos:
 
@@ -837,8 +1295,54 @@ Classificar, utilizando a árvore de decisão após a poda e os seguintes exempl
 | 17  | Chuvoso     | 68          | 87      | Não   | Sim   |                          |
 | 18  | Ensolarado  | 77          | 84      | Não   | Não   |                          |
 | 19  | Chuvoso     | 86          | 65      | Sim   | Sim   |                          |
-	
-Qual a taxa de acerto encontrada? _______________
+
+```
+def classify(tree, instance):
+    if not isinstance(tree, dict):
+        return tree
+    attribute = next(iter(tree))
+    value = instance[attribute]
+    for condition, subtree in tree[attribute].items():
+        threshold = float(condition.split()[1])
+        if ("<=" in condition and value <= threshold) or (">" in condition and value > threshold):
+            return classify(subtree, instance)
+
+# Novos exemplos
+new_data = [
+    {"Tempo": "Ensolarado", "Temperatura": 52, "Umidade": 70, "Vento": "Sim", "Joga?": "Não"},
+    {"Tempo": "Ensolarado", "Temperatura": 84, "Umidade": 52, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 68, "Umidade": 87, "Vento": "Não", "Joga?": "Sim"},
+    {"Tempo": "Ensolarado", "Temperatura": 77, "Umidade": 84, "Vento": "Não", "Joga?": "Não"},
+    {"Tempo": "Chuvoso", "Temperatura": 86, "Umidade": 65, "Vento": "Sim", "Joga?": "Sim"}
+]
+
+# Classificar os novos exemplos
+correct = 0
+for instance in new_data:
+    predicted = classify(decision_tree, instance)
+    print(f"Instance: {instance} => Predicted: {predicted}, Actual: {instance['Joga?']}")
+    if predicted == instance["Joga?"]:
+        correct += 1
+
+# Taxa de acerto
+accuracy = correct / len(new_data)
+print(f"Accuracy: {accuracy * 100:.2f}%")
+
+
+```
+
+SOLUCAO
+
+```
+Instance: {'Tempo': 'Ensolarado', 'Temperatura': 52, 'Umidade': 70, 'Vento': 'Sim', 'Joga?': 'Não'} => Predicted: Não, Actual: Não
+Instance: {'Tempo': 'Ensolarado', 'Temperatura': 84, 'Umidade': 52, 'Vento': 'Não', 'Joga?': 'Sim'} => Predicted: Sim, Actual: Sim
+Instance: {'Tempo': 'Chuvoso', 'Temperatura': 68, 'Umidade': 87, 'Vento': 'Não', 'Joga?': 'Sim'} => Predicted: Sim, Actual: Sim
+Instance: {'Tempo': 'Ensolarado', 'Temperatura': 77, 'Umidade': 84, 'Vento': 'Não', 'Joga?': 'Não'} => Predicted: Não, Actual: Não
+Instance: {'Tempo': 'Chuvoso', 'Temperatura': 86, 'Umidade': 65, 'Vento': 'Sim', 'Joga?': 'Sim'} => Predicted: Sim, Actual: Sim
+Accuracy: 100.00%
+```
+
+Qual a taxa de acerto encontrada? 100%
 									
 									
 Classificar, utilizando a árvore de decisão após a poda e os seguintes exemplos:
@@ -852,11 +1356,37 @@ Classificar, utilizando a árvore de decisão após a poda e os seguintes exempl
 | 24  | Chuvoso     | 69          | 89      | Sim   |                          |
 | 25  | Chuvoso     | 80          | 87      | Sim   |                          |
 	
-									
+```
+# New examples
+new_data = [
+    {"Tempo": "Nublado", "Temperatura": 84, "Umidade": 65, "Vento": "Sim"},
+    {"Tempo": "Nublado", "Temperatura": 90, "Umidade": 58, "Vento": "Sim"},
+    {"Tempo": "Ensolarado", "Temperatura": 86, "Umidade": 86, "Vento": "Sim"},
+    {"Tempo": "Ensolarado", "Temperatura": 59, "Umidade": 90, "Vento": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 69, "Umidade": 89, "Vento": "Sim"},
+    {"Tempo": "Chuvoso", "Temperatura": 80, "Umidade": 87, "Vento": "Sim"}
+]
+
+# Classify new examples
+for idx, instance in enumerate(new_data, start=20):
+    predicted = classify(decision_tree, instance)
+    print(f"ID {idx}: Predicted = {predicted}")
+    
+```
+
+SOLUCAO
+
+ID 20: Predicted = Sim
+ID 21: Predicted = Sim
+ID 22: Predicted = Não
+ID 23: Predicted = Sim
+ID 24: Predicted = Sim
+ID 25: Predicted = Não
 									
 Agora com a tabela principal utilize o Weka com a opção de teste Dados de Treinamento, método C4.5 (J48), execute, visualize a árvore, insira aqui e compare os resultados obtidos.
 Na sequência, forneça a base de testes (linhas 20 a 25) e discuta os resultados obtidos.
 
+```
 === Run information ===
 
 Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
@@ -915,6 +1445,6 @@ Weighted Avg.    0.500    0.544    0.521      0.500    0.508      -0.043   0.689
  a b   <-- classified as
  5 4 | a = Sim
  3 2 | b = Não
-
+```
 
 

@@ -1,0 +1,19 @@
+[PAÍS]
+|   [Argentina] -> Sim
+|   [Brasil]
+|   |   [DOCE]
+|   |   |   [Chocolate]
+|   |   |   |   [FRUTA]
+|   |   |   |   |   [Banana]
+|   |   |   |   |   |   [IDADE]
+|   |   |   |   |   |   |   [A] -> Sim
+|   |   |   [Bala] -> Não
+|   |   |   [Sorvete] -> Não
+|   [EUA] -> Sim
+|   [Suíça]
+|   |   [DOCE]
+|   |   |   [Chocolate]
+|   |   |   |   [FRUTA]
+|   |   |   |   |   [Laranja] -> Sim
+|   |   |   |   |   [Banana] -> Não
+|   |   |   [Bala] -> Sim
