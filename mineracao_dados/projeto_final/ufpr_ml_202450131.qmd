@@ -1,0 +1,287 @@
+---
+title: "Análise de Modelos de Previsão de Inadimplência"
+subtitle: "Utilizando KNN e Random Forest em uma Base de Dados de Crédito"
+author: "Alceu Eilert Nascimento"
+date: "2025-01-31"
+format:
+  docx:
+    reference-doc: ufpr_template_artigo.docx
+keep_tex: true
+geometry: "left=3cm, right=2cm, top=3cm, bottom=2cm"
+bibliography: bibliografia.bib
+link-citations: TRUE
+endnote: no
+csl: "abnt_alceu.csl"
+---
+
+Este texto apresenta a experiência de aplicação de diferentes modelos de
+classificação para prever inadimplência (default) em uma base de dados
+de crédito. O estudo foi conduzido com foco na comparação entre o
+algoritmo K-Nearest Neighbors (KNN) e o Random Forest, bem como na
+análise de diferentes técnicas de balanceamento de classes.
+
+# 1. Introdução
+
+O problema de previsão de inadimplência é de grande relevância no setor
+financeiro, pois permite às instituições de crédito identificar clientes
+com maior probabilidade de não pagamento, auxiliando na tomada de
+decisão e na mitigação de riscos
+[@altmanFinancialRatiosDiscriminant1968]. Diversos métodos de
+aprendizado de máquina têm sido empregados para esse propósito,
+destacando-se algoritmos como KNN, devido à sua simplicidade e boa
+capacidade preditiva em cenários com número moderado de variáveis
+[@coverNearestNeighborPattern1967], e Random Forest, reconhecido pela
+robustez e habilidade de lidar com dados de alta dimensionalidade
+[@breimanRandomForests2001].
+
+Entretanto, em muitas bases de inadimplência, há desbalanceamento das
+classes (mais adimplentes que inadimplentes). Essa disparidade pode
+prejudicar o treinamento de modelos de aprendizado de máquina, pois eles
+tendem a aprender predominantemente o comportamento da classe
+majoritária [@chawlaSMOTESyntheticMinority2002]. Para atenuar tal
+problema, técnicas de reamostragem como o SMOTE (*Synthetic Minority
+Over-sampling Technique*) são frequentemente empregadas.
+
+O objetivo deste artigo é comparar o desempenho de diferentes
+configurações de Random Forest (variando pesos de classe e aplicando
+SMOTE) e um modelo KNN, utilizando métricas de desempenho como acurácia,
+precisão, recall e F1-score
+[@sokolovaSystematicAnalysisPerformance2009]. A base de dados usada
+contém informações de clientes de crédito e a variável-alvo indica se o
+cliente está inadimplente ($1$) ou não ($0$) no mês seguinte.
+
+# 2. Metodologia
+
+## 2.1 Base de Dados
+
+A base de dados (credit_data.csv) produzida por Yeh
+[-@yehDefaultCreditCard2009], contém 30.000 observações com variáveis
+relacionadas ao limite de crédito, histórico de pagamentos, montantes
+devidos e valores pagos em diferentes períodos, além de informações
+demográficas como idade, estado civil e nível educacional. A coluna
+alvo, denominada originalmente `default.payment.next.month`, foi
+renomeada para $Y$, onde: $Y = 0$ é adimplente $Y = 1$ é inadimplente.
+
+Após o carregamento dos dados, foi removida a coluna de identificação
+`ID`, por não apresentar relevância preditiva. Em seguida, convertemos a
+variável-alvo $Y$ em fator para adequação às funções de classificação.
+
+## 2.2 Pré-Processamento e Particionamento
+
+Para avaliar o desempenho dos modelos, os dados foram divididos em
+treino ($70$%) e teste ($30$%), utilizando a função
+`createDataPartition` do pacote **caret**
+[@kuhnBuildingPredictiveModels2008]. Foi definida uma semente aleatória
+(`set.seed(123)`) para garantir a reprodutibilidade dos resultados.
+
+Em seguida, aplicou-se normalização (método `range`) nas variáveis
+preditoras, mantendo-se a escala entre 0 e 1. Esse processo foi
+realizado por meio do `preProcess` do **caret**. A normalização busca
+evitar que variáveis em escalas muito diferentes influenciem de forma
+desproporcional a distância (principalmente no KNN) e o critério de
+divisão de nós (no caso de algumas variantes de árvores).
+
+## 2.3 Modelagem
+
+A modelagem estatística e de aprendizado de máquina para previsão de
+inadimplência envolve a escolha de algoritmos apropriados, a
+configuração de hiperparâmetros e a validação dos modelos treinados.
+Nesta seção, serão apresentados os modelos utilizados, justificando sua
+aplicação e comparando seu desempenho em termos de métricas
+padronizadas. Os algoritmos foram selecionados com base na capacidade de
+capturar padrões não lineares nos dados e na eficiência em cenários de
+alto desequilíbrio de classes, como é o caso da previsão de
+inadimplência.
+
+Inicialmente, implementaram-se métodos supervisionados de classificação,
+incluindo K-Nearest Neighbors (KNN) e Random Forest, cada um com
+características distintas na forma de aprendizado e na capacidade de
+generalização. O desempenho dos modelos foi avaliado considerando
+métricas como acurácia, sensibilidade, especificidade e F1-score,
+buscando identificar a abordagem mais eficaz para detectar clientes
+inadimplentes com maior precisão e reduzir falsos negativos, fator
+crítico em contextos de risco de crédito.
+
+### 2.3.1 K-Nearest Neighbors (KNN)
+
+O KNN é um método baseado em instâncias, em que a classificação é
+decidida pela maioria dos rótulos dos vizinhos mais próximos de uma nova
+instância [@coverNearestNeighborPattern1967]. Definiu-se $k = 5$ para o
+treinamento, avaliando-se seu desempenho no conjunto de teste. As
+métricas de avaliação foram obtidas por meio da `confusionMatrix` do
+**caret**.
+
+### 2.3.2 Random Forest
+
+O Random Forest, proposto por Breiman [-@breimanRandomForests2001],
+consiste em um conjunto de árvores de decisão geradas a partir de
+amostras aleatórias com reposição (*bootstrapping*) dos dados e da
+seleção aleatória de subconjuntos de variáveis em cada nó. Foram
+construídos três cenários distintos:
+
+| **Cenário**      | **Descrição**                                                                                                                                   |
+|:------------------|:----------------------------------------------------|
+| **RF Padrão**    | **ntree** = $100$; **mtry** = $\sqrt{p}$ (onde $p$ é o número de variáveis preditoras). Nenhum ajuste de pesos de classe                        |
+| **RF com Pesos** | **ntree** = $100$; **classwt** = c($0.5$, $1.5$), atribuindo maior peso à classe inadimplente ($1$)                                             |
+| **RF com SMOTE** | Aplicação da técnica **SMOTE** no conjunto de treino, via `step_smote` do pacote `themis` <br/>- **ntree** = 1000 para maior robustez do modelo |
+
+A avaliação foi realizada com base na matriz de confusão e nas métricas
+de acurácia, precisão, recall e F1-score.
+
+# 3. Resultados e Discussões
+
+A análise dos resultados permite avaliar o desempenho dos modelos em
+prever a inadimplência, comparando diferentes abordagens e suas
+respectivas métricas. O foco principal está na capacidade de detectar
+corretamente os clientes inadimplentes, minimizando falsos negativos.
+Além disso, discute-se o impacto do balanceamento dos dados e da escolha
+dos hiperparâmetros na eficácia dos algoritmos.
+
+## 3.1 Desempenho do Modelo KNN
+
+O modelo KNN apresentou, no conjunto de teste, uma acurácia de $0,7876$,
+demonstrando boa capacidade de classificação geral, embora ainda haja
+algumas limitações quanto à correta identificação da classe minoritária.
+A precisão para a classe positiva (definida como $0$) foi de $0,8304$,
+indicando que, entre todas as instâncias classificadas como adimplentes,
+cerca de $83$% eram efetivamente da classe $0$. Já o recall de $0,9141$
+reforça a habilidade do modelo em recuperar a maior parte dos
+adimplentes. Por fim, o F1-Score de $0,8702$ reflete o equilíbrio entre
+precisão e recall, denotando um desempenho satisfatório para o objetivo
+de classificação proposto.
+
+Observa-se uma boa capacidade de identificar corretamente a classe
+majoritária (adimplentes), com recall de cerca de $91$%, mas isso se
+deve em parte ao desbalanceamento do conjunto de dados. O baixo valor de
+Kappa ($0,2937$) revela que, apesar de o modelo identificar bem a classe
+$0$, há limitações na distinção mais equilibrada das classes.
+
+## 3.2 Desempenho do Random Forest
+
+O modelo Random Forest foi aplicado com o objetivo de superar as
+limitações observadas no KNN, especialmente no que se refere ao
+desbalanceamento das classes. Sua abordagem baseada em múltiplas árvores
+permite capturar relações mais complexas entre as variáveis preditoras,
+resultando em um modelo mais robusto e generalizável. A seguir, são
+apresentados os resultados obtidos com a configuração padrão e com
+ajustes nos hiperparâmetros para otimização do desempenho.
+
+### 3.2.1 RF Padrão
+
+O modelo Random Forest padrão (`rf_model.1`) apresentou um desempenho
+robusto no conjunto de teste, evidenciado por uma acurácia de $0,8149$,
+o que reflete uma elevada taxa de classificações corretas. A precisão de
+$0,8404$ indica que a maioria das instâncias classificadas como
+pertencentes à classe positiva corresponde efetivamente aos casos de
+adimplência. Além disso, o recall de $0,9411$ demonstra a capacidade do
+modelo em identificar corretamente a maior parte dos verdadeiros
+positivos, enquanto o F1-Score de $0,8702$ evidencia um equilíbrio
+satisfatório entre precisão e recall. Tais resultados corroboram a
+eficácia do Random Forest em tarefas de classificação, especialmente em
+contextos onde a distinção entre classes é desafiadora, como nos
+problemas de previsão de inadimplência.
+
+O Random Forest padrão supera o KNN em termos de acurácia, atingindo
+$0,8149$. O recall ($94,11$%) indica que o modelo consegue identificar a
+maioria dos adimplentes corretamente, mas ainda mantém uma
+especificidade relativamente baixa ($37,04$%), o que implica em
+dificuldade para identificar corretamente os inadimplentes (clique
+moderado de falsos negativos/falsos positivos).
+
+### 3.2.2 RF com Pesos
+
+O modelo Random Forest com Pesos (`rf_model.2`) apresentou um desempenho
+sólido no conjunto de teste, registrando uma acurácia de $0,8040$, o que
+significa que aproximadamente $80,40$% das classificações foram
+realizadas de forma correta. A precisão de $0,8378$ indica que, dentre
+as instâncias classificadas como positivas, $83,78$% correspondem
+efetivamente à classe prevista. Além disso, o recall de $0,9279$
+evidencia que o modelo identificou corretamente $92,79$% dos casos
+positivos, demonstrando uma elevada capacidade de detecção. Por fim, o
+F1-Score de $0,870$ reflete um equilíbrio adequado entre precisão e
+recall, sugerindo que o ajuste de pesos empregado na modelagem
+contribuiu para uma melhora na identificação dos casos de inadimplência,
+mesmo diante do desbalanceamento presente na base de dados. Tais
+resultados corroboram a eficácia da estratégia de ponderação das classes
+na mitigação dos vieses inerentes a conjuntos de dados desbalanceados,
+conforme discutido por [@breimanRandomForests2001].
+
+A atribuição de maior peso à classe inadimplente ($1$) ligeiramente
+reduziu a acurácia para $0,8040$, mas potencialmente melhora a
+identificação da classe minoritária no treino. Apesar disso, a
+especificidade ainda não apresentou ganho substancial no conjunto de
+teste. Esses resultados confirmam que o trade-off entre as métricas de
+desempenho deve ser avaliado conforme a estratégia do negócio (provável
+priorização de redução de inadimplência).
+
+### 3.2.3 RF com SMOTE
+
+No cenário de Random Forest com SMOTE (`rf_model.3`), o modelo
+apresentou uma acurácia de $0,7945$, o que significa que aproximadamente
+$79,45$% das previsões foram corretas no conjunto de teste. A precisão
+de $0,8578$ indica que a grande maioria das instâncias classificadas
+como positivas efetivamente correspondem à classe prevista, enquanto o
+recall de $0,8824$ demonstra a elevada capacidade do modelo em
+identificar os casos positivos. O F1-Score de $0,8702$ evidencia um
+equilíbrio robusto entre precisão e recall, refletindo a eficácia da
+estratégia de balanceamento implementada por meio da técnica SMOTE, que
+gera amostras sintéticas da classe minoritária para mitigar o
+desbalanceamento dos dados [@chawlaSMOTESyntheticMinority2002]. Apesar
+da acurácia ter sofrido uma leve queda em comparação com os modelos
+Random Forest sem SMOTE, os demais indicadores sugerem uma melhora na
+detecção dos casos positivos, aspecto crucial em problemas de previsão
+de inadimplência, onde a identificação correta dos casos de risco é
+prioritária. Assim, a incorporação do SMOTE mostrou-se uma estratégia
+promissora para otimizar o desempenho preditivo do modelo, corroborando
+evidências presentes na literatura [@breimanRandomForests2001].
+
+A aplicação de SMOTE no conjunto de treino foi benéfica para aumentar o
+número de exemplos sintéticos da classe minoritária, buscando um
+equilíbrio maior entre as classes. Observou-se uma redução na acurácia
+global ($0,7945$) em comparação ao modelo básico, mas houve melhora
+considerável na sensibilidade em relação à classe menos representada
+(ainda que a métrica exata de recall para a classe 1 não esteja
+diretamente visível na tabela --- possivelmente indicando um maior
+esforço de identificação da classe inadimplente). Em cenários de
+avaliação de crédito, esse resultado pode ser preferível, pois reduzir
+falsos negativos (inadimplentes não identificados) é frequentemente mais
+crítico do que garantir a mais alta acurácia global
+[@baesensBenchmarkingStateoftheartClassification2003].
+
+## 3.3 Comparação Geral
+
+Ao comparar KNN e Random Forest, verifica-se que o Random Forest obteve
+consistentemente melhor desempenho em termos de acurácia e manteve
+F1-score mais equilibrado, ainda que todos os modelos apresentem
+desafios na distinção da classe minoritária. Em aplicações de
+classificação de risco de crédito, o custo de prever indevidamente que
+um cliente é adimplente (falso negativo) costuma ser maior do que o
+oposto (falso positivo). Assim, a escolha final do modelo deve
+considerar as estratégias de mitigação de perdas e o custo-benefício de
+errar em cada classe.
+
+# 4. Conclusão
+
+Este estudo ilustra a aplicação de dois algoritmos populares em
+Mineração de Dados --- KNN e Random Forest --- para a previsão de
+inadimplência em uma base de crédito. Os resultados indicam que, embora
+o modelo KNN tenha apresentado boa sensibilidade para a classe
+majoritária, ele foi superado pelo Random Forest em termos de acurácia
+global. Entre as variações do Random Forest, o modelo padrão destacou-se
+com uma acurácia de $0,8149$, evidenciando um desempenho superior de
+forma geral. Ademais, a aplicação de técnicas de balanceamento, seja
+através do SMOTE ou pela atribuição de pesos, influenciou a distribuição
+dos acertos e erros, ocasionando uma redução na acurácia global, mas
+potencialmente melhorando a sensibilidade para a classe minoritária.
+Essa melhoria na detecção dos casos de inadimplência é especialmente
+relevante no contexto de risco de crédito, onde a minimização de falsos
+negativos é crucial para a mitigação de perdas.
+
+Portanto, a decisão sobre qual abordagem utilizar deve ser guiada por
+métricas que reflitam a estratégia de negócio (por exemplo, priorizar a
+detecção de inadimplentes) e considerar os custos associados a cada tipo
+de erro. Pesquisas futuras podem incluir técnicas avançadas de ensemble
+e tuning mais aprofundado dos hiperparâmetros para refinar ainda mais o
+desempenho preditivo.
+
+# Referências bibliográficas
