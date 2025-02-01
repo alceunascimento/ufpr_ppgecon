@@ -8,6 +8,13 @@ import os
 from time import sleep
 from tqdm import tqdm
 
+# Define the output directory
+OUTPUT_DIR = '/home/alceu/Documents/data/alvaras'
+
+def ensure_output_directory():
+    """Create the output directory if it doesn't exist."""
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
 def extract_table_data(table):
     """Extract data from table with headers and values."""
     if not table:
@@ -18,7 +25,9 @@ def extract_table_data(table):
 
 def get_last_processed():
     """Find the last processed permit number from existing JSON files."""
-    files = [f for f in os.listdir() if f.endswith('.json')]
+    if not os.path.exists(OUTPUT_DIR):
+        return 1
+    files = [f for f in os.listdir(OUTPUT_DIR) if f.endswith('.json')]
     if not files:
         return 1
     return max(int(f.split('.')[0]) for f in files)
@@ -146,10 +155,14 @@ def get_alvara_construcao(browser, documento):
         return None
 
 def main():
-    start_num = get_last_processed()
+    # Ensure the output directory exists
+    ensure_output_directory()
+
+    start_num = 350000
     end_num = 406000
     
     print(f"Starting from permit number: {start_num}")
+    print(f"Saving files to: {OUTPUT_DIR}")
     
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -160,12 +173,14 @@ def main():
     
     try:
         for doc_num in tqdm(range(start_num, end_num + 1), desc="Processing permits"):
-            if os.path.exists(f"{doc_num}.json"):
+            output_file = os.path.join(OUTPUT_DIR, f"{doc_num}.json")
+            
+            if os.path.exists(output_file):
                 continue
                 
             data = get_alvara_construcao(browser, str(doc_num))
             if data:
-                with open(f"{doc_num}.json", 'w', encoding='utf-8') as f:
+                with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(data, f, ensure_ascii=False, indent=2)
                 
             # Prevent overwhelming the server
