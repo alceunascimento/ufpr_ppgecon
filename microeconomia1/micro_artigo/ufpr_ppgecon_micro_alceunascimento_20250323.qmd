@@ -1,0 +1,25 @@
+---
+title: "titulo"
+subtitle: "subtitulo"
+author: "Alceu Eilert Nascimento"
+date: "2025-03-23"
+format:
+  docx:
+    reference-doc: ufpr_template_artigo.docx
+keep_tex: true
+geometry: "left=3cm, right=2cm, top=3cm, bottom=2cm"
+bibliography: bibliografia.bib
+link-citations: TRUE
+endnote: no
+csl: "ipea.csl"
+---
+
+# 1 Introdução
+
+
+
+# 5 Conclusão
+
+Em conclusão, .
+
+# Referências bibliográficas
