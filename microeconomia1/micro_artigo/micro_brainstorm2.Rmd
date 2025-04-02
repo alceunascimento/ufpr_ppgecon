@@ -1,116 +1,303 @@
-Below is an expanded microeconomics-based discussion of the “weak enforcement paradox,” focusing on how it can stimulate certain kinds of market activity. This includes references to fundamental microeconomic principles (like principal-agent problems, incomplete contracts, real options, and moral hazard) and models commonly found in advanced micro theory. The aim is to situate the phenomenon within core micro concepts and frameworks—useful for a PhD-level paper. Full references are at the end.
+Below is an expanded microeconomics-based discussion of the “weak
+enforcement paradox,” focusing on how it can stimulate certain kinds of
+market activity. This includes references to fundamental microeconomic
+principles (like principal-agent problems, incomplete contracts, real
+options, and moral hazard) and models commonly found in advanced micro
+theory. The aim is to situate the phenomenon within core micro concepts
+and frameworks—useful for a PhD-level paper. Full references are at the
+end.
 
----
+------------------------------------------------------------------------
 
 ## 1. The Micro-Underpinnings of Contract Enforcement
 
-In microeconomics, **contracts** govern exchanges between self-interested agents operating under uncertainty and asymmetric information (Grossman & Hart, 1986). Standard theory posits that *complete contracting*—where outcomes are fully observable and enforceable—maximizes expected surplus (Williamson, 1985). However, real-world constraints such as **judicial inefficiency**, **imperfect information**, and **limited enforcement** create incomplete contracts (Hart & Moore, 1988; Tirole, 1999). In such settings, some degree of *ex-post renegotiation* or breach becomes a rational response to unforeseen contingencies (Shavell, 1980).  
+In microeconomics, **contracts** govern exchanges between
+self-interested agents operating under uncertainty and asymmetric
+information (Grossman & Hart, 1986). Standard theory posits that
+*complete contracting*—where outcomes are fully observable and
+enforceable—maximizes expected surplus (Williamson, 1985). However,
+real-world constraints such as **judicial inefficiency**, **imperfect
+information**, and **limited enforcement** create incomplete contracts
+(Hart & Moore, 1988; Tirole, 1999). In such settings, some degree of
+*ex-post renegotiation* or breach becomes a rational response to
+unforeseen contingencies (Shavell, 1980).
 
 ### Option Value of Breach
-When enforcement is weak or merely monetary, a contract can be viewed as a **call or put option** for the contracting party (Katz, 2004). Standard microeconomic models of *option value* (Dixit & Pindyck, 1994) show that an agent’s payoff is increased if they can abandon or revise a decision mid-course without incurring the full cost. Under uncertain market conditions (e.g. volatile asset prices), a **real option** embedded in a contract can elevate the ex-ante willingness to contract (Bowman & Moskowitz, 2001). The impetus is: a party can secure upside gains if market conditions shift favorably, while limiting downside losses by strategically defaulting in a less favorable state (Cooter & Ulen, 2016).
+
+When enforcement is weak or merely monetary, a contract can be viewed as
+a **call or put option** for the contracting party (Katz, 2004).
+Standard microeconomic models of *option value* (Dixit & Pindyck, 1994)
+show that an agent’s payoff is increased if they can abandon or revise a
+decision mid-course without incurring the full cost. Under uncertain
+market conditions (e.g. volatile asset prices), a **real option**
+embedded in a contract can elevate the ex-ante willingness to contract
+(Bowman & Moskowitz, 2001). The impetus is: a party can secure upside
+gains if market conditions shift favorably, while limiting downside
+losses by strategically defaulting in a less favorable state (Cooter &
+Ulen, 2016).
 
 ### Moral Hazard and Asymmetric Enforcement
-Weak enforcement inherently generates **moral hazard** (Holmström, 1979). If buyers anticipate mild penalties upon breach, they can take on risk-laden contracts they might otherwise avoid. Meanwhile, sellers or lenders, constrained by competitive forces or short-term incentives, may continue offering lenient terms (Stiglitz & Weiss, 1981). This dynamic—fueled by asymmetric information (buyers know more about their likelihood of default than sellers) and asymmetric enforcement (the state is more lenient to one party)—can expand market participation in the short run, leading to **over-contracting** (Pavlov & Wachter, 2006).  
 
----
+Weak enforcement inherently generates **moral hazard** (Holmström,
+1979). If buyers anticipate mild penalties upon breach, they can take on
+risk-laden contracts they might otherwise avoid. Meanwhile, sellers or
+lenders, constrained by competitive forces or short-term incentives, may
+continue offering lenient terms (Stiglitz & Weiss, 1981). This
+dynamic—fueled by asymmetric information (buyers know more about their
+likelihood of default than sellers) and asymmetric enforcement (the
+state is more lenient to one party)—can expand market participation in
+the short run, leading to **over-contracting** (Pavlov & Wachter, 2006).
+
+------------------------------------------------------------------------
 
 ## 2. Microeconomic Mechanisms in Strategic Contracting
 
 ### 2.1 Adverse Selection in High-Risk Deals
-In strong-enforcement environments, risk-averse or liquidity-constrained agents might be reluctant to contract at all, fearing strict penalties. Under weak enforcement, these agents effectively gain a low-cost “escape hatch,” thus joining the market. However, this invites **adverse selection**—a higher proportion of “weak hands” who rely on the easy default option (Akerlof, 1970). If sellers cannot perfectly screen out speculative buyers, the overall pool of participants may increase, inflating trade volume (Laffont & Martimort, 2002).
+
+In strong-enforcement environments, risk-averse or liquidity-constrained
+agents might be reluctant to contract at all, fearing strict penalties.
+Under weak enforcement, these agents effectively gain a low-cost “escape
+hatch,” thus joining the market. However, this invites **adverse
+selection**—a higher proportion of “weak hands” who rely on the easy
+default option (Akerlof, 1970). If sellers cannot perfectly screen out
+speculative buyers, the overall pool of participants may increase,
+inflating trade volume (Laffont & Martimort, 2002).
 
 ### 2.2 Principal-Agent and Incentive Alignment
-In classical principal-agent models, agents must be incentivized to perform (Grossman & Hart, 1983). With strong enforcement, a nonperforming agent can be penalized heavily or forced into performance. Under weak enforcement, penalties are uncertain or limited, so the agent (buyer/borrower) can misbehave (default/renege) without bearing the full cost. From the principal’s perspective, it may still be rational to offer a contract if expected returns outweigh default losses. If competition drives principals to chase short-term profits, we get an equilibrium with more (but riskier) deals (Stiglitz, 2010).
+
+In classical principal-agent models, agents must be incentivized to
+perform (Grossman & Hart, 1983). With strong enforcement, a
+nonperforming agent can be penalized heavily or forced into performance.
+Under weak enforcement, penalties are uncertain or limited, so the agent
+(buyer/borrower) can misbehave (default/renege) without bearing the full
+cost. From the principal’s perspective, it may still be rational to
+offer a contract if expected returns outweigh default losses. If
+competition drives principals to chase short-term profits, we get an
+equilibrium with more (but riskier) deals (Stiglitz, 2010).
 
 ### 2.3 Real Options as Strategic Tools
-In dynamic microeconomic models, agents anticipate their outside options and the evolution of market states (Maskin & Tirole, 2001). A contract under partial enforcement adds an *ex-post outside option* to the promisor: the possibility of “walking away.” This can reallocate bargaining power. For instance, in real estate pre-sales, a buyer with a weakly enforced deposit contract can threaten to default if market conditions move against them, effectively renegotiating the purchase price (Chan et al., 2012). This ex-post renegotiation power can encourage more ex-ante contracting when buyers foresee a strong fallback position (MacLeod & Malcomson, 1993).
 
----
+In dynamic microeconomic models, agents anticipate their outside options
+and the evolution of market states (Maskin & Tirole, 2001). A contract
+under partial enforcement adds an *ex-post outside option* to the
+promisor: the possibility of “walking away.” This can reallocate
+bargaining power. For instance, in real estate pre-sales, a buyer with a
+weakly enforced deposit contract can threaten to default if market
+conditions move against them, effectively renegotiating the purchase
+price (Chan et al., 2012). This ex-post renegotiation power can
+encourage more ex-ante contracting when buyers foresee a strong fallback
+position (MacLeod & Malcomson, 1993).
+
+------------------------------------------------------------------------
 
 ## 3. Microeconomic Modeling of Weak Enforcement
 
 ### 3.1 Rational Expectations and Bubbles
-Rational-expectations models with limited contract enforcement can generate bubble-like equilibria (Scheinkman & Xiong, 2003). If agents believe they can default at minimal cost, they will bid up asset prices beyond fundamental values. While standard bubble models rely on heterogeneous beliefs or liquidity constraints, limited enforcement offers an additional channel: **trading risk-free upside under uncertain conditions** (Brunnermeier, 2001). Overlapping-generations models can incorporate an “enforcement friction” that amplifies speculation (Tirole, 1985).
+
+Rational-expectations models with limited contract enforcement can
+generate bubble-like equilibria (Scheinkman & Xiong, 2003). If agents
+believe they can default at minimal cost, they will bid up asset prices
+beyond fundamental values. While standard bubble models rely on
+heterogeneous beliefs or liquidity constraints, limited enforcement
+offers an additional channel: **trading risk-free upside under uncertain
+conditions** (Brunnermeier, 2001). Overlapping-generations models can
+incorporate an “enforcement friction” that amplifies speculation
+(Tirole, 1985).
 
 ### 3.2 Screening and Signaling Equilibria
-When courts are weak, contractual signals—like deposit size—become less credible (Spence, 1973). If a buyer forfeits only a small deposit upon breach, the deposit is a weak signal of commitment. Consequently, even low-type buyers flood into the market. In equilibrium, sellers may raise deposit requirements or interest rates, but if competition is fierce, they might not do so enough to exclude speculators. This leads to a partial-pooling equilibrium where good and bad types coexist in the market, increasing transaction volume but also default risk (Wilson, 1977).
+
+When courts are weak, contractual signals—like deposit size—become less
+credible (Spence, 1973). If a buyer forfeits only a small deposit upon
+breach, the deposit is a weak signal of commitment. Consequently, even
+low-type buyers flood into the market. In equilibrium, sellers may raise
+deposit requirements or interest rates, but if competition is fierce,
+they might not do so enough to exclude speculators. This leads to a
+partial-pooling equilibrium where good and bad types coexist in the
+market, increasing transaction volume but also default risk (Wilson,
+1977).
 
 ### 3.3 Self-Enforcing Contracts
-Microeconomic theories of **relational contracting** (Baker et al., 2002) show that, in repeated interactions, parties may rely on their future business to ensure compliance. However, in *speculative, one-shot* markets—like real estate pre-sales or short-term credit booms—such relational mechanisms are less relevant, and formal enforcement is the main disciplining device. If that device is weak, the stage is set for short-term speculation and opportunism (Klein, 1996).
 
----
+Microeconomic theories of **relational contracting** (Baker et al.,
+2002) show that, in repeated interactions, parties may rely on their
+future business to ensure compliance. However, in *speculative,
+one-shot* markets—like real estate pre-sales or short-term credit
+booms—such relational mechanisms are less relevant, and formal
+enforcement is the main disciplining device. If that device is weak, the
+stage is set for short-term speculation and opportunism (Klein, 1996).
+
+------------------------------------------------------------------------
 
 ## 4. Consequences in Micro-Level Equilibria
 
 ### 4.1 Over-Investment and Welfare Implications
-Standard micro theory suggests that if the *social* cost of default exceeds the *private* cost, the market equilibrium is not Pareto efficient (Pigou, 1920). The inflated contracting volume can lead to over-investment in risky assets (Rajan, 1994). While each agent is acting rationally, the *aggregate outcome* can be excessive risk-taking, eventual defaults, and negative externalities (Greenwald & Stiglitz, 1986).
+
+Standard micro theory suggests that if the *social* cost of default
+exceeds the *private* cost, the market equilibrium is not Pareto
+efficient (Pigou, 1920). The inflated contracting volume can lead to
+over-investment in risky assets (Rajan, 1994). While each agent is
+acting rationally, the *aggregate outcome* can be excessive risk-taking,
+eventual defaults, and negative externalities (Greenwald & Stiglitz,
+1986).
 
 ### 4.2 Equilibrium Outcomes with Heterogeneous Agents
-In advanced micro models featuring heterogeneous risk profiles, risk-tolerant or strategic actors thrive under weak enforcement, while conservative or uninformed agents may overpay or be crowded out (DeMarzo & Duffie, 1999). The equilibrium distribution of payoffs skews toward those who can best exploit the system’s laxity (Kyle & Xiong, 2001). As more players adopt “strategic breach” tactics, the collective result can be a surge in contract volume—*but also heightened fragility* (Allen & Gale, 2000).
+
+In advanced micro models featuring heterogeneous risk profiles,
+risk-tolerant or strategic actors thrive under weak enforcement, while
+conservative or uninformed agents may overpay or be crowded out (DeMarzo
+& Duffie, 1999). The equilibrium distribution of payoffs skews toward
+those who can best exploit the system’s laxity (Kyle & Xiong, 2001). As
+more players adopt “strategic breach” tactics, the collective result can
+be a surge in contract volume—*but also heightened fragility* (Allen &
+Gale, 2000).
 
 ### 4.3 Welfare Trade-Offs
-The micro-level lens points to a *welfare trade-off*:  
-- **Short-run**: Some individuals benefit from upside speculation, and overall transaction volume may increase, generating more immediate activity.  
-- **Long-run**: The system is more prone to breakdown, and default externalities (lower credit availability, court congestion, reputational damage) reduce overall welfare. Additionally, moral hazard can distort resource allocation toward short-term gambles (Hart, 1995).
 
----
+The micro-level lens points to a *welfare trade-off*:\
+- **Short-run**: Some individuals benefit from upside speculation, and
+overall transaction volume may increase, generating more immediate
+activity.\
+- **Long-run**: The system is more prone to breakdown, and default
+externalities (lower credit availability, court congestion, reputational
+damage) reduce overall welfare. Additionally, moral hazard can distort
+resource allocation toward short-term gambles (Hart, 1995).
+
+------------------------------------------------------------------------
 
 ## 5. Synthesis and Counterarguments
 
-While microeconomic theory can explain how weak enforcement fosters contract volume, it also reveals important limitations:
+While microeconomic theory can explain how weak enforcement fosters
+contract volume, it also reveals important limitations:
 
-1. **Adverse Selection**: The market can be flooded by low-quality participants who damage average outcomes for all.  
-2. **Moral Hazard**: Agents may default if outcomes are unfavorable, creating instability.  
-3. **Credible Commitments**: Lack of trust in enforcement can discourage long-horizon investments (Dixit, 2004).  
-4. **Externalities**: System-wide consequences (market crashes, court backlogs) can outweigh the private benefits of speculation (Shleifer & Vishny, 1997).  
+1.  **Adverse Selection**: The market can be flooded by low-quality
+    participants who damage average outcomes for all.\
+2.  **Moral Hazard**: Agents may default if outcomes are unfavorable,
+    creating instability.\
+3.  **Credible Commitments**: Lack of trust in enforcement can
+    discourage long-horizon investments (Dixit, 2004).\
+4.  **Externalities**: System-wide consequences (market crashes, court
+    backlogs) can outweigh the private benefits of speculation (Shleifer
+    & Vishny, 1997).
 
-Ultimately, the micro perspective underscores that while weak enforcement may stimulate *speculative* contracting, it also introduces significant distortions and potential negative-sum scenarios when defaults cascade.
+Ultimately, the micro perspective underscores that while weak
+enforcement may stimulate *speculative* contracting, it also introduces
+significant distortions and potential negative-sum scenarios when
+defaults cascade.
 
----
+------------------------------------------------------------------------
 
 ## References
 
-- Akerlof, G.A. (1970). "The Market for Lemons: Quality Uncertainty and the Market Mechanism." *The Quarterly Journal of Economics*, 84(3), 488–500. [DOI: 10.2307/1879431]  
-- Allen, F., & Gale, D. (2000). "Bubbles and Crises." *Economic Journal*, 110(460), 236–255. [DOI: 10.1111/1468-0297.00499]  
-- Baker, G.P., Gibbons, R., & Murphy, K.J. (2002). "Relational Contracts and the Theory of the Firm." *Quarterly Journal of Economics*, 117(1), 39–84. [DOI: 10.1162/003355302753399445]  
-- Bowman, E.H., & Moskowitz, G.T. (2001). "Real Options Analysis and Strategic Decision Making." *Organization Science*, 12(6), 772–777. [DOI: 10.1287/orsc.12.6.772.10080]  
-- Brunnermeier, M.K. (2001). *Asset Pricing under Asymmetric Information: Bubbles, Crashes, Technical Analysis, and Herding*. Oxford University Press. [No DOI available]  
-- Chan, S., Wang, K., & Yang, T. (2012). "Presale Contract and Real Estate Development: A Game-Theoretic Analysis." *Journal of Real Estate Research*, 34(4), 567–591. [DOI: 10.5555/rees.34.4.0x346315g6636357]  
-- Cooter, R.D., & Ulen, T. (2016). *Law and Economics* (6th ed.). Pearson. [No DOI available]  
-- DeMarzo, P., & Duffie, D. (1999). "A Liquidity-Based Model of Security Design." *Econometrica*, 67(1), 65–99. [DOI: 10.1111/1468-0262.00005]  
-- Dixit, A. (2004). *Lawlessness and Economics: Alternative Modes of Governance*. Princeton University Press. [DOI: 10.1515/9781400851625]  
-- Dixit, A.K., & Pindyck, R.S. (1994). *Investment under Uncertainty*. Princeton University Press. [DOI: 10.1515/9780691218638]  
-- Greenwald, B., & Stiglitz, J.E. (1986). "Externalities in Economies with Imperfect Information and Incomplete Markets." *The Quarterly Journal of Economics*, 101(2), 229–264. [DOI: 10.2307/1891114]  
-- Grossman, S.J., & Hart, O. (1983). "An Analysis of the Principal-Agent Problem." *Econometrica*, 51(1), 7–45. [DOI: 10.2307/1912246]  
-- Grossman, S.J., & Hart, O. (1986). "The Costs and Benefits of Ownership: A Theory of Vertical and Lateral Integration." *Journal of Political Economy*, 94(4), 691–719. [DOI: 10.1086/261404]  
-- Hart, O. (1995). *Firms, Contracts, and Financial Structure*. Oxford University Press. [No DOI available]  
-- Hart, O., & Moore, J. (1988). "Incomplete Contracts and Renegotiation." *Econometrica*, 56(4), 755–785. [DOI: 10.2307/1912698]  
-- Holmström, B. (1979). "Moral Hazard and Observability." *The Bell Journal of Economics*, 10(1), 74–91. [DOI: 10.2307/3003320]  
-- Katz, A.W. (2004). "The Option Element in Contracting." *Virginia Law Review*, 90(8), 2187–2245. [No DOI]  
-- Klein, B. (1996). "Why Hold-Ups Occur: The Self-Enforcing Range of Contractual Relationships." *Economic Inquiry*, 34(3), 444–463. [DOI: 10.1111/j.1465-7295.1996.tb01390.x]  
-- Kyle, A.S., & Xiong, W. (2001). "Contagion as a Wealth Effect." *Journal of Finance*, 56(4), 1401–1440. [DOI: 10.1111/0022-1082.00373]  
-- Laffont, J.J., & Martimort, D. (2002). *The Theory of Incentives: The Principal-Agent Model*. Princeton University Press. [DOI: 10.1515/9781400829457]  
-- MacLeod, B., & Malcomson, J.M. (1993). "Investments, Holdup, and the Form of Market Contracts." *American Economic Review*, 83(4), 811–837. [No DOI]  
-- Maskin, E., & Tirole, J. (2001). "Markov Perfect Equilibrium: I. Observable Actions." *Journal of Economic Theory*, 100(2), 191–219. [DOI: 10.1006/jeth.2000.2785]  
-- Pavlov, A., & Wachter, S. (2006). "Underpriced Default Risk and Real Estate Markets." *Journal of Real Estate Research*, 28(2), 123–140. [No DOI]  
-- Rajan, R.G. (1994). "Why Credit Policies Fluctuate: A Theory and Some Evidence." *The Quarterly Journal of Economics*, 109(2), 399–441. [DOI: 10.2307/2118468]  
-- Scheinkman, J., & Xiong, W. (2003). "Overconfidence and Speculative Bubbles." *Journal of Political Economy*, 111(6), 1183–1219. [DOI: 10.1086/378531]  
-- Shavell, S. (1980). "Damage Measures for Breach of Contract." *Bell Journal of Economics*, 11(2), 466–490. [DOI: 10.2307/3003370]  
-- Shleifer, A., & Vishny, R.W. (1997). "The Limits of Arbitrage." *Journal of Finance*, 52(1), 35–55. [DOI: 10.1111/j.1540-6261.1997.tb03807.x]  
-- Spence, M. (1973). "Job Market Signaling." *The Quarterly Journal of Economics*, 87(3), 355–374. [DOI: 10.2307/1882010]  
-- Stiglitz, J.E. (2010). "Risk and Global Economic Architecture: Why Full Financial Integration May Be Undesirable." *American Economic Review*, 100(2), 388–392. [DOI: 10.1257/aer.100.2.388]  
-- Stiglitz, J.E., & Weiss, A. (1981). "Credit Rationing in Markets with Imperfect Information." *American Economic Review*, 71(3), 393–410. [No DOI]  
-- Tirole, J. (1985). "Asset Bubbles and Overlapping Generations." *Econometrica*, 53(5), 1071–1100. [DOI: 10.2307/1911012]  
-- Tirole, J. (1999). "Incomplete Contracts: Where Do We Stand?" *Econometrica*, 67(4), 741–781. [DOI: 10.1111/1468-0262.00052]  
-- Williamson, O.E. (1985). *The Economic Institutions of Capitalism*. Free Press. [No DOI]  
-- Wilson, C. (1977). "A Model of Insurance Markets with Incomplete Information." *Journal of Economic Theory*, 16(2), 167–207. [DOI: 10.1016/0022-0531(77)90051-7]  
+-   Akerlof, G.A. (1970). "The Market for Lemons: Quality Uncertainty
+    and the Market Mechanism." *The Quarterly Journal of Economics*,
+    84(3), 488–500. [DOI: 10.2307/1879431]\
+-   Allen, F., & Gale, D. (2000). "Bubbles and Crises." *Economic
+    Journal*, 110(460), 236–255. [DOI: 10.1111/1468-0297.00499]\
+-   Baker, G.P., Gibbons, R., & Murphy, K.J. (2002). "Relational
+    Contracts and the Theory of the Firm." *Quarterly Journal of
+    Economics*, 117(1), 39–84. [DOI: 10.1162/003355302753399445]\
+-   Bowman, E.H., & Moskowitz, G.T. (2001). "Real Options Analysis and
+    Strategic Decision Making." *Organization Science*, 12(6), 772–777.
+    [DOI: 10.1287/orsc.12.6.772.10080]\
+-   Brunnermeier, M.K. (2001). *Asset Pricing under Asymmetric
+    Information: Bubbles, Crashes, Technical Analysis, and Herding*.
+    Oxford University Press. [No DOI available]\
+-   Chan, S., Wang, K., & Yang, T. (2012). "Presale Contract and Real
+    Estate Development: A Game-Theoretic Analysis." *Journal of Real
+    Estate Research*, 34(4), 567–591. [DOI:
+    10.5555/rees.34.4.0x346315g6636357]\
+-   Cooter, R.D., & Ulen, T. (2016). *Law and Economics* (6th ed.).
+    Pearson. [No DOI available]\
+-   DeMarzo, P., & Duffie, D. (1999). "A Liquidity-Based Model of
+    Security Design." *Econometrica*, 67(1), 65–99. [DOI:
+    10.1111/1468-0262.00005]\
+-   Dixit, A. (2004). *Lawlessness and Economics: Alternative Modes of
+    Governance*. Princeton University Press. [DOI:
+    10.1515/9781400851625]\
+-   Dixit, A.K., & Pindyck, R.S. (1994). *Investment under Uncertainty*.
+    Princeton University Press. [DOI: 10.1515/9780691218638]\
+-   Greenwald, B., & Stiglitz, J.E. (1986). "Externalities in Economies
+    with Imperfect Information and Incomplete Markets." *The Quarterly
+    Journal of Economics*, 101(2), 229–264. [DOI: 10.2307/1891114]\
+-   Grossman, S.J., & Hart, O. (1983). "An Analysis of the
+    Principal-Agent Problem." *Econometrica*, 51(1), 7–45. [DOI:
+    10.2307/1912246]\
+-   Grossman, S.J., & Hart, O. (1986). "The Costs and Benefits of
+    Ownership: A Theory of Vertical and Lateral Integration." *Journal
+    of Political Economy*, 94(4), 691–719. [DOI: 10.1086/261404]\
+-   Hart, O. (1995). *Firms, Contracts, and Financial Structure*. Oxford
+    University Press. [No DOI available]\
+-   Hart, O., & Moore, J. (1988). "Incomplete Contracts and
+    Renegotiation." *Econometrica*, 56(4), 755–785. [DOI:
+    10.2307/1912698]\
+-   Holmström, B. (1979). "Moral Hazard and Observability." *The Bell
+    Journal of Economics*, 10(1), 74–91. [DOI: 10.2307/3003320]\
+-   Katz, A.W. (2004). "The Option Element in Contracting." *Virginia
+    Law Review*, 90(8), 2187–2245. [No DOI]\
+-   Klein, B. (1996). "Why Hold-Ups Occur: The Self-Enforcing Range of
+    Contractual Relationships." *Economic Inquiry*, 34(3), 444–463.
+    [DOI: 10.1111/j.1465-7295.1996.tb01390.x]\
+-   Kyle, A.S., & Xiong, W. (2001). "Contagion as a Wealth Effect."
+    *Journal of Finance*, 56(4), 1401–1440. [DOI:
+    10.1111/0022-1082.00373]\
+-   Laffont, J.J., & Martimort, D. (2002). *The Theory of Incentives:
+    The Principal-Agent Model*. Princeton University Press. [DOI:
+    10.1515/9781400829457]\
+-   MacLeod, B., & Malcomson, J.M. (1993). "Investments, Holdup, and the
+    Form of Market Contracts." *American Economic Review*, 83(4),
+    811–837. [No DOI]\
+-   Maskin, E., & Tirole, J. (2001). "Markov Perfect Equilibrium: I.
+    Observable Actions." *Journal of Economic Theory*, 100(2), 191–219.
+    [DOI: 10.1006/jeth.2000.2785]\
+-   Pavlov, A., & Wachter, S. (2006). "Underpriced Default Risk and Real
+    Estate Markets." *Journal of Real Estate Research*, 28(2), 123–140.
+    [No DOI]\
+-   Rajan, R.G. (1994). "Why Credit Policies Fluctuate: A Theory and
+    Some Evidence." *The Quarterly Journal of Economics*, 109(2),
+    399–441. [DOI: 10.2307/2118468]\
+-   Scheinkman, J., & Xiong, W. (2003). "Overconfidence and Speculative
+    Bubbles." *Journal of Political Economy*, 111(6), 1183–1219. [DOI:
+    10.1086/378531]\
+-   Shavell, S. (1980). "Damage Measures for Breach of Contract." *Bell
+    Journal of Economics*, 11(2), 466–490. [DOI: 10.2307/3003370]\
+-   Shleifer, A., & Vishny, R.W. (1997). "The Limits of Arbitrage."
+    *Journal of Finance*, 52(1), 35–55. [DOI:
+    10.1111/j.1540-6261.1997.tb03807.x]\
+-   Spence, M. (1973). "Job Market Signaling." *The Quarterly Journal of
+    Economics*, 87(3), 355–374. [DOI: 10.2307/1882010]\
+-   Stiglitz, J.E. (2010). "Risk and Global Economic Architecture: Why
+    Full Financial Integration May Be Undesirable." *American Economic
+    Review*, 100(2), 388–392. [DOI: 10.1257/aer.100.2.388]\
+-   Stiglitz, J.E., & Weiss, A. (1981). "Credit Rationing in Markets
+    with Imperfect Information." *American Economic Review*, 71(3),
+    393–410. [No DOI]\
+-   Tirole, J. (1985). "Asset Bubbles and Overlapping Generations."
+    *Econometrica*, 53(5), 1071–1100. [DOI: 10.2307/1911012]\
+-   Tirole, J. (1999). "Incomplete Contracts: Where Do We Stand?"
+    *Econometrica*, 67(4), 741–781. [DOI: 10.1111/1468-0262.00052]\
+-   Williamson, O.E. (1985). *The Economic Institutions of Capitalism*.
+    Free Press. [No DOI]\
+-   Wilson, C. (1977). "A Model of Insurance Markets with Incomplete
+    Information." *Journal of Economic Theory*, 16(2), 167–207. [DOI:
+    10.1016/0022-0531(77)90051-7]
 
----
+------------------------------------------------------------------------
 
-**Suggested Micro-Focused Discussion Points in Your Paper:**  
-1. **Formalize the Real-Options Approach**: Present a short model showing that if the legal remedy for breach is incomplete, then the buyer’s payoff function resembles a call option.  
-2. **Game-Theoretic Scenarios**: Illustrate how Bayesian games with asymmetric information and limited recourse produce equilibria with higher contract volumes under certain parameter conditions.  
-3. **Welfare Analysis**: Use a simple partial equilibrium framework to show how over-contracting can occur and evaluate the net social welfare change.  
-4. **Policy Implications**: Conclude by discussing how judicial reforms might shift equilibria—potentially lowering contract volumes but increasing *quality* of transactions and overall welfare.  
+**Suggested Micro-Focused Discussion Points in Your Paper:**\
+1. **Formalize the Real-Options Approach**: Present a short model
+showing that if the legal remedy for breach is incomplete, then the
+buyer’s payoff function resembles a call option.\
+2. **Game-Theoretic Scenarios**: Illustrate how Bayesian games with
+asymmetric information and limited recourse produce equilibria with
+higher contract volumes under certain parameter conditions.\
+3. **Welfare Analysis**: Use a simple partial equilibrium framework to
+show how over-contracting can occur and evaluate the net social welfare
+change.\
+4. **Policy Implications**: Conclude by discussing how judicial reforms
+might shift equilibria—potentially lowering contract volumes but
+increasing *quality* of transactions and overall welfare.
 
-With these points, your paper will demonstrate a deep understanding of how limited enforcement can paradoxically raise market volume, framed in core microeconomic concepts such as adverse selection, moral hazard, incomplete contracting, and real options.
+With these points, your paper will demonstrate a deep understanding of
+how limited enforcement can paradoxically raise market volume, framed in
+core microeconomic concepts such as adverse selection, moral hazard,
+incomplete contracting, and real options.
